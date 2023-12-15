@@ -8,22 +8,22 @@
       type="number"
     />
     <div :class="'spanstyle'">Risk: {{ risk }}</div>
-    <select :class="'tempstyle'" v-model="risk">
-      <option>Low</option>
-      <option>Medium</option>
-      <option>High</option>
+    <select :class="'tempstyle'" v-model="risk" @change="onRiskChange">
+      <option value="Low">Low</option>
+      <option value="Medium">Medium</option>
+      <option value="High">High</option>
     </select>
     <div :class="'spanstyle'">Rows: {{ rows }}</div>
-    <select :class="'tempstyle'" v-model="rows">
-      <option>8</option>
-      <option>9</option>
-      <option>10</option>
-      <option>11</option>
-      <option>12</option>
-      <option>13</option>
-      <option>14</option>
-      <option>15</option>
-      <option>16</option>
+    <select :class="'tempstyle'" v-model="rows" @change="onRowChange">
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <!-- <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option>
+      <option value="16">16</option> -->
     </select>
     <button :class="['tempstyle', 'buttonstyle']" @click="bet">Bet</button>
   </div>
@@ -61,42 +61,72 @@
 </style>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { Plinko } from "./Plinko";
 
 const amount = ref("100.0000");
 const risk = ref("Low");
 const rows = ref("8");
 
-const basket = [10, 5.6, 2.1, 1.1, 1, 0.5, 1, 1.1, 2.1, 5.6, 10];
+// const basket = [10, 5.6, 2.1, 1.1, 1, 0.5, 1, 1.1, 2.1, 5.6, 10];
+let basket = [5.6, 2.1, 1, 0.7, 0.3, 0.7, 1, 2.1, 5.6];
+const basket_risk = ref(basket);
 const plinko = Plinko(document.body.querySelector("#canvas"));
-plinko.map(basket);
+plinko.map(basket_risk.value);
 
+const onRowChange = () => {
+  switch (rows.value) {
+    case "8":
+      basket = [5.6, 2.1, 1, 0.7, 0.3, 0.7, 1, 2.1, 5.6];
+      break;
+    case "9":
+      basket = [5.6, 2.1, 1, 0.7, 0.3, 0.3, 0.7, 1, 2.1, 5.6];
+      break;
+    case "10":
+      basket = [5.6, 2.1, 1, 0.7, 0.5, 0.3, 0.5, 0.7, 1, 2.1, 5.6];
+      break;
+    case "11":
+      basket = [5.6, 2.1, 1, 0.7, 0.5, 0.3, 0.3, 0.5, 0.7, 1, 2.1, 5.6];
+      break;
+    case "12":
+      basket = [5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6];
+      break;
+    case "13":
+      basket = [5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6];
+      break;
+    case "14":
+      basket = [7.2, 5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6, 7.2];
+      break;
+    case "15":
+      basket = [7.2, 5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6, 7.2];
+      break;
+    case "16":
+      basket = [10, 7.2, 5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6, 7.2, 10];
+      break;
+    default:
+      basket = [5.6, 2.1, 1, 0.7, 0.3, 0.7, 1, 2.1, 5.6];
+  }
+  onRiskChange();
+}
 
+const onRiskChange = () => {
+  plinko.clear();
+  if (risk.value === "Low") {
+    basket_risk.value = basket.map((item) => (item ** 1).toFixed(2));
+  } else if (risk.value === "Medium") {
+    basket_risk.value = basket.map((item) => (item ** 2).toFixed(2));
+  } else if (risk.value === "High") {
+    basket_risk.value = basket.map((item) => (item ** 3).toFixed(2));
+  }
+  plinko.map(basket_risk.value);
+};
 const bet = () => {
-  // setTimeout(() => {
-  //   plinko.add([0, 0, 0, 0, 0, 0, 0, 0, 0]);
-  // }, 300);
-  // setTimeout(() => {
-  //   plinko.add([1, 1, 1, 1, 1, 1, 1]);
-  // }, 600);
-  // setTimeout(() => {
-  //   plinko.add([0, 0, 1, 1, 0, 0, 1]);
-  // }, 900);
-  // setTimeout(() => {
-  //   plinko.add([1, 0, 1, 0, 0, 0, 1]);
-  // }, 1200);
-  // setTimeout(() => {
-  //   plinko.add([0, 0, 1, 1, 1, 0, 1]);
-  // }, 1500);
-  // setTimeout(() => {
-  //   plinko.add([1, 1, 1, 0, 1, 1, 1]);
-  // }, 1800);
   const randomArray = [];
   for (let i = 0; i < 7; i++) {
     const randomNumber = Math.floor(Math.random() * 2);
     randomArray.push(randomNumber);
   }
+  randomArray.push(basket_risk.value.length)
   plinko.add(randomArray);
 };
 </script>

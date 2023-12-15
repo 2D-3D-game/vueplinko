@@ -168,6 +168,7 @@ export function Plinko(element) {
     for (let i = 0; i < pairs.length; i++) {
       const bodyA = pairs[i].bodyA;
       const bodyB = pairs[i].bodyB;
+      console.log(bodyA, bodyB);
       if (bodyA.label === "point") new Splash(bodyA);
       if (bodyB.label === "point") new Splash(bodyB);
       if (bodyA.label === "particle" && bodyB.label === "point")
@@ -185,6 +186,7 @@ export function Plinko(element) {
     Body.setStatic(body, true);
     if (!body.road.id.includes(point.id)) {
       const road = body.road.list.shift();
+      console.log(point.position.y);
       Body.setPosition(body, {
         x: point.position.x,
         y: point.position.y - point.circleRadius * 2,
@@ -279,11 +281,12 @@ export function Plinko(element) {
   function map(rows) {
     let col = 3;
     const increment = 1;
-    const radius = PointRadius;
+    const radius = PointRadius * 9 / rows.length;
     const gap = radius * 2 * MapGap;
 
     for (let i = 1; i <= rows.length; i++) {
       const space = (canvasWidth - gap * col) / 2;
+      // console.log(space);
       for (let j = 1; j <= col; j++) {
         if (i < rows.length) {
           new Point(space + j * gap - radius * MapGap, i * gap, radius);
@@ -303,7 +306,9 @@ export function Plinko(element) {
   }
 
   function add(road) {
-    new Particle(canvasWidth / 2, 0, ParticleRadius, road);
+    const for_road = road.slice(0, -1);
+    const row_num = road.slice(-1)[0];
+    new Particle(canvasWidth / 2, 0, ParticleRadius * 9 / row_num, for_road);
   }
 
   function clear() {
