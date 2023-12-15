@@ -18,6 +18,12 @@
       <option value="8">8</option>
       <option value="9">9</option>
       <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option>
+      <option value="16">16</option>
     </select>
     <button :class="['tempstyle', 'buttonstyle']" @click="bet">Bet</button>
   </div>
@@ -28,7 +34,7 @@
   background-color: #082537;
   padding: 50px;
   border-radius: 20px;
-  margin-top: 20vh;
+  margin-top: 5vh;
   height: 60vh;
   display: flex;
   flex-direction: column;
@@ -116,11 +122,10 @@ const onRiskChange = () => {
 };
 const bet = () => {
   const randomArray = [];
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < basket_risk.value.length; i++) {
     const randomNumber = Math.floor(Math.random() * 2);
     randomArray.push(randomNumber);
   }
-  randomArray.push(basket_risk.value.length)
   plinko.add(randomArray);
 };
 </script>

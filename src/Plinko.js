@@ -2,11 +2,6 @@ import Matter from "matter-js";
 import * as PIXI from "pixi.js";
 
 export function Plinko(element) {
-  /*--------------------------
-  Setup
-  --------------------------*/
-
-  // Matter Modules
   const Engine = Matter.Engine;
   const Render = Matter.Render;
   const Runner = Matter.Runner;
@@ -15,26 +10,13 @@ export function Plinko(element) {
   const Composite = Matter.Composite;
   const Events = Matter.Events;
 
-  // Scene Container
   const canvasWidth = element.offsetWidth;
   const canvasHeight = element.offsetHeight;
 
-  /*--------------------------
-  Engine
-  --------------------------*/
-
   const engine = Engine.create();
-
-  /*--------------------------
-  Scene Objects
-  --------------------------*/
 
   const sceneObjects = [];
   const splashObjects = [];
-
-  /*--------------------------
-  Pixi
-  --------------------------*/
 
   const app = new PIXI.Application({
     backgroundAlpha: 0,
@@ -46,11 +28,10 @@ export function Plinko(element) {
     autoDensity: true,
   });
 
-  element.appendChild(app.view);
+  let scale = 1;
+  app.stage.scale.set(scale);
 
-  /*--------------------------
-  Pixi Frame Updates
-  --------------------------*/
+  element.appendChild(app.view);
 
   app.ticker.add(() => {
     sceneObjects.forEach((object) => {
@@ -59,17 +40,9 @@ export function Plinko(element) {
     });
   });
 
-  /*--------------------------
-  Run
-  --------------------------*/
-
   Runner.run(engine);
 
   Events.on(engine, "collisionStart", collision);
-
-  /*--------------------------
-  Game
-  --------------------------*/
 
   const ParticleRadius = 10;
   const PointRadius = 10;
@@ -134,16 +107,50 @@ export function Plinko(element) {
   }
 
   function RemoveParticle(body) {
-    // console.log(body);
     for (let i = 0; i < sceneObjects.length; i++) {
       if (sceneObjects[i].body.id === body.id) {
-        console.log(body.id);
         Composite.remove(engine.world, sceneObjects[i].body);
         app.stage.removeChild(sceneObjects[i].sprite);
         sceneObjects.splice(i, 1);
       }
     }
   }
+
+  // function Basket(x, y, gap, text) {
+  //   const options = {
+  //     isStatic: true,
+  //   };
+
+  //   const metter = Bodies.rectangle(x, y, gap, gap, options);
+  //   metter.label = "basket";
+  //   Composite.add(engine.world, metter);
+
+  //   if (text === undefined) {
+  //     return;
+  //   }
+  //   const rectangle = new PIXI.Graphics();
+  //   rectangle.beginFill(0x05121c);
+
+  //   const cornerRadius = (gap * 10) / 60;
+  //   rectangle.drawRoundedRect(
+  //     x + 2 - gap / 2,
+  //     y - gap / 4,
+  //     gap - 4,
+  //     gap / 2,
+  //     cornerRadius
+  //   );
+
+  //   rectangle.endFill();
+
+  //   const pixiText = new PIXI.Text(text, {
+  //     fontSize: (gap * 12) / 60 + "px",
+  //     fill: "#ffffff",
+  //   });
+  //   pixiText.x = x - gap / 2 + pixiText.width / 2;
+  //   pixiText.y = y - gap / 4 + gap / 4 - pixiText.height / 2;
+  //   app.stage.addChild(rectangle);
+  //   app.stage.addChild(pixiText);
+  // }
 
   function Basket(x, y, gap, text) {
     const options = {
@@ -154,12 +161,70 @@ export function Plinko(element) {
     metter.label = "basket";
     Composite.add(engine.world, metter);
 
+    if (text === undefined) {
+      return;
+    }
+
+    let color = 0x05121c;
+    switch (parseFloat(text)) {
+      case 10:
+        color = 0xfb3434;
+        break;
+      case 7.2:
+        color = 0xef6060;
+        break;
+      case 5.6:
+        color = 0xea842c;
+        break;
+      case 2.1:
+        color = 0xd9a425;
+        break;
+      case 1.2:
+        color = 0xdad323;
+        break;
+      case 1:
+        color = 0xb2d023;
+        break;
+      case 0.7:
+        color = 0x8ace22;
+        break;
+      case 0.5:
+        color = 0x5dc421;
+        break;
+      case 0.3:
+        color = 0x38c121;
+        break;
+      default:
+        color = 0x38c121;
+    }
+
+    const rectangle = new PIXI.Graphics();
+    rectangle.beginFill(color);
+
+    const cornerRadius = (gap * 10) / 60;
+    const rectangleWidth = gap - 4;
+    const rectangleHeight = gap / 2;
+
+    rectangle.drawRoundedRect(
+      x + 2 - gap / 2,
+      y - gap / 4,
+      rectangleWidth,
+      rectangleHeight,
+      cornerRadius
+    );
+
+    rectangle.endFill();
+
     const pixiText = new PIXI.Text(text, {
-      fontSize: "12px",
-      fill: "#b2de27",
+      fontSize: (gap * 12) / 60 + "px",
+      fill: "#ffffff",
     });
+
+    pixiText.anchor.set(0.5); // Center the text within the rectangle
     pixiText.x = x;
     pixiText.y = y;
+
+    app.stage.addChild(rectangle);
     app.stage.addChild(pixiText);
   }
 
@@ -168,7 +233,6 @@ export function Plinko(element) {
     for (let i = 0; i < pairs.length; i++) {
       const bodyA = pairs[i].bodyA;
       const bodyB = pairs[i].bodyB;
-      console.log(bodyA, bodyB);
       if (bodyA.label === "point") new Splash(bodyA);
       if (bodyB.label === "point") new Splash(bodyB);
       if (bodyA.label === "particle" && bodyB.label === "point")
@@ -186,7 +250,6 @@ export function Plinko(element) {
     Body.setStatic(body, true);
     if (!body.road.id.includes(point.id)) {
       const road = body.road.list.shift();
-      console.log(point.position.y);
       Body.setPosition(body, {
         x: point.position.x,
         y: point.position.y - point.circleRadius * 2,
@@ -204,89 +267,57 @@ export function Plinko(element) {
 
   function Splash(body) {
     const graphics = new PIXI.Graphics();
-    // graphics.beginFill("0xb2de27");
-    // graphics.drawCircle(
-    //   body.position.x,
-    //   body.position.y,
-    //   body.circleRadius * 2
-    // );
 
-    setTimeout(() => {
-      graphics.beginFill("0xffffff");
-      graphics.drawCircle(
-        body.position.x,
-        body.position.y,
-        body.circleRadius * 2
-      );
-      graphics.beginHole();
-      graphics.drawCircle(
-        body.position.x,
-        body.position.y,
-        body.circleRadius * 2 - 15
-      );
-      graphics.endHole();
-      graphics.alpha = 0.2;
-      graphics.zIndex = 1;
-      graphics.endFill();
-    }, 50);
-    setTimeout(() => {
-      graphics.beginFill("0xffffff");
-      graphics.drawCircle(
-        body.position.x,
-        body.position.y,
-        body.circleRadius * 2
-      );
-      graphics.beginHole();
-      graphics.drawCircle(
-        body.position.x,
-        body.position.y,
-        body.circleRadius * 2 - 10
-      );
-      graphics.endHole();
-      graphics.alpha = 0.2;
-      graphics.zIndex = 1;
-      graphics.endFill();
-    }, 100);
-    setTimeout(() => {
-      graphics.beginFill("0xffffff");
-      graphics.drawCircle(
-        body.position.x,
-        body.position.y,
-        body.circleRadius * 2
-      );
-      graphics.beginHole();
-      graphics.drawCircle(
-        body.position.x,
-        body.position.y,
-        body.circleRadius * 2 - 5
-      );
-      graphics.endHole();
-      graphics.alpha = 0.2;
-      graphics.zIndex = 1;
-      graphics.endFill();
-    }, 150);
+    var reqAnim;
+    var breathSpeed = 1;
+    var rMax = 15;
+    var rMin = 0;
+    var r = rMin;
+    var opacity = 0.7;
+    var rDiff = rMax - rMin;
+    var opacityIncr = 1 / rDiff / 1.2;
 
-    // graphics.alpha = 0.2;
-    // graphics.zIndex = 1;
-    // graphics.endFill();
-    app.stage.addChild(graphics);
+    animate();
+    function animate() {
+      graphics.clear();
+      if (
+        localStorage.getItem("style") &&
+        localStorage.getItem("style") == "light"
+      ) {
+        graphics.lineStyle(r, 0xb2de27, opacity);
+      } else {
+        graphics.lineStyle(r, 0xffffff, opacity);
+      }
+      graphics.lineStyle(r, 0xb2de27, opacity);
+      graphics.beginFill(0, 0);
+      graphics.drawCircle(body.position.x, body.position.y, body.circleRadius);
+      graphics.endFill();
 
-    splashObjects.push(graphics);
+      app.stage.addChild(graphics);
+      if (r === rMax) {
+        cancelAnimationFrame(reqAnim);
+        reqAnim = undefined;
+        return;
+      }
+      r += breathSpeed;
+      opacity -= opacityIncr;
+      reqAnim = requestAnimationFrame(animate);
+    }
 
     setTimeout(() => {
       app.stage.removeChild(graphics);
-    }, 200);
+    }, 400);
   }
 
   function map(rows) {
+    app.stage.position._x = 0;
     let col = 3;
     const increment = 1;
-    const radius = PointRadius * 9 / rows.length;
+    const radius = PointRadius;
     const gap = radius * 2 * MapGap;
 
     for (let i = 1; i <= rows.length; i++) {
       const space = (canvasWidth - gap * col) / 2;
-      // console.log(space);
       for (let j = 1; j <= col; j++) {
         if (i < rows.length) {
           new Point(space + j * gap - radius * MapGap, i * gap, radius);
@@ -303,22 +334,19 @@ export function Plinko(element) {
       }
       col += increment;
     }
+    scale = 9 / rows.length;
+    app.stage.scale.set(scale);
+    app.stage.position._x += ((1 - scale) * canvasWidth) / 2;
   }
 
   function add(road) {
-    const for_road = road.slice(0, -1);
-    const row_num = road.slice(-1)[0];
-    new Particle(canvasWidth / 2, 0, ParticleRadius * 9 / row_num, for_road);
+    new Particle(canvasWidth / 2, 0, ParticleRadius, road);
   }
 
   function clear() {
     Composite.clear(engine.world);
     app.stage.removeChildren();
   }
-
-  /*--------------------------
-  Return
-  --------------------------*/
 
   return {
     map,
