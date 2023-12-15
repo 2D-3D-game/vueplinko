@@ -165,33 +165,50 @@ export function Plinko(element) {
       return;
     }
 
+    // console.log(Math.pow(5.6, 2).toFixed(2));
     let color = 0x05121c;
     switch (parseFloat(text)) {
       case 10:
+      case 100:
+      case 1000:
         color = 0xfb3434;
         break;
       case 7.2:
+      case parseFloat(Math.pow(7.2, 2).toFixed(2)):
+      case parseFloat(Math.pow(7.2, 3).toFixed(2)):
         color = 0xef6060;
         break;
       case 5.6:
+      case parseFloat(Math.pow(5.6, 2).toFixed(2)):
+      case parseFloat(Math.pow(5.6, 3).toFixed(2)):
         color = 0xea842c;
         break;
       case 2.1:
+      case parseFloat(Math.pow(2.1, 2).toFixed(2)):
+      case parseFloat(Math.pow(2.1, 3).toFixed(2)):
         color = 0xd9a425;
         break;
       case 1.2:
+      case parseFloat(Math.pow(1.2, 2).toFixed(2)):
+      case parseFloat(Math.pow(1.2, 3).toFixed(2)):
         color = 0xdad323;
         break;
       case 1:
         color = 0xb2d023;
         break;
       case 0.7:
+      case parseFloat(Math.pow(0.7, 2).toFixed(2)):
+      case parseFloat(Math.pow(0.7, 3).toFixed(2)):
         color = 0x8ace22;
         break;
       case 0.5:
+      case parseFloat(Math.pow(0.5, 2).toFixed(2)):
+      case parseFloat(Math.pow(0.5, 3).toFixed(2)):
         color = 0x5dc421;
         break;
       case 0.3:
+      case parseFloat(Math.pow(0.3, 2).toFixed(2)):
+      case parseFloat(Math.pow(0.3, 3).toFixed(2)):
         color = 0x38c121;
         break;
       default:
@@ -239,10 +256,14 @@ export function Plinko(element) {
         Road(bodyA, bodyB);
       if (bodyB.label === "particle" && bodyA.label === "point")
         Road(bodyB, bodyA);
-      if (bodyA.label === "basket" && bodyB.label === "particle")
+      if (bodyA.label === "basket" && bodyB.label === "particle") {
         RemoveParticle(bodyB);
-      if (bodyB.label === "basket" && bodyA.label === "particle")
+        new BucketSplash(bodyA);
+      }
+      if (bodyB.label === "basket" && bodyA.label === "particle") {
         RemoveParticle(bodyA);
+        new BucketSplash(bodyB);
+      }
     }
   }
 
@@ -259,7 +280,7 @@ export function Plinko(element) {
           x: road === 0 ? -1 : 1,
           y: -3,
         });
-      }, 0);
+      }, 50);
       body.road.id.push(point.id);
     }
     Body.setStatic(body, false);
@@ -291,6 +312,57 @@ export function Plinko(element) {
       graphics.lineStyle(r, 0xb2de27, opacity);
       graphics.beginFill(0, 0);
       graphics.drawCircle(body.position.x, body.position.y, body.circleRadius);
+      graphics.endFill();
+
+      app.stage.addChild(graphics);
+      if (r === rMax) {
+        cancelAnimationFrame(reqAnim);
+        reqAnim = undefined;
+        return;
+      }
+      r += breathSpeed;
+      opacity -= opacityIncr;
+      reqAnim = requestAnimationFrame(animate);
+    }
+
+    setTimeout(() => {
+      app.stage.removeChild(graphics);
+    }, 400);
+  }
+
+  function BucketSplash(body) {
+    const graphics = new PIXI.Graphics();
+
+    var reqAnim;
+    var breathSpeed = 1;
+    var rMax = 15;
+    var rMin = 0;
+    var r = rMin;
+    var opacity = 0.7;
+    var rDiff = rMax - rMin;
+    var opacityIncr = 1 / rDiff / 1.2;
+
+    animate();
+
+    function animate() {
+      graphics.clear();
+      if (
+        localStorage.getItem("style") &&
+        localStorage.getItem("style") == "light"
+      ) {
+        graphics.lineStyle(r, 0xb2de27, opacity);
+      } else {
+        graphics.lineStyle(r, 0xffffff, opacity);
+      }
+      graphics.beginFill(0, 0);
+
+      // Draw the rectangle
+      const rectWidth = 50;
+      const rectHeight = 30;
+      const rectX = body.position.x - rectWidth / 2;
+      const rectY = body.position.y - rectHeight / 2; // Remove y position adjustment
+      graphics.drawRect(rectX, rectY, rectWidth, rectHeight);
+
       graphics.endFill();
 
       app.stage.addChild(graphics);
