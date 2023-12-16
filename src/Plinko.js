@@ -14,6 +14,7 @@ export function Plinko(element) {
   const canvasHeight = element.offsetHeight;
 
   const engine = Engine.create();
+  engine.timing.timeScale = 1;
 
   const sceneObjects = [];
   const splashObjects = [];
@@ -47,6 +48,9 @@ export function Plinko(element) {
   const ParticleRadius = 10;
   const PointRadius = 10;
   const MapGap = 3;
+  let score = 0;
+  let scoreArray = [];
+  let rowNum = 8;
 
   function Point(x, y, r) {
     const options = {
@@ -116,42 +120,6 @@ export function Plinko(element) {
     }
   }
 
-  // function Basket(x, y, gap, text) {
-  //   const options = {
-  //     isStatic: true,
-  //   };
-
-  //   const metter = Bodies.rectangle(x, y, gap, gap, options);
-  //   metter.label = "basket";
-  //   Composite.add(engine.world, metter);
-
-  //   if (text === undefined) {
-  //     return;
-  //   }
-  //   const rectangle = new PIXI.Graphics();
-  //   rectangle.beginFill(0x05121c);
-
-  //   const cornerRadius = (gap * 10) / 60;
-  //   rectangle.drawRoundedRect(
-  //     x + 2 - gap / 2,
-  //     y - gap / 4,
-  //     gap - 4,
-  //     gap / 2,
-  //     cornerRadius
-  //   );
-
-  //   rectangle.endFill();
-
-  //   const pixiText = new PIXI.Text(text, {
-  //     fontSize: (gap * 12) / 60 + "px",
-  //     fill: "#ffffff",
-  //   });
-  //   pixiText.x = x - gap / 2 + pixiText.width / 2;
-  //   pixiText.y = y - gap / 4 + gap / 4 - pixiText.height / 2;
-  //   app.stage.addChild(rectangle);
-  //   app.stage.addChild(pixiText);
-  // }
-
   function Basket(x, y, gap, text) {
     const options = {
       isStatic: true,
@@ -165,7 +133,6 @@ export function Plinko(element) {
       return;
     }
 
-    // console.log(Math.pow(5.6, 2).toFixed(2));
     let color = 0x05121c;
     switch (parseFloat(text)) {
       case 10:
@@ -243,6 +210,10 @@ export function Plinko(element) {
 
     app.stage.addChild(rectangle);
     app.stage.addChild(pixiText);
+    metter.metter = {
+      text: text,
+      color: color,
+    };
   }
 
   function collision(event) {
@@ -252,40 +223,94 @@ export function Plinko(element) {
       const bodyB = pairs[i].bodyB;
       if (bodyA.label === "point") new Splash(bodyA);
       if (bodyB.label === "point") new Splash(bodyB);
-      if (bodyA.label === "particle" && bodyB.label === "point")
+      if (bodyA.label === "particle" && bodyB.label === "point") {
         Road(bodyA, bodyB);
-      if (bodyB.label === "particle" && bodyA.label === "point")
+      }
+      if (bodyB.label === "particle" && bodyA.label === "point") {
         Road(bodyB, bodyA);
+      }
       if (bodyA.label === "basket" && bodyB.label === "particle") {
         RemoveParticle(bodyB);
         new BucketSplash(bodyA);
+        updateScore(bodyA);
       }
       if (bodyB.label === "basket" && bodyA.label === "particle") {
         RemoveParticle(bodyA);
         new BucketSplash(bodyB);
+        updateScore(bodyB);
       }
     }
   }
 
   function Road(body, point) {
+    body.frictionAir = 0;
     Body.setStatic(body, true);
-    if (!body.road.id.includes(point.id)) {
-      const road = body.road.list.shift();
-      Body.setPosition(body, {
-        x: point.position.x,
-        y: point.position.y - point.circleRadius * 2,
-      });
+    // if (!body.road.id.includes(point.id)) {
+    const road = body.road.list.shift();
+    if (road === 0) {
       setTimeout(() => {
         Body.setVelocity(body, {
-          x: road === 0 ? -1 : 1,
+          x: -3,
           y: -3,
         });
-      }, 50);
-      body.road.id.push(point.id);
+      }, 0);
+    } else if (road === 1) {
+      setTimeout(() => {
+        Body.setVelocity(body, {
+          x: 3,
+          y: -3,
+        });
+      }, 0);
+    } else if (road === 2) {
+      setTimeout(() => {
+        Body.setVelocity(body, {
+          x: 1,
+          y: -3,
+        });
+      }, 0);
+    } else if (road === 3) {
+      setTimeout(() => {
+        Body.setVelocity(body, {
+          x: -1,
+          y: -3,
+        });
+      }, 0);
     }
+    console.log(body.frictionAir);
+    // else {
+    //   Body.setPosition(body, {
+    //     x: point.position.x,
+    //     y: point.position.y - point.circleRadius * 2,
+    //   });
+    //   setTimeout(() => {
+    //     Body.setVelocity(body, {
+    //       x: 0,
+    //       y: -1,
+    //     });
+    //   }, 0);
+    // }
+    body.road.id.push(point.id);
+    // }
     Body.setStatic(body, false);
   }
 
+  function updateScore(body) {
+    const text = body.metter.text;
+    score += text * 100;
+    scoreArray.push(text);
+
+    const startIndex = Math.max(scoreArray.length - 4, 0);
+    const lastFourScores = scoreArray.slice(startIndex);
+
+    for (let i = 0; i < lastFourScores.length; i++) {
+      Basket(
+        canvasWidth - 100,
+        50 + (30 * i) / scale,
+        50 / scale,
+        lastFourScores[i]
+      );
+    }
+  }
   function Splash(body) {
     const graphics = new PIXI.Graphics();
 
@@ -350,18 +375,19 @@ export function Plinko(element) {
         localStorage.getItem("style") &&
         localStorage.getItem("style") == "light"
       ) {
-        graphics.lineStyle(r, 0xb2de27, opacity);
+        graphics.lineStyle(r, body.metter.color, opacity);
       } else {
-        graphics.lineStyle(r, 0xffffff, opacity);
+        graphics.lineStyle(r, body.metter.color, opacity);
       }
       graphics.beginFill(0, 0);
 
       // Draw the rectangle
-      const rectWidth = 50;
-      const rectHeight = 30;
+      const rectWidth = 60;
+      const rectHeight = 40;
       const rectX = body.position.x - rectWidth / 2;
       const rectY = body.position.y - rectHeight / 2; // Remove y position adjustment
-      graphics.drawRect(rectX, rectY, rectWidth, rectHeight);
+      graphics.drawRoundedRect(rectX, rectY, rectWidth, rectHeight, 10);
+      // graphics.drawRect(rectX, rectY, rectWidth, rectHeight);
 
       graphics.endFill();
 
@@ -382,11 +408,12 @@ export function Plinko(element) {
   }
 
   function map(rows) {
+    rowNum = rows.length;
     app.stage.position._x = 0;
     let col = 3;
     const increment = 1;
     const radius = PointRadius;
-    const gap = radius * 2 * MapGap;
+    const gap = ParticleRadius * 2 * MapGap;
 
     for (let i = 1; i <= rows.length; i++) {
       const space = (canvasWidth - gap * col) / 2;

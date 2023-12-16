@@ -61,7 +61,7 @@
 </style>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { Plinko } from "./Plinko";
 
 const amount = ref("100.0000");
@@ -92,22 +92,32 @@ const onRowChange = () => {
       basket = [5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6];
       break;
     case "13":
-      basket = [5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6];
+      basket = [
+        5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6,
+      ];
       break;
     case "14":
-      basket = [7.2, 5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6, 7.2];
+      basket = [
+        7.2, 5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6, 7.2,
+      ];
       break;
     case "15":
-      basket = [7.2, 5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6, 7.2];
+      basket = [
+        7.2, 5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6,
+        7.2,
+      ];
       break;
     case "16":
-      basket = [10, 7.2, 5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6, 7.2, 10];
+      basket = [
+        10, 7.2, 5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6,
+        7.2, 10,
+      ];
       break;
     default:
       basket = [5.6, 2.1, 1, 0.7, 0.3, 0.7, 1, 2.1, 5.6];
   }
   onRiskChange();
-}
+};
 
 const onRiskChange = () => {
   plinko.clear();
@@ -123,9 +133,16 @@ const onRiskChange = () => {
 const bet = () => {
   const randomArray = [];
   for (let i = 0; i < basket_risk.value.length; i++) {
-    const randomNumber = Math.floor(Math.random() * 2);
-    randomArray.push(randomNumber);
+    const randomNumber = Math.floor(Math.random() * 3); 
+    const value = randomNumber === 0 ? 0 : randomNumber === 1 ? 1 : 1;
+    if(value === 0 || value === 1) {
+      randomArray.push(value);
+      randomArray.push(value + 2);
+    } else {
+      randomArray.push(value);
+    }
   }
   plinko.add(randomArray);
+  console.log(randomArray);
 };
 </script>
