@@ -68,8 +68,7 @@ const amount = ref("100.0000");
 const risk = ref("Low");
 const rows = ref("8");
 
-// const basket = [10, 5.6, 2.1, 1.1, 1, 0.5, 1, 1.1, 2.1, 5.6, 10];
-let basket = [5.6, 2.1, 1, 0.7, 0.3, 0.7, 1, 2.1, 5.6];
+let basket = [5.60, 2.10, 1.00, 0.80, 0.50, 0.80, 1.00, 2.10, 5.60];
 const basket_risk = ref(basket);
 const plinko = Plinko(document.body.querySelector("#canvas"));
 plinko.map(basket_risk.value);
@@ -77,44 +76,44 @@ plinko.map(basket_risk.value);
 const onRowChange = () => {
   switch (rows.value) {
     case "8":
-      basket = [5.6, 2.1, 1, 0.7, 0.3, 0.7, 1, 2.1, 5.6];
+      basket = [5.60, 2.10, 1.00, 0.80, 0.50, 0.80, 1.00, 2.10, 5.60];
       break;
     case "9":
-      basket = [5.6, 2.1, 1, 0.7, 0.3, 0.3, 0.7, 1, 2.1, 5.6];
+      basket = [5.6, 2.1, 1, 0.8, 0.5, 0.5, 0.8, 1, 2.1, 5.6];
       break;
     case "10":
-      basket = [5.6, 2.1, 1, 0.7, 0.5, 0.3, 0.5, 0.7, 1, 2.1, 5.6];
+      basket = [5.6, 2.1, 1.2, 1, 0.8, 0.5, 0.8, 1, 1.2, 2.1, 5.6];
       break;
     case "11":
-      basket = [5.6, 2.1, 1, 0.7, 0.5, 0.3, 0.3, 0.5, 0.7, 1, 2.1, 5.6];
+      basket = [5.6, 2.1, 1.2, 1, 0.8, 0.5, 0.5, 0.8, 1, 1.2, 2.1, 5.6];
       break;
     case "12":
-      basket = [5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6];
+      basket = [5.6, 3.6, 2.1, 1.2, 1, 0.8, 0.5, 0.8, 1, 1.2, 2.1, 3.6, 5.6];
       break;
     case "13":
       basket = [
-        5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6,
+        5.6, 3.6, 2.1, 1.2, 1, 0.8, 0.5, 0.5, 0.8, 1, 1.2, 2.1, 3.6, 5.6,
       ];
       break;
     case "14":
       basket = [
-        7.2, 5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6, 7.2,
+        7.2, 5.6, 3.6, 2.1, 1.2, 1, 0.8, 0.5, 0.8, 1, 1.2, 2.1, 3.6, 5.6, 7.2,
       ];
       break;
     case "15":
       basket = [
-        7.2, 5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6,
+        7.2, 5.6, 3.6, 2.1, 1.2, 1, 0.8, 0.5, 0.5, 0.8, 1, 1.2, 2.1, 3.6, 5.6,
         7.2,
       ];
       break;
     case "16":
       basket = [
-        10, 7.2, 5.6, 2.1, 1.2, 1, 0.7, 0.5, 0.3, 0.5, 0.7, 1, 1.2, 2.1, 5.6,
+        10, 7.2, 5.6, 3.6, 2.1, 1.2, 1, 0.8, 0.5, 0.8, 1, 1.2, 2.1, 3.6, 5.6,
         7.2, 10,
       ];
       break;
     default:
-      basket = [5.6, 2.1, 1, 0.7, 0.3, 0.7, 1, 2.1, 5.6];
+      basket = [5.60, 2.10, 1.00, 0.80, 0.50, 0.80, 1.00, 2.10, 5.60];
   }
   onRiskChange();
 };
@@ -135,7 +134,6 @@ const bet = () => {
   for (let i = 0; i < basket_risk.value.length; i++) {
     const randomNumber = Math.floor(Math.random() * 3); 
     const value = randomNumber === 0 ? 0 : randomNumber === 1 ? 1 : 5;
-    // const value = randomNumber === 0 ? 0 : 1;
     if(value === 0 || value === 1) {
       randomArray.push(value);
       randomArray.push(value + 2);
@@ -144,6 +142,5 @@ const bet = () => {
     }
   }
   plinko.add(randomArray);
-  console.log(randomArray);
 };
 </script>

@@ -50,7 +50,6 @@ export function Plinko(element) {
   const MapGap = 3;
   let score = 0;
   let scoreArray = [];
-  let rowNum = 8;
 
   function Point(x, y, r) {
     const options = {
@@ -150,6 +149,11 @@ export function Plinko(element) {
       case parseFloat(Math.pow(5.6, 3).toFixed(2)):
         color = 0xea842c;
         break;
+      case 3.6:
+      case parseFloat(Math.pow(3.6, 2).toFixed(2)):
+      case parseFloat(Math.pow(3.6, 3).toFixed(2)):
+        color = 0xfaa425;
+        break;
       case 2.1:
       case parseFloat(Math.pow(2.1, 2).toFixed(2)):
       case parseFloat(Math.pow(2.1, 3).toFixed(2)):
@@ -163,19 +167,14 @@ export function Plinko(element) {
       case 1:
         color = 0xb2d023;
         break;
-      case 0.7:
-      case parseFloat(Math.pow(0.7, 2).toFixed(2)):
-      case parseFloat(Math.pow(0.7, 3).toFixed(2)):
-        color = 0x8ace22;
+      case 0.8:
+      case parseFloat(Math.pow(0.8, 2).toFixed(2)):
+      case parseFloat(Math.pow(0.8, 3).toFixed(2)):
+        color = 0x5dc421;
         break;
       case 0.5:
       case parseFloat(Math.pow(0.5, 2).toFixed(2)):
       case parseFloat(Math.pow(0.5, 3).toFixed(2)):
-        color = 0x5dc421;
-        break;
-      case 0.3:
-      case parseFloat(Math.pow(0.3, 2).toFixed(2)):
-      case parseFloat(Math.pow(0.3, 3).toFixed(2)):
         color = 0x38c121;
         break;
       default:
@@ -204,7 +203,7 @@ export function Plinko(element) {
       fill: "#ffffff",
     });
 
-    pixiText.anchor.set(0.5); // Center the text within the rectangle
+    pixiText.anchor.set(0.5);
     pixiText.x = x;
     pixiText.y = y;
 
@@ -315,6 +314,7 @@ export function Plinko(element) {
       );
     }
   }
+
   function Splash(body) {
     const graphics = new PIXI.Graphics();
 
@@ -385,13 +385,11 @@ export function Plinko(element) {
       }
       graphics.beginFill(0, 0);
 
-      // Draw the rectangle
       const rectWidth = 60;
       const rectHeight = 40;
       const rectX = body.position.x - rectWidth / 2;
-      const rectY = body.position.y - rectHeight / 2; // Remove y position adjustment
+      const rectY = body.position.y - rectHeight / 2;
       graphics.drawRoundedRect(rectX, rectY, rectWidth, rectHeight, 10);
-      // graphics.drawRect(rectX, rectY, rectWidth, rectHeight);
 
       graphics.endFill();
 
@@ -412,7 +410,6 @@ export function Plinko(element) {
   }
 
   function map(rows) {
-    rowNum = rows.length;
     app.stage.position._x = 0;
     let col = 3;
     const increment = 1;
