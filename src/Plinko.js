@@ -14,7 +14,7 @@ export function Plinko(element) {
   const canvasHeight = element.offsetHeight;
 
   const engine = Engine.create();
-  engine.timing.timeScale = 1;
+  engine.timing.timeScale = 0.9;
 
   const sceneObjects = [];
   const splashObjects = [];
@@ -243,54 +243,58 @@ export function Plinko(element) {
   }
 
   function Road(body, point) {
-    body.frictionAir = 0;
     Body.setStatic(body, true);
-    // if (!body.road.id.includes(point.id)) {
-    const road = body.road.list.shift();
-    if (road === 0) {
+    Body.setPosition(body, {
+      x: point.position.x,
+      y: point.position.y - point.circleRadius * 2,
+    });
+    if (!body.road.id.includes(point.id)) {
+      const road = body.road.list.shift();
+      if (road === 0) {
+        setTimeout(() => {
+          Body.setVelocity(body, {
+            x: -3.2,
+            y: -3,
+          });
+        }, 0);
+      } else if (road === 1) {
+        setTimeout(() => {
+          Body.setVelocity(body, {
+            x: 3.2,
+            y: -3,
+          });
+        }, 0);
+      } else if (road === 2) {
+        setTimeout(() => {
+          Body.setVelocity(body, {
+            x: 1,
+            y: -3,
+          });
+        }, 0);
+      } else if (road === 3) {
+        setTimeout(() => {
+          Body.setVelocity(body, {
+            x: -1,
+            y: -3,
+          });
+        }, 0);
+      } else {
+        setTimeout(() => {
+          Body.setVelocity(body, {
+            x: 0,
+            y: -3,
+          });
+        }, 0);
+      }
+      body.road.id.push(point.id);
+    } else {
       setTimeout(() => {
         Body.setVelocity(body, {
-          x: -3,
-          y: -3,
-        });
-      }, 0);
-    } else if (road === 1) {
-      setTimeout(() => {
-        Body.setVelocity(body, {
-          x: 3,
-          y: -3,
-        });
-      }, 0);
-    } else if (road === 2) {
-      setTimeout(() => {
-        Body.setVelocity(body, {
-          x: 1,
-          y: -3,
-        });
-      }, 0);
-    } else if (road === 3) {
-      setTimeout(() => {
-        Body.setVelocity(body, {
-          x: -1,
+          x: Math.random() < 0.5 ? -1 : 1,
           y: -3,
         });
       }, 0);
     }
-    console.log(body.frictionAir);
-    // else {
-    //   Body.setPosition(body, {
-    //     x: point.position.x,
-    //     y: point.position.y - point.circleRadius * 2,
-    //   });
-    //   setTimeout(() => {
-    //     Body.setVelocity(body, {
-    //       x: 0,
-    //       y: -1,
-    //     });
-    //   }, 0);
-    // }
-    body.road.id.push(point.id);
-    // }
     Body.setStatic(body, false);
   }
 
@@ -413,7 +417,7 @@ export function Plinko(element) {
     let col = 3;
     const increment = 1;
     const radius = PointRadius;
-    const gap = ParticleRadius * 2 * MapGap;
+    const gap = PointRadius * 2 * MapGap;
 
     for (let i = 1; i <= rows.length; i++) {
       const space = (canvasWidth - gap * col) / 2;

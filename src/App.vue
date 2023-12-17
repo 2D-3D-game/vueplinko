@@ -134,7 +134,8 @@ const bet = () => {
   const randomArray = [];
   for (let i = 0; i < basket_risk.value.length; i++) {
     const randomNumber = Math.floor(Math.random() * 3); 
-    const value = randomNumber === 0 ? 0 : randomNumber === 1 ? 1 : 1;
+    const value = randomNumber === 0 ? 0 : randomNumber === 1 ? 1 : 5;
+    // const value = randomNumber === 0 ? 0 : 1;
     if(value === 0 || value === 1) {
       randomArray.push(value);
       randomArray.push(value + 2);
