@@ -525,7 +525,7 @@ export function Plinko(element) {
       }
       if (flag === 0) {
         // last = Math.random() > 0.5 ? 1 : 3;
-        last = Math.random() > 0.4 ? 1 : Math.random() > 0.7 ? 6 : 3;
+        last = Math.random() > 0.2 ? 1 : Math.random() > 0.5 ? 3 : 6;
         if (last === 6) {
           selfPos = 3;
         }
@@ -533,7 +533,7 @@ export function Plinko(element) {
       }
       if (flag === 1) {
         // last = Math.random() > 0.5 ? 0 : 2;
-        last = Math.random() > 0.4 ? 0 : Math.random() > 0.7 ? 6 : 2;
+        last = Math.random() > 0.2 ? 0 : Math.random() > 0.5 ? 2 : 6;
         if (last === 6) {
           selfPos = 2;
         }
