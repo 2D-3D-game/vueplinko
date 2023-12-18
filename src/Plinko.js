@@ -48,10 +48,11 @@ export function Plinko(element) {
   const ParticleRadius = 10;
   const PointRadius = 10;
   const MapGap = 3;
-  let score = 0;
+  let score = 10000;
   let scoreArray = [];
+  const Points = [];
 
-  function Point(x, y, r) {
+  function Point(x, y, r, color = 0xd3d3d3) {
     const options = {
       isStatic: true,
     };
@@ -61,11 +62,13 @@ export function Plinko(element) {
     Composite.add(engine.world, metter);
 
     const graphics = new PIXI.Graphics();
-    graphics.beginFill(0xd3d3d3);
+    graphics.beginFill(color);
     graphics.drawCircle(x, y, r);
     graphics.zIndex = 2;
     graphics.endFill();
     app.stage.addChild(graphics);
+    let Point = [x, y, r];
+    Points.push(Point);
   }
 
   function Particle(x, y, r, road) {
@@ -95,14 +98,13 @@ export function Plinko(element) {
       "0xfbc093",
       "0xefcfe3",
     ];
-    const color = colors[Math.ceil(Math.random() * colors.length - 1)];
 
+    const color = colors[Math.ceil(Math.random() * colors.length - 1)];
     const graphics = new PIXI.Graphics();
     graphics.beginFill(color);
     graphics.drawCircle(0, 0, r);
     graphics.endFill();
     app.stage.addChild(graphics);
-
     sceneObjects.push({
       body: metter,
       sprite: graphics,
@@ -135,46 +137,46 @@ export function Plinko(element) {
     let color = 0x05121c;
     switch (parseFloat(text)) {
       case 10:
-      case 100:
-      case 1000:
+      case parseFloat(Math.pow(10, 1.4).toFixed(2)):
+      case parseFloat(Math.pow(10, 2).toFixed(2)):
         color = 0xfb3434;
         break;
       case 7.2:
+      case parseFloat(Math.pow(7.2, 1.4).toFixed(2)):
       case parseFloat(Math.pow(7.2, 2).toFixed(2)):
-      case parseFloat(Math.pow(7.2, 3).toFixed(2)):
         color = 0xef6060;
         break;
       case 5.6:
+      case parseFloat(Math.pow(5.6, 1.4).toFixed(2)):
       case parseFloat(Math.pow(5.6, 2).toFixed(2)):
-      case parseFloat(Math.pow(5.6, 3).toFixed(2)):
         color = 0xea842c;
         break;
       case 3.6:
+      case parseFloat(Math.pow(3.6, 1.4).toFixed(2)):
       case parseFloat(Math.pow(3.6, 2).toFixed(2)):
-      case parseFloat(Math.pow(3.6, 3).toFixed(2)):
         color = 0xfaa425;
         break;
       case 2.1:
+      case parseFloat(Math.pow(2.1, 1.4).toFixed(2)):
       case parseFloat(Math.pow(2.1, 2).toFixed(2)):
-      case parseFloat(Math.pow(2.1, 3).toFixed(2)):
         color = 0xd9a425;
         break;
       case 1.2:
+      case parseFloat(Math.pow(1.2, 1.4).toFixed(2)):
       case parseFloat(Math.pow(1.2, 2).toFixed(2)):
-      case parseFloat(Math.pow(1.2, 3).toFixed(2)):
         color = 0xdad323;
         break;
       case 1:
         color = 0xb2d023;
         break;
       case 0.8:
+      case parseFloat(Math.pow(0.8, 1.4).toFixed(2)):
       case parseFloat(Math.pow(0.8, 2).toFixed(2)):
-      case parseFloat(Math.pow(0.8, 3).toFixed(2)):
         color = 0x5dc421;
         break;
       case 0.5:
+      case parseFloat(Math.pow(0.5, 1.4).toFixed(2)):
       case parseFloat(Math.pow(0.5, 2).toFixed(2)):
-      case parseFloat(Math.pow(0.5, 3).toFixed(2)):
         color = 0x38c121;
         break;
       default:
@@ -266,11 +268,25 @@ export function Plinko(element) {
       } else if (road === 2) {
         setTimeout(() => {
           Body.setVelocity(body, {
-            x: 1,
+            x: -1,
             y: -3,
           });
         }, 0);
       } else if (road === 3) {
+        setTimeout(() => {
+          Body.setVelocity(body, {
+            x: 1,
+            y: -3,
+          });
+        }, 0);
+      } else if (road === 4) {
+        setTimeout(() => {
+          Body.setVelocity(body, {
+            x: 1,
+            y: -3,
+          });
+        }, 0);
+      } else if (road === 5) {
         setTimeout(() => {
           Body.setVelocity(body, {
             x: -1,
@@ -299,7 +315,7 @@ export function Plinko(element) {
 
   function updateScore(body) {
     const text = body.metter.text;
-    score += text * 100;
+    score += (text - 1) * 100;
     scoreArray.push(text);
 
     const startIndex = Math.max(scoreArray.length - 4, 0);
@@ -409,18 +425,34 @@ export function Plinko(element) {
     }, 400);
   }
 
+  function getIndexFromCoordinate(row, col) {
+    return (row * (row - 1)) / 2 + (row - 1) * 2 + col;
+  }
+
   function map(rows) {
     app.stage.position._x = 0;
     let col = 3;
     const increment = 1;
     const radius = PointRadius;
     const gap = PointRadius * 2 * MapGap;
+    // let resultRoute = searchRoute(8, 3);
 
     for (let i = 1; i <= rows.length; i++) {
       const space = (canvasWidth - gap * col) / 2;
       for (let j = 1; j <= col; j++) {
         if (i < rows.length) {
+          // const index = getIndexFromCoordinate(i, j);
+          // console.log("getIndex", i, j, index);
+          // if (resultRoute.indexOf(index) >= 0) {
+          // new Point(
+          //   space + j * gap - radius * MapGap,
+          //   i * gap,
+          //   radius,
+          //   0xff0000
+          // );
+          // } else {
           new Point(space + j * gap - radius * MapGap, i * gap, radius);
+          // }
         } else {
           if (j > 1) {
             new Basket(
@@ -439,13 +471,111 @@ export function Plinko(element) {
     app.stage.position._x += ((1 - scale) * canvasWidth) / 2;
   }
 
-  function add(road) {
-    new Particle(canvasWidth / 2, 0, ParticleRadius, road);
+  function add(rowNum, target) {
+    let [routes, dirRoute] = searchRoute(rowNum, target);
+    routes.reverse();
+    // dirRoute.reverse();
+    // console.log(dirRoute);
+
+    // let col = 3;
+    // const increment = 1;
+    // const radius = PointRadius;
+    // const gap = PointRadius * 2 * MapGap;
+    // for (let i = 1; i <= rowNum; i++) {
+    //   const space = (canvasWidth - gap * col) / 2;
+    //   for (let j = 1; j <= col; j++) {
+    //     if (i <= rowNum) {
+    //       const index = getIndexFromCoordinate(i, j);
+    //       // console.log("getIndex", i, j, index);
+    //       if (routes.indexOf(index) >= 0) {
+    //         new Point(
+    //           space + j * gap - radius * MapGap,
+    //           i * gap,
+    //           radius,
+    //           0xff0000
+    //         );
+    //       } else {
+    //         new Point(space + j * gap - radius * MapGap, i * gap, radius);
+    //       }
+    //     }
+    //   }
+    //   col += increment;
+    // }
+    new Particle(canvasWidth / 2, 0, ParticleRadius, dirRoute);
   }
 
   function clear() {
     Composite.clear(engine.world);
     app.stage.removeChildren();
+  }
+
+  let last = 0;
+  function searchRoute(rowNum, target) {
+    // console.log(1);
+    let selfPos = 0;
+    const result = [];
+    const dirResult = [];
+    let gapLeft = target - 1;
+    let gapRight = rowNum + 1 - target;
+    let currentIndex = getIndexFromCoordinate(rowNum, target);
+    for (let i = rowNum; i > 0; i--) {
+      let flag = gapLeft > 0 ? (Math.random() > 0.5 ? 0 : 1) : 1;
+      if (gapRight === 0) {
+        flag = 0;
+      }
+      if (flag === 0) {
+        // last = Math.random() > 0.5 ? 1 : 3;
+        last = Math.random() > 0.4 ? 1 : Math.random() > 0.7 ? 6 : 3;
+        if (last === 6) {
+          selfPos = 3;
+        }
+        gapLeft--;
+      }
+      if (flag === 1) {
+        // last = Math.random() > 0.5 ? 0 : 2;
+        last = Math.random() > 0.4 ? 0 : Math.random() > 0.7 ? 6 : 2;
+        if (last === 6) {
+          selfPos = 2;
+        }
+        gapRight--;
+      }
+      currentIndex += flag;
+      result.push(currentIndex);
+      if (last === 1 || last === 0) {
+        dirResult.push(last);
+        dirResult.push(last + 4);
+      } else if (last === 6) {
+        dirResult.push(last);
+        dirResult.push(selfPos);
+      } else {
+        dirResult.push(last);
+      }
+      currentIndex -= i + 2;
+    }
+    // console.log(dirResult);
+    return [result, dirResult];
+
+    /*
+    if (rowNum > 0) {
+      const lastNum = ((rowNum + 2) * (rowNum + 3)) / 2 - 3;
+      const ParticleNum = rowNum + 2;
+      const firstNum = lastNum - ParticleNum + 1;
+      let left = firstNum + target - 2;
+      let prevTarget;
+      if (left < firstNum) {
+        prevTarget = left + 1;
+      } else if (left + 1 > lastNum) {
+        prevTarget = left;
+      } else {
+        prevTarget = Math.random() > 0.5 ? left + 1 : left;
+      }
+      routes.push(prevTarget);
+      // routes.push(prevTarget === left ? 1 : 0);
+      searchRoute(rowNum - 1, prevTarget - firstNum + 1, routes);
+    } else {
+      return routes;
+    }
+    */
   }
 
   return {
