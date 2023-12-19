@@ -252,6 +252,7 @@ const activeButton = (buttonId) => {
 };
 
 onMounted(() => {
-  percentage = changePercent([1, 8, 28, 56, 70, 56, 28, 8, 1]);
+  percentage = changePercent([0, 0, 28, 56, 70, 56, 28, 0, 0]);
+  console.log(percentage);
 });
 </script>

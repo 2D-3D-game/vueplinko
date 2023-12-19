@@ -14,7 +14,7 @@ export function Plinko(element) {
   const canvasHeight = element.offsetHeight;
 
   const engine = Engine.create();
-  engine.timing.timeScale = 0.9;
+  engine.timing.timeScale = 0.8;
 
   const sceneObjects = [];
   const splashObjects = [];
@@ -245,27 +245,41 @@ export function Plinko(element) {
 
   function Road(body, point) {
     Body.setStatic(body, true);
-    Body.setPosition(body, {
-      x: point.position.x,
-      y: point.position.y - point.circleRadius * 2,
-    });
+    // Body.setPosition(body, {
+    //   x: point.position.x,
+    //   y: point.position.y - point.circleRadius * 2,
+    // });
     if (!body.road.id.includes(point.id)) {
       const road = body.road.list.shift();
       if (road === 0) {
+        Body.setPosition(body, {
+          x: point.position.x,
+          y: point.position.y - point.circleRadius * 2,
+        });
+        // Body.applyForce(body, body.position, { x: -1000, y: -5 });
         setTimeout(() => {
           Body.setVelocity(body, {
             x: -3.2,
-            y: -3,
+            y: -1,
           });
         }, 0);
       } else if (road === 1) {
+        Body.setPosition(body, {
+          x: point.position.x,
+          y: point.position.y - point.circleRadius * 2,
+        });
         setTimeout(() => {
           Body.setVelocity(body, {
             x: 3.2,
-            y: -3,
+            y: -1,
           });
         }, 0);
+        // Body.applyForce(body, body.position, { x: 1000, y: -5 });
       } else if (road === 2) {
+        Body.setPosition(body, {
+          x: point.position.x,
+          y: point.position.y - point.circleRadius * 2,
+        });
         setTimeout(() => {
           Body.setVelocity(body, {
             x: -1,
@@ -273,6 +287,10 @@ export function Plinko(element) {
           });
         }, 0);
       } else if (road === 3) {
+        Body.setPosition(body, {
+          x: point.position.x,
+          y: point.position.y - point.circleRadius * 2,
+        });
         setTimeout(() => {
           Body.setVelocity(body, {
             x: 1,
@@ -280,20 +298,32 @@ export function Plinko(element) {
           });
         }, 0);
       } else if (road === 4) {
+        // Body.setPosition(body, {
+        //   x: point.position.x + point.circleRadius,
+        //   y: point.position.y - point.circleRadius,
+        // });
         setTimeout(() => {
           Body.setVelocity(body, {
-            x: 1,
-            y: -3,
+            x: 0.7,
+            y: 0,
           });
         }, 0);
       } else if (road === 5) {
+        // Body.setPosition(body, {
+        //   x: point.position.x - point.circleRadius,
+        //   y: point.position.y - point.circleRadius,
+        // });
         setTimeout(() => {
           Body.setVelocity(body, {
-            x: -1,
-            y: -3,
+            x: -0.7,
+            y: 0,
           });
         }, 0);
       } else {
+        Body.setPosition(body, {
+          x: point.position.x,
+          y: point.position.y - point.circleRadius * 2,
+        });
         setTimeout(() => {
           Body.setVelocity(body, {
             x: 0,
@@ -501,6 +531,7 @@ export function Plinko(element) {
     //   }
     //   col += increment;
     // }
+    console.log(dirRoute);
     new Particle(canvasWidth / 2, 0, ParticleRadius, dirRoute);
   }
 
@@ -511,7 +542,6 @@ export function Plinko(element) {
 
   let last = 0;
   function searchRoute(rowNum, target) {
-    // console.log(1);
     let selfPos = 0;
     const result = [];
     const dirResult = [];
@@ -525,7 +555,7 @@ export function Plinko(element) {
       }
       if (flag === 0) {
         // last = Math.random() > 0.5 ? 1 : 3;
-        last = Math.random() > 0.2 ? 1 : Math.random() > 0.5 ? 3 : 6;
+        last = Math.random() < 0.2 ? 6 : Math.random() < 0.4 ? 1 : 3;
         if (last === 6) {
           selfPos = 3;
         }
@@ -533,7 +563,7 @@ export function Plinko(element) {
       }
       if (flag === 1) {
         // last = Math.random() > 0.5 ? 0 : 2;
-        last = Math.random() > 0.2 ? 0 : Math.random() > 0.5 ? 2 : 6;
+        last = Math.random() < 0.2 ? 6 : Math.random() < 0.4 ? 0 : 2;
         if (last === 6) {
           selfPos = 2;
         }
