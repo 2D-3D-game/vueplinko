@@ -51,6 +51,9 @@ export function Plinko(element) {
   let score = 10000;
   let scoreArray = [];
   const Points = [];
+  let PosX = [];
+  let PosY = [];
+  let collisionNum = 0;
 
   function Point(x, y, r, color = 0xd3d3d3) {
     const options = {
@@ -251,29 +254,36 @@ export function Plinko(element) {
     // });
     if (!body.road.id.includes(point.id)) {
       const road = body.road.list.shift();
+      collisionNum++;
+      // Body.setPosition(body, {
+      //   x: point.position.x,
+      //   y: point.position.y - point.circleRadius * PosY[collisionNum],
+      // });
       if (road === 0) {
-        Body.setPosition(body, {
-          x: point.position.x,
-          y: point.position.y - point.circleRadius * 2,
-        });
+        // Body.setPosition(body, {
+        //   x: point.position.x + Pos[collisionNum],
+        //   y: point.position.y - point.circleRadius * 2,
+        // });
         // Body.applyForce(body, body.position, { x: -1000, y: -5 });
         setTimeout(() => {
           Body.setVelocity(body, {
             x: -3.2,
-            y: -1,
+            y: -1.5 + Math.random(),
           });
         }, 0);
+        engine.timing.timeScale = 0.6;
       } else if (road === 1) {
-        Body.setPosition(body, {
-          x: point.position.x,
-          y: point.position.y - point.circleRadius * 2,
-        });
+        // Body.setPosition(body, {
+        //   x: point.position.x,
+        //   y: point.position.y - point.circleRadius * 2,
+        // });
         setTimeout(() => {
           Body.setVelocity(body, {
             x: 3.2,
-            y: -1,
+            y: -1.5 + Math.random(),
           });
         }, 0);
+        engine.timing.timeScale = 0.6;
         // Body.applyForce(body, body.position, { x: 1000, y: -5 });
       } else if (road === 2) {
         Body.setPosition(body, {
@@ -286,6 +296,7 @@ export function Plinko(element) {
             y: -3,
           });
         }, 0);
+        engine.timing.timeScale = 0.8;
       } else if (road === 3) {
         Body.setPosition(body, {
           x: point.position.x,
@@ -297,6 +308,7 @@ export function Plinko(element) {
             y: -3,
           });
         }, 0);
+        engine.timing.timeScale = 0.8;
       } else if (road === 4) {
         // Body.setPosition(body, {
         //   x: point.position.x + point.circleRadius,
@@ -308,6 +320,7 @@ export function Plinko(element) {
             y: 0,
           });
         }, 0);
+        engine.timing.timeScale = 0.7;
       } else if (road === 5) {
         // Body.setPosition(body, {
         //   x: point.position.x - point.circleRadius,
@@ -319,6 +332,7 @@ export function Plinko(element) {
             y: 0,
           });
         }, 0);
+        engine.timing.timeScale = 0.7;
       } else {
         Body.setPosition(body, {
           x: point.position.x,
@@ -330,6 +344,7 @@ export function Plinko(element) {
             y: -3,
           });
         }, 0);
+        engine.timing.timeScale = 0.6;
       }
       body.road.id.push(point.id);
     } else {
@@ -502,8 +517,6 @@ export function Plinko(element) {
   }
 
   function add(rowNum, target) {
-    let [routes, dirRoute] = searchRoute(rowNum, target);
-    routes.reverse();
     // dirRoute.reverse();
     // console.log(dirRoute);
 
@@ -531,7 +544,9 @@ export function Plinko(element) {
     //   }
     //   col += increment;
     // }
-    console.log(dirRoute);
+    let [routes, dirRoute] = searchRoute(rowNum, target);
+    // routes.reverse();
+    setPosAndVel(dirRoute);
     new Particle(canvasWidth / 2, 0, ParticleRadius, dirRoute);
   }
 
@@ -606,6 +621,36 @@ export function Plinko(element) {
       return routes;
     }
     */
+  }
+
+  function setPosAndVel(dir) {
+    for (let i = 0; i < dir.length; i++) {
+      if (dir[i] === 0) {
+        PosX.push(Math.random());
+        PosY.push(1);
+      } else if (dir[i] === 1) {
+        PosX.push(-Math.random());
+        PosY.push(1);
+      } else if (dir[i] === 2) {
+        PosX.push(-Math.random());
+        PosY.push(2);
+      } else if (dir[i] === 3) {
+        PosX.push(Math.random());
+        PosY.push(2);
+      } else if (dir[i] === 4) {
+        PosX.push(-Math.random());
+        PosY.push(2);
+      } else if (dir[i] === 5) {
+        PosX.push(Math.random());
+        PosY.push(2);
+      } else if (dir[i] === 6) {
+        if (i + 1 < dir.length && dir[i + 1] === 2) PosX.push(-Math.random());
+        PosX.push(Math.random());
+        PosY.push(2);
+      }
+    }
+    // console.log(dir);
+    // console.log(PosX);
   }
 
   return {
