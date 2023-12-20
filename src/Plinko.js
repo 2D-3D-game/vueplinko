@@ -14,7 +14,7 @@ export function Plinko(element) {
   const canvasHeight = element.offsetHeight;
 
   const engine = Engine.create();
-  engine.timing.timeScale = 0.2;
+  engine.timing.timeScale = 0.8;
 
   const sceneObjects = [];
   const splashObjects = [];
