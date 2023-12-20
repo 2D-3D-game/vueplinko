@@ -14,7 +14,7 @@ export function Plinko(element) {
   const canvasHeight = element.offsetHeight;
 
   const engine = Engine.create();
-  engine.timing.timeScale = 0.8;
+  engine.timing.timeScale = 0.2;
 
   const sceneObjects = [];
   const splashObjects = [];
@@ -45,7 +45,7 @@ export function Plinko(element) {
 
   Events.on(engine, "collisionStart", collision);
 
-  const ParticleRadius = 10;
+  const ParticleRadius = 12;
   const PointRadius = 10;
   const MapGap = 3;
   let score = 10000;
@@ -60,17 +60,17 @@ export function Plinko(element) {
       isStatic: true,
     };
 
-    const metter = Bodies.circle(x, y, r, options);
+    const metter = Bodies.circle(x, y, 8, options);
     metter.label = "point";
     Composite.add(engine.world, metter);
 
     const graphics = new PIXI.Graphics();
     graphics.beginFill(color);
-    graphics.drawCircle(x, y, r);
+    graphics.drawCircle(x, y, 8);
     graphics.zIndex = 2;
     graphics.endFill();
     app.stage.addChild(graphics);
-    let Point = [x, y, r];
+    let Point = [x, y, 8];
     Points.push(Point);
   }
 
@@ -217,7 +217,49 @@ export function Plinko(element) {
     metter.metter = {
       text: text,
       color: color,
+      x: x,
+      y: y,
+      gap: gap,
     };
+
+    let startTime;
+    function update() {
+      const time = Date.now() - startTime;
+      const newY = y + Math.sin(time * 0.01) * 10;
+      rectangle.clear();
+      rectangle.beginFill(color);
+      rectangle.drawRoundedRect(
+        x + 2 - gap / 2,
+        newY - gap / 4,
+        rectangleWidth,
+        rectangleHeight,
+        cornerRadius
+      );
+      rectangle.endFill();
+      pixiText.y = newY;
+      requestAnimationFrame(update);
+    }
+
+    function stopAnimation() {
+      rectangle.clear();
+      rectangle.beginFill(color);
+      rectangle.drawRoundedRect(
+        x,
+        y,
+        rectangleWidth,
+        rectangleHeight,
+        cornerRadius
+      );
+      rectangle.endFill();
+      pixiText.y = y;
+    }
+
+    function startAnimation(duration) {
+      startTime = Date.now();
+      requestAnimationFrame(update);
+      setTimeout(stopAnimation, duration);
+    }
+    // startAnimation(5000);
   }
 
   function collision(event) {
@@ -235,12 +277,13 @@ export function Plinko(element) {
       }
       if (bodyA.label === "basket" && bodyB.label === "particle") {
         RemoveParticle(bodyB);
-        new BucketSplash(bodyA);
+        new BasketSplash(bodyA);
         updateScore(bodyA);
       }
       if (bodyB.label === "basket" && bodyA.label === "particle") {
         RemoveParticle(bodyA);
-        new BucketSplash(bodyB);
+        new BasketSplash(bodyB);
+        console.log(bodyB);
         updateScore(bodyB);
       }
     }
@@ -420,7 +463,57 @@ export function Plinko(element) {
     }, 400);
   }
 
-  function BucketSplash(body) {
+  // function BasketSplash(body) {
+  //   const graphics = new PIXI.Graphics();
+
+  //   var reqAnim;
+  //   var breathSpeed = 1;
+  //   var rMax = 15;
+  //   var rMin = 0;
+  //   var r = rMin;
+  //   var opacity = 0.7;
+  //   var rDiff = rMax - rMin;
+  //   var opacityIncr = 1 / rDiff / 1.2;
+
+  //   animate();
+
+  //   function animate() {
+  //     graphics.clear();
+  //     if (
+  //       localStorage.getItem("style") &&
+  //       localStorage.getItem("style") == "light"
+  //     ) {
+  //       graphics.lineStyle(r, body.metter.color, opacity);
+  //     } else {
+  //       graphics.lineStyle(r, body.metter.color, opacity);
+  //     }
+  //     graphics.beginFill(0, 0);
+
+  //     const rectWidth = 60;
+  //     const rectHeight = 40;
+  //     const rectX = body.position.x - rectWidth / 2;
+  //     const rectY = body.position.y - rectHeight / 2;
+  //     graphics.drawRoundedRect(rectX, rectY, rectWidth, rectHeight, 10);
+
+  //     graphics.endFill();
+
+  //     app.stage.addChild(graphics);
+  //     if (r === rMax) {
+  //       cancelAnimationFrame(reqAnim);
+  //       reqAnim = undefined;
+  //       return;
+  //     }
+  //     r += breathSpeed;
+  //     opacity -= opacityIncr;
+  //     reqAnim = requestAnimationFrame(animate);
+  //   }
+
+  //   setTimeout(() => {
+  //     app.stage.removeChild(graphics);
+  //   }, 400);
+  // }
+
+  function BasketSplash(body) {
     const graphics = new PIXI.Graphics();
 
     var reqAnim;
@@ -468,6 +561,7 @@ export function Plinko(element) {
     setTimeout(() => {
       app.stage.removeChild(graphics);
     }, 400);
+
   }
 
   function getIndexFromCoordinate(row, col) {
