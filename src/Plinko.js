@@ -314,7 +314,7 @@ export function Plinko(element) {
             y: -1.6 + Math.random(),
           });
         }, 0);
-        engine.timing.timeScale = 1;
+        engine.timing.timeScale = 1.2;
       } else if (road === 1) {
         // Body.setPosition(body, {
         //   x: point.position.x,
@@ -326,7 +326,7 @@ export function Plinko(element) {
             y: -1.6 + Math.random(),
           });
         }, 0);
-        engine.timing.timeScale = 1;
+        engine.timing.timeScale = 1.2;
         // Body.applyForce(body, body.position, { x: 1000, y: -5 });
       } else if (road === 2) {
         Body.setPosition(body, {
@@ -339,7 +339,7 @@ export function Plinko(element) {
             y: -3.2,
           });
         }, 0);
-        engine.timing.timeScale = 1.2;
+        engine.timing.timeScale = 1.5;
       } else if (road === 3) {
         Body.setPosition(body, {
           x: point.position.x,
@@ -351,7 +351,7 @@ export function Plinko(element) {
             y: -3.2,
           });
         }, 0);
-        engine.timing.timeScale = 1.2;
+        engine.timing.timeScale = 1.5;
       } else if (road === 4) {
         // Body.setPosition(body, {
         //   x: point.position.x + point.circleRadius,
@@ -363,7 +363,7 @@ export function Plinko(element) {
             y: 0,
           });
         }, 0);
-        engine.timing.timeScale = 1.2;
+        engine.timing.timeScale = 1.5;
       } else if (road === 5) {
         // Body.setPosition(body, {
         //   x: point.position.x - point.circleRadius,
@@ -375,7 +375,7 @@ export function Plinko(element) {
             y: 0,
           });
         }, 0);
-        engine.timing.timeScale = 1.2;
+        engine.timing.timeScale = 1.5;
       } else {
         Body.setPosition(body, {
           x: point.position.x,
@@ -387,7 +387,7 @@ export function Plinko(element) {
             y: -3.5,
           });
         }, 0);
-        engine.timing.timeScale = 1.2;
+        engine.timing.timeScale = 1.5;
       }
       body.road.id.push(point.id);
     } else {
