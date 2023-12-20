@@ -91,16 +91,16 @@ export function Plinko(element) {
     };
     Composite.add(engine.world, metter);
 
-    const colors = [
-      "0xb2de27",
-      "0xcf2f74",
-      "0xeff5f7",
-      "0x284387",
-      "0xfaf4d3",
-      "0xf7f9f7",
-      "0xfbc093",
-      "0xefcfe3",
-    ];
+    // const colors = [
+    //   "0xb2de27",
+    //   "0xcf2f74",
+    //   "0xeff5f7",
+    //   "0x284387",
+    //   "0xfaf4d3",
+    //   "0xf7f9f7",
+    //   "0xfbc093",
+    //   "0xefcfe3",
+    // ];
 
     // const color = colors[Math.ceil(Math.random() * colors.length - 1)];
     // const graphics = new PIXI.Graphics();
