@@ -103,7 +103,7 @@ const amount = ref("100.0000");
 const risk = ref("Low");
 const rows = ref("8");
 let rowNum = 8;
-let basket = [5.6, 2.1, 1.0, 0.8, 0.5, 0.8, 1.0, 2.1, 5.6];
+let basket = [2.1, 1.2, 1.0, 0.8, 0.5, 0.8, 1.0, 1.2, 2.1];
 let percentage = [];
 // let percentage = [0.001, 0.005, 0.12, 0.14, 0.468, 0.14, 0.12, 0.005, 0.001];
 // let percentage = [0, 1, 0, 0, 0, 0, 0, 0, 0];
@@ -118,21 +118,21 @@ const onRowChange = () => {
   rowNum = parseInt(rows.value);
   switch (rows.value) {
     case "8":
-      basket = [5.6, 2.1, 1.0, 0.8, 0.5, 0.8, 1.0, 2.1, 5.6];
+      basket = [2.1, 1.2, 1.0, 0.8, 0.5, 0.8, 1.0, 1.2, 2.1];
       percentage = changePercent([1, 8, 28, 56, 70, 56, 28, 8, 1]);
       break;
     case "9":
-      basket = [5.6, 2.1, 1, 0.8, 0.5, 0.5, 0.8, 1, 2.1, 5.6];
+      basket = [2.1, 1.2, 1.0, 0.8, 0.5, 0.5, 0.8, 1.0, 1.2, 2.1];
       percentage = changePercent([1, 9, 36, 84, 126, 126, 84, 36, 9, 1]);
       break;
     case "10":
-      basket = [5.6, 2.1, 1.2, 1, 0.8, 0.5, 0.8, 1, 1.2, 2.1, 5.6];
+      basket = [3.6, 2.1, 1.2, 1.0, 0.8, 0.5, 0.8, 1.0, 1.2, 2.1, 3.6];
       percentage = changePercent([
         1, 10, 45, 120, 210, 252, 210, 120, 45, 10, 1,
       ]);
       break;
     case "11":
-      basket = [5.6, 2.1, 1.2, 1, 0.8, 0.5, 0.5, 0.8, 1, 1.2, 2.1, 5.6];
+      basket = [3.6, 2.1, 1.2, 1.0, 0.8, 0.5, 0.5, 0.8, 1.0, 1.2, 2.1, 3.6];
       percentage = changePercent([
         1, 11, 55, 165, 330, 462, 462, 330, 165, 55, 11, 1,
       ]);
