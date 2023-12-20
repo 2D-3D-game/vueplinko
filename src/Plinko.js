@@ -14,7 +14,7 @@ export function Plinko(element) {
   const canvasHeight = element.offsetHeight;
 
   const engine = Engine.create();
-  engine.timing.timeScale = 0.8;
+  engine.timing.timeScale = 1;
 
   const sceneObjects = [];
   const splashObjects = [];
@@ -311,10 +311,10 @@ export function Plinko(element) {
         setTimeout(() => {
           Body.setVelocity(body, {
             x: -3.2,
-            y: -1.5 + Math.random(),
+            y: -1.6 + Math.random(),
           });
         }, 0);
-        engine.timing.timeScale = 0.6;
+        engine.timing.timeScale = 0.8;
       } else if (road === 1) {
         // Body.setPosition(body, {
         //   x: point.position.x,
@@ -323,10 +323,10 @@ export function Plinko(element) {
         setTimeout(() => {
           Body.setVelocity(body, {
             x: 3.2,
-            y: -1.5 + Math.random(),
+            y: -1.6 + Math.random(),
           });
         }, 0);
-        engine.timing.timeScale = 0.6;
+        engine.timing.timeScale = 0.8;
         // Body.applyForce(body, body.position, { x: 1000, y: -5 });
       } else if (road === 2) {
         Body.setPosition(body, {
@@ -336,10 +336,10 @@ export function Plinko(element) {
         setTimeout(() => {
           Body.setVelocity(body, {
             x: -1,
-            y: -3,
+            y: -3.2,
           });
         }, 0);
-        engine.timing.timeScale = 0.8;
+        engine.timing.timeScale = 0.9;
       } else if (road === 3) {
         Body.setPosition(body, {
           x: point.position.x,
@@ -348,10 +348,10 @@ export function Plinko(element) {
         setTimeout(() => {
           Body.setVelocity(body, {
             x: 1,
-            y: -3,
+            y: -3.2,
           });
         }, 0);
-        engine.timing.timeScale = 0.8;
+        engine.timing.timeScale = 0.9;
       } else if (road === 4) {
         // Body.setPosition(body, {
         //   x: point.position.x + point.circleRadius,
@@ -363,7 +363,7 @@ export function Plinko(element) {
             y: 0,
           });
         }, 0);
-        engine.timing.timeScale = 0.7;
+        engine.timing.timeScale = 0.9;
       } else if (road === 5) {
         // Body.setPosition(body, {
         //   x: point.position.x - point.circleRadius,
@@ -375,7 +375,7 @@ export function Plinko(element) {
             y: 0,
           });
         }, 0);
-        engine.timing.timeScale = 0.7;
+        engine.timing.timeScale = 0.9;
       } else {
         Body.setPosition(body, {
           x: point.position.x,
@@ -384,17 +384,17 @@ export function Plinko(element) {
         setTimeout(() => {
           Body.setVelocity(body, {
             x: 0,
-            y: -3,
+            y: -3.5,
           });
         }, 0);
-        engine.timing.timeScale = 0.6;
+        engine.timing.timeScale = 0.9;
       }
       body.road.id.push(point.id);
     } else {
       setTimeout(() => {
         Body.setVelocity(body, {
           x: Math.random() < 0.5 ? -1 : 1,
-          y: -3,
+          y: -3.5,
         });
       }, 0);
     }
