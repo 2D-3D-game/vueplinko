@@ -423,7 +423,7 @@ export function Plinko(element) {
     const graphics = new PIXI.Graphics();
 
     var reqAnim;
-    var breathSpeed = 1;
+    var breathSpeed = 2;
     var rMax = 15;
     var rMin = 0;
     var r = rMin;
