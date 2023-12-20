@@ -1,21 +1,5 @@
 <template>
   <div :class="'container'">
-    <div :class="'betType'">
-      <button
-        :class="['betButtonStyle', { active: isManualButton }]"
-        id="manualButton"
-        @click="activeButton('manualButton')"
-      >
-        Manual
-      </button>
-      <button
-        :class="['betButtonStyle', { active: isAutoButton }]"
-        id="autoButton"
-        @click="activeButton('autoButton')"
-      >
-        Auto
-      </button>
-    </div>
     <div :class="'spanstyle'">Bet Amount: {{ amount }}</div>
     <input
       :class="'tempstyle'"
@@ -23,6 +7,7 @@
       placeholder="100.0000"
       type="number"
     />
+    <button :class="['tempstyle', 'buttonstyle']" @click="bet">Bet</button>
     <div :class="'spanstyle'">Risk: {{ risk }}</div>
     <select :class="'tempstyle'" v-model="risk" @change="onRiskChange">
       <option value="Low">Low</option>
@@ -41,7 +26,29 @@
       <option value="15">15</option>
       <option value="16">16</option>
     </select>
-    <button :class="['tempstyle', 'buttonstyle']" @click="bet">Bet</button>
+    <div :class="'spanstyle'">Number of Bets: {{ numberofbet }}</div>
+    <input
+      :class="'tempstyle'"
+      v-model="numberofbet"
+      placeholder="0"
+      type="number"
+    />
+    <div :class="'betType'">
+      <button
+        :class="['betButtonStyle', { active: isManualButton }]"
+        id="manualButton"
+        @click="activeButton('manualButton')"
+      >
+        Manual
+      </button>
+      <button
+        :class="['betButtonStyle', { active: isAutoButton }]"
+        id="autoButton"
+        @click="activeButton('autoButton')"
+      >
+        Auto
+      </button>
+    </div>
   </div>
 </template>
 
@@ -60,9 +67,14 @@
   width: 100%;
   height: 30px;
   background-color: #05121c;
-  border-radius: 10px;
+  border: none;
+  border-radius: 5px;
   color: #fff;
   margin-bottom: 20px;
+}
+input {
+  padding-block: 0px;
+  padding-inline: 0px;
 }
 .spanstyle {
   color: #fff;
@@ -70,27 +82,31 @@
 
 .buttonstyle {
   background-color: #0094ea;
-  border-radius: 10px;
+  border-radius: 5px;
+  border: none;
 }
 .betType {
   display: flex;
   flex-direction: row;
   gap: 10px;
-  border-radius: 10px;
+  border-radius: 1000px;
   background-color: #04131c;
-  padding: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   margin-bottom: 20px;
 }
 .betButtonStyle {
-  background-color: #082435;
-  border-radius: 10px;
-  border: 2px solid #000000;
   width: 100%;
   height: 30px;
-  border-radius: 10px;
   color: #fff;
+  background-color: transparent;
+  border: none;
 }
 .active {
+  border-radius: 1000px;
+  border: 2px solid #000000;
   background-color: #0094ea;
 }
 </style>
@@ -102,13 +118,10 @@ import { Plinko } from "./Plinko";
 const amount = ref("100.0000");
 const risk = ref("Low");
 const rows = ref("8");
+const numberofbet = ref(0);
 let rowNum = 8;
 let basket = [2.1, 1.2, 1.0, 0.8, 0.5, 0.8, 1.0, 1.2, 2.1];
 let percentage = [];
-// let percentage = [0.001, 0.005, 0.12, 0.14, 0.468, 0.14, 0.12, 0.005, 0.001];
-// let percentage = [0, 1, 0, 0, 0, 0, 0, 0, 0];
-
-// let percentage = [1, 8, 28, 56, 70, 56, 28, 8, 1];
 
 const basket_risk = ref(basket);
 const plinko = Plinko(document.body.querySelector("#canvas"));
@@ -180,7 +193,7 @@ const onRowChange = () => {
       ]);
       break;
     default:
-      basket = [5.6, 2.1, 1.0, 0.8, 0.5, 0.8, 1.0, 2.1, 5.6];
+      basket = [2.1, 1.2, 1.0, 0.8, 0.5, 0.8, 1.0, 1.2, 2.1];
       percentage = changePercent([1, 8, 28, 56, 70, 56, 28, 8, 1]);
   }
   onRiskChange();
@@ -195,33 +208,10 @@ const onRiskChange = () => {
   } else if (risk.value === "High") {
     basket_risk.value = basket.map((item) => (item ** 2).toFixed(2));
   }
-  plinko.map(basket_risk.value);
-  // changePercent(basket_risk.value);
+  plinko.map(basket_risk.value, percentage);
 };
 
 const changePercent = (values) => {
-  // let total = 0;
-  // for (let i = 0; i < values.length; i++) {
-  //   total += values[i];
-  // }
-
-  // percentage = [];
-
-  // for (let i = 0; i < values.length; i++) {
-  //   let percent = 1 / values[i] / total;
-  //   percentage.push(percent);
-  // }
-
-  // for (let i = 0; i < values.length; i++) {
-  //   if (i === 0 || i === values.length - 1) {
-  //     percentage[i] = 0.0001;
-  //   } else if (i === 1 || i === values.length - 2) {
-  //     percentage[i] = 0.0006;
-  //   } else if (i === 2 || i === values.length - 3) {
-  //     percentage[i] = 0.0012;
-  //   }
-  // }
-
   const sum = values.reduce((acc, val) => acc + val, 0);
   percentage = values.map((val) => val / sum);
   return percentage;
@@ -240,7 +230,7 @@ const bet = () => {
       continue;
     }
   }
-  plinko.add(rowNum, target);
+  plinko.add(rowNum, target, percentage, basket_risk.value);
 };
 
 const isManualButton = ref(true);
@@ -253,6 +243,5 @@ const activeButton = (buttonId) => {
 
 onMounted(() => {
   percentage = changePercent([1, 8, 28, 56, 70, 56, 28, 8, 1]);
-  console.log(percentage);
 });
 </script>
