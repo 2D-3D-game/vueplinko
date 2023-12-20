@@ -102,15 +102,22 @@ export function Plinko(element) {
       "0xefcfe3",
     ];
 
-    const color = colors[Math.ceil(Math.random() * colors.length - 1)];
-    const graphics = new PIXI.Graphics();
-    graphics.beginFill(color);
-    graphics.drawCircle(0, 0, r);
-    graphics.endFill();
-    app.stage.addChild(graphics);
+    // const color = colors[Math.ceil(Math.random() * colors.length - 1)];
+    // const graphics = new PIXI.Graphics();
+    // graphics.beginFill(color);
+    // graphics.drawCircle(0, 0, r);
+    // graphics.endFill();
+    // app.stage.addChild(graphics);
+    let texture = PIXI.Texture.from("/ball.png?8");
+    const sprite = new PIXI.Sprite(texture);
+    sprite.width = ParticleRadius * 2;
+    sprite.height = ParticleRadius * 2;
+    sprite.pivot.set(ParticleRadius * 2, ParticleRadius * 2);
+    app.stage.addChild(sprite);
+
     sceneObjects.push({
       body: metter,
-      sprite: graphics,
+      sprite: sprite,
     });
   }
 
@@ -444,7 +451,11 @@ export function Plinko(element) {
       }
       graphics.lineStyle(r, 0xb2de27, opacity);
       graphics.beginFill(0, 0);
-      graphics.drawCircle(body.position.x, body.position.y, body.circleRadius);
+      graphics.drawCircle(
+        body.position.x,
+        body.position.y,
+        body.circleRadius * 2
+      );
       graphics.endFill();
 
       app.stage.addChild(graphics);
@@ -561,7 +572,6 @@ export function Plinko(element) {
     setTimeout(() => {
       app.stage.removeChild(graphics);
     }, 400);
-
   }
 
   function getIndexFromCoordinate(row, col) {
