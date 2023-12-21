@@ -26,7 +26,7 @@ export function Plinko(element) {
     autoDensity: true,
   });
 
-  let scale = 1;
+  let scale = 1.2;
   app.stage.scale.set(scale);
 
   element.appendChild(app.view);
@@ -41,8 +41,8 @@ export function Plinko(element) {
   Runner.run(engine);
   Events.on(engine, "collisionStart", collision);
 
-  const ParticleRadius = 6;
-  const PointRadius = 5;
+  const ParticleRadius = 12;
+  const PointRadius = 10;
   const MapGap = 3;
   let score = 10000;
   let scoreArray = [];
@@ -62,17 +62,17 @@ export function Plinko(element) {
       isStatic: true,
     };
 
-    const metter = Bodies.circle(x, y, 4, options);
+    const metter = Bodies.circle(x, y, 8, options);
     metter.label = "point";
     Composite.add(engine.world, metter);
 
     const graphics = new PIXI.Graphics();
     graphics.beginFill(color);
-    graphics.drawCircle(x, y, 4);
+    graphics.drawCircle(x, y, 8);
     graphics.zIndex = 2;
     graphics.endFill();
     app.stage.addChild(graphics);
-    let Point = [x, y, 4];
+    let Point = [x, y, 8];
     Points.push(Point);
   }
 
@@ -135,8 +135,8 @@ export function Plinko(element) {
 
     const style = new PIXI.TextStyle({
       fontFamily: "Arial",
-      fontSize: 6,
-      fill: "#000000",
+      fontSize: 14,
+      fill: "#ffffff",
       align: "center",
     });
 
@@ -545,16 +545,16 @@ export function Plinko(element) {
       if (road === 0) {
         setTimeout(() => {
           Body.setVelocity(body, {
-            x: -1.6,
-            y: -0.8 + Math.random(),
+            x: -3.2,
+            y: -1.6 + Math.random(),
           });
         }, 0);
         engine.timing.timeScale = 1.2;
       } else if (road === 1) {
         setTimeout(() => {
           Body.setVelocity(body, {
-            x: 1.6,
-            y: -0.8 + Math.random(),
+            x: 3.2,
+            y: -1.6 + Math.random(),
           });
         }, 0);
         engine.timing.timeScale = 1.2;
@@ -565,8 +565,8 @@ export function Plinko(element) {
         });
         setTimeout(() => {
           Body.setVelocity(body, {
-            x: -0.5,
-            y: -1.6,
+            x: -1,
+            y: -3.2,
           });
         }, 0);
         engine.timing.timeScale = 1.5;
@@ -577,8 +577,8 @@ export function Plinko(element) {
         });
         setTimeout(() => {
           Body.setVelocity(body, {
-            x: 0.5,
-            y: -1.6,
+            x: 1,
+            y: -3.2,
           });
         }, 0);
         engine.timing.timeScale = 1.5;
@@ -606,7 +606,7 @@ export function Plinko(element) {
         setTimeout(() => {
           Body.setVelocity(body, {
             x: 0,
-            y: -1.8,
+            y: -3.5,
           });
         }, 0);
         engine.timing.timeScale = 1.5;
@@ -616,7 +616,7 @@ export function Plinko(element) {
       setTimeout(() => {
         Body.setVelocity(body, {
           x: Math.random() < 0.5 ? -1 : 1,
-          y: -1.8,
+          y: -3.5,
         });
       }, 0);
     }

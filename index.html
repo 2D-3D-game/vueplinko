@@ -2,27 +2,26 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="src/style.css" rel="stylesheet" />
     <link rel="icon" href="/ball.png" type="image/png" />
     <title>Plinko</title>
   </head>
   <body>
-    <div style="display: flex; flex-direction: column;">
+    <div style="display: flex; flex-direction: row; margin-top: 5vh">
+      <div id="app" style="margin-left: 10vw; width: 20vw; height: 80vh"></div>
       <div
         id="canvas"
         style="
-          width: 40vw;
-          height: 40vh;
-          margin: auto;
+          width: 60vw;
+          height: 80vh;
+          margin: 0 auto;
           color: #fff;
           background-color: #0F212E;
-          border-top-left-radius: 8px;
-          border-top-right-radius: 8px;
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
         "
       ></div>
-      <div id="app" style="margin: auto; width: 40vw; height: 40vh"></div>
       <div
         id="overlay"
         style="

@@ -2,20 +2,23 @@
   <div :class="'container'">
     <div :class="'spanstyle'">Bet Amount: {{ amount }}</div>
     <input
-      :class="['tempstyle', { warning: isEmpty }]"
+      :class="['baseStyle', { warning: isEmpty }]"
       v-model="amount"
-      placeholder="100.0000"
+      placeholder="0.0000"
       type="number"
+      min="0"
     />
-    <button :class="['tempstyle', 'buttonstyle']" @click="bet">Bet</button>
+    <button :class="['baseStyle', 'betButton']" @click="bet">
+      {{ isManualButton ? "Bet" : isAutoBetting ? "Stop Bet" : "Auto Bet" }}
+    </button>
     <div :class="'spanstyle'">Risk: {{ risk }}</div>
-    <select :class="'tempstyle'" v-model="risk" @change="onRiskChange">
+    <select :class="'baseStyle'" v-model="risk" @change="onRiskChange">
       <option value="Low">Low</option>
       <option value="Medium">Medium</option>
       <option value="High">High</option>
     </select>
     <div :class="'spanstyle'">Rows: {{ rows }}</div>
-    <select :class="'tempstyle'" v-model="rows" @change="onRowChange">
+    <select :class="'baseStyle'" v-model="rows" @change="onRowChange">
       <option value="8">8</option>
       <option value="9">9</option>
       <option value="10">10</option>
@@ -26,23 +29,27 @@
       <option value="15">15</option>
       <option value="16">16</option>
     </select>
-    <div :class="'spanstyle'">Number of Bets: {{ numberofbet }}</div>
-    <input
-      :class="'tempstyle'"
-      v-model="numberofbet"
-      placeholder="0"
-      type="number"
-    />
-    <div :class="'betType'">
+    <div v-if="isAutoButton">
+      <div :class="'spanstyle'">Number of Bets: {{ numberofbet }}</div>
+      <input
+        :class="'baseStyle'"
+        v-model="numberofbet"
+        placeholder="0"
+        type="number"
+        min="0"
+      />
+    </div>
+
+    <div :class="'betTypeContainer'">
       <button
-        :class="['betButtonStyle', { active: isManualButton }]"
+        :class="['typeButton', { betTypeActive: isManualButton }]"
         id="manualButton"
         @click="activeButton('manualButton')"
       >
         Manual
       </button>
       <button
-        :class="['betButtonStyle', { active: isAutoButton }]"
+        :class="['typeButton', { betTypeActive: isAutoButton }]"
         id="autoButton"
         @click="activeButton('autoButton')"
       >
@@ -55,59 +62,60 @@
 <style scoped>
 .container {
   background-color: #213743;
-  padding-left: 100px;
-  padding-right: 100px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  height: 60vh;
+  padding-left: 30px;
+  padding-right: 30px;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
 }
-.tempstyle {
+.baseStyle {
   width: 100%;
   height: 30px;
-  background-color: #2F4553;
-  border: none;
-  border-radius: 5px;
+  background-color: #0f212e;
+  border-radius: 4px;
+  border: 2px solid #2f4553;
   color: #fff;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
 }
-input {
-  padding-block: 0px;
-  padding-inline: 0px;
+input,
+select {
+  box-sizing: border-box;
+  width: 100%;
 }
 .spanstyle {
   color: #fff;
 }
 
-.buttonstyle {
-  background-color: #00E701;
-  border-radius: 5px;
+.betButton {
+  background-color: #00e701;
+  border-radius: 4px;
+  height: 42px;
   border: none;
+  color: #000000;
+  font-weight: 600;
 }
-.betType {
+.betTypeContainer {
   display: flex;
   flex-direction: row;
   gap: 10px;
   border-radius: 1000px;
-  background-color: #04131c;
+  background-color: #0f212e;
   padding: 2px;
   margin-bottom: 20px;
 }
-.betButtonStyle {
+.typeButton {
   width: 100%;
   height: 30px;
   color: #fff;
   background-color: transparent;
   border: none;
 }
-.active {
+.betTypeActive {
   border-radius: 1000px;
-  border: 2px solid #000000;
-  background-color: #0094ea;
+  background-color: #2f4552;
 }
 
 .warning {
@@ -121,11 +129,13 @@ import { Plinko } from "./Plinko";
 
 const isManualButton = ref(true);
 const isAutoButton = ref(false);
+const isAutoBetting = ref(false);
 const isEmpty = ref(true);
 const amount = ref("0");
 const risk = ref("Low");
 const rows = ref("8");
 const numberofbet = ref(0);
+let intervalId;
 let rowNum = 8;
 let basket = [2.1, 1.2, 1.0, 0.8, 0.5, 0.8, 1.0, 1.2, 2.1];
 let percentage = [];
@@ -230,22 +240,55 @@ const bet = () => {
     return;
   } else {
     isEmpty.value = false;
-    console.log(amount.value);
-    let target = 0;
-    let sum = 0;
-    const randomNumber = Math.random();
-    for (let i = 0; i < percentage.length; i++) {
-      sum += percentage[i];
-      if (randomNumber >= sum - percentage[i] && randomNumber < sum) {
-        target = i + 1;
-        break;
+    if (isManualButton.value) {
+      dropParticle();
+    } else {
+      if (
+        parseInt(numberofbet.value) === 0 ||
+        numberofbet.value === undefined ||
+        numberofbet.value === ""
+      ) {
+        if (!isAutoBetting.value) {
+          isAutoBetting.value = true;
+          startInterval();
+        } else {
+          isAutoBetting.value = false;
+          stopInterval();
+        }
       } else {
-        continue;
+        for (let i = 0; i < numberofbet.value; i++) {
+          setTimeout(() => {
+            dropParticle();
+          }, 500 * i);
+        }
       }
     }
-    plinko.add(rowNum, target);
   }
 };
+
+function startInterval() {
+  intervalId = setInterval(dropParticle, 500);
+}
+
+function stopInterval() {
+  clearInterval(intervalId);
+}
+
+function dropParticle() {
+  let target = 0;
+  let sum = 0;
+  const randomNumber = Math.random();
+  for (let i = 0; i < percentage.length; i++) {
+    sum += percentage[i];
+    if (randomNumber >= sum - percentage[i] && randomNumber < sum) {
+      target = i + 1;
+      break;
+    } else {
+      continue;
+    }
+  }
+  plinko.add(rowNum, target);
+}
 
 const activeButton = (buttonId) => {
   isManualButton.value = buttonId === "manualButton";
