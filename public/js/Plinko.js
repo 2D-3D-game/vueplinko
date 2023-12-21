@@ -93,7 +93,7 @@ export function Plinko(element) {
       id: [],
     };
     Composite.add(engine.world, metter);
-    let texture = PIXI.Texture.from("/public/image/ball.png?8");
+    let texture = PIXI.Texture.from("/image/ball.png?8");
     const sprite = new PIXI.Sprite(texture);
     sprite.width = ParticleRadius * 2;
     sprite.height = ParticleRadius * 2;
