@@ -93,7 +93,7 @@ export function Plinko(element) {
       id: [],
     };
     Composite.add(engine.world, metter);
-    let texture = PIXI.Texture.from("/ball.png?8");
+    let texture = PIXI.Texture.from("/public/image/ball.png?8");
     const sprite = new PIXI.Sprite(texture);
     sprite.width = ParticleRadius * 2;
     sprite.height = ParticleRadius * 2;
@@ -124,7 +124,7 @@ export function Plinko(element) {
     const rectangle = new PIXI.Graphics();
     rectangle.beginFill(color);
 
-    const cornerRadius = (gap * 10) / 60;
+    const cornerRadius = (gap * 10) / 120;
     rectangle.drawRoundedRect(
       -gap / 2,
       -gap / 4,
@@ -134,10 +134,16 @@ export function Plinko(element) {
     );
     rectangle.endFill();
 
+    // rectangle.dropShadow = true;
+    // rectangle.dropShadowAngle = Math.PI / 2;
+    // rectangle.dropShadowDistance = 4;
+    // rectangle.dropShadowColor = 0xa61304;
+    // rectangle.dropShadowAlpha = 0.5;
+
     const style = new PIXI.TextStyle({
       fontFamily: "Arial",
       fontSize: 14,
-      fill: "#ffffff",
+      fill: "#000000",
       align: "center",
     });
 
@@ -151,6 +157,10 @@ export function Plinko(element) {
     container.buttonMode = true;
     container.addChild(rectangle);
     container.addChild(label);
+
+    // container.filters = [new PIXI.filters.BlurFilter()];
+    // container.filters[0].blur = 0; 
+    // container.filters[0].blendMode = PIXI.BLEND_MODES.MULTIPLY;
 
     const object = {
       body: metter,
@@ -258,19 +268,19 @@ export function Plinko(element) {
     rectangle.drawRoundedRect(
       x + 2 - gap / 2,
       y - gap / 4,
-      rectangleWidth,
-      rectangleHeight,
+      rectangleWidth / scale,
+      rectangleHeight / scale,
       cornerRadius
     );
 
     rectangle.endFill();
 
     const pixiText = new PIXI.Text(text + "x", {
-      fontSize: (gap * 12) / 60 + "px",
+      fontSize: (gap * 14) / 60 / scale + "px",
       fill: "#ffffff",
     });
 
-    pixiText.anchor.set(0.5);
+    pixiText.anchor.set(0.5, 0.5);
     pixiText.x = x;
     pixiText.y = y;
 
@@ -478,9 +488,9 @@ export function Plinko(element) {
   }
 
   function getRowNum(val) {
-    if(val === undefined) {
+    if (val === undefined) {
       return;
-    } else{
+    } else {
       rowNumForBasket = val - 1;
     }
   }

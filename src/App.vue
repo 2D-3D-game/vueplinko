@@ -1,6 +1,6 @@
 <template>
   <div :class="'container'">
-    <div :class="'spanstyle'">Bet Amount: {{ amount }}</div>
+    <div :class="'spanstyle'">投注额: {{ amount }}</div>
     <div :class="'betAmountContainer'">
       <input
         :class="['betAmountInput', { warning: isEmpty }]"
@@ -9,19 +9,36 @@
         type="number"
         min="0"
       />
-      <button :class="'betAmountTimesBtn-left'">1/2</button>
-      <button :class="'betAmountTimesBtn-right'">2x</button>
+      <button :class="'betAmountTimesBtn-left'" @click="betAmountTimes(0.5)">
+        1/2
+      </button>
+      <button :class="'betAmountTimesBtn-right'" @click="betAmountTimes(2)">
+        2x
+      </button>
+      <img
+        :src="'/image/bit.png'"
+        width="16"
+        height="16"
+        alt="Image"
+        :class="'bitImage'"
+      />
     </div>
     <button :class="['baseStyle', 'betButton']" @click="bet">
-      {{ isManualButton ? "Bet" : isAutoBetting ? "Stop Bet" : "Auto Bet" }}
+      {{
+        isManualButton
+          ? "投注"
+          : isAutoBetting
+          ? "停止自动投注"
+          : "开始自动投注"
+      }}
     </button>
-    <div :class="'spanstyle'">Risk: {{ risk }}</div>
+    <div :class="'spanstyle'">风险:</div>
     <select :class="'baseStyle'" v-model="risk" @change="onRiskChange">
-      <option value="Low">Low</option>
-      <option value="Medium">Medium</option>
-      <option value="High">High</option>
+      <option value="Low">下等</option>
+      <option value="Medium">中等</option>
+      <option value="High">上等</option>
     </select>
-    <div :class="'spanstyle'">Rows: {{ rows }}</div>
+    <div :class="'spanstyle'">排数:</div>
     <select :class="'baseStyle'" v-model="rows" @change="onRowChange">
       <option value="8">8</option>
       <option value="9">9</option>
@@ -33,14 +50,21 @@
       <option value="15">15</option>
       <option value="16">16</option>
     </select>
-    <div v-if="isAutoButton">
-      <div :class="'spanstyle'">Number of Bets: {{ numberofbet }}</div>
+    <div :class="'betNumberContainer'" v-if="isAutoButton">
+      <div :class="'spanstyle'">投注次数:</div>
       <input
         :class="'baseStyle'"
         v-model="numberofbet"
         placeholder="0"
         type="number"
         min="0"
+      />
+      <img
+        :src="'/image/infinitive.png'"
+        width="14"
+        height="14"
+        alt="Image"
+        :class="'infinitiveImage'"
       />
     </div>
 
@@ -50,120 +74,26 @@
         id="manualButton"
         @click="activeButton('manualButton')"
       >
-        Manual
+        手动投注
       </button>
       <button
         :class="['typeButton', { betTypeActive: isAutoButton }]"
         id="autoButton"
         @click="activeButton('autoButton')"
       >
-        Auto
+        自动投注
       </button>
     </div>
   </div>
 </template>
 
 <style scoped>
-.container {
-  background-color: #213743;
-  padding-left: 30px;
-  padding-right: 30px;
-  height: 80vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-.betAmountContainer {
-  display: flex;
-  flex-direction: row;
-}
-.betAmountTimesBtn-left {
-  width: 15%;
-  height: 30px;
-  background-color: #2f4553;
-  border: none;
-  color: #fff;
-  border-right: 2px solid #1a2c37;
-}
-
-.betAmountTimesBtn-right {
-  width: 15%;
-  height: 30px;
-  background-color: #2f4553;
-  border: none;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  color: #fff;
-}
-.baseStyle {
-  width: 100%;
-  height: 30px;
-  background-color: #0f212e;
-  border-radius: 4px;
-  border: 2px solid #2f4553;
-  color: #fff;
-  margin-bottom: 20px;
-}
-
-.betAmountInput {
-  width: 100%;
-  height: 30px;
-  background-color: #0f212e;
-  border: 2px solid #2f4553;
-  color: #fff;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-  margin-bottom: 20px;
-}
-input,
-select {
-  box-sizing: border-box;
-  width: 100%;
-}
-.spanstyle {
-  color: #fff;
-}
-
-.betButton {
-  background-color: #00e701;
-  border-radius: 4px;
-  height: 42px;
-  border: none;
-  color: #000000;
-  font-weight: 600;
-}
-.betTypeContainer {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  border-radius: 1000px;
-  background-color: #0f212e;
-  padding: 2px;
-  margin-bottom: 20px;
-}
-.typeButton {
-  width: 100%;
-  height: 30px;
-  color: #fff;
-  background-color: transparent;
-  border: none;
-}
-.betTypeActive {
-  border-radius: 1000px;
-  background-color: #2f4552;
-}
-
-.warning {
-  border: 2px solid #ff0000;
-}
+@import "/public/css/sidebar.css";
 </style>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { Plinko } from "./Plinko";
+import { Plinko } from "/public/js/Plinko";
 
 const isManualButton = ref(true);
 const isAutoButton = ref(false);
@@ -173,6 +103,7 @@ const amount = ref("0");
 const risk = ref("Low");
 const rows = ref("8");
 const numberofbet = ref(0);
+
 let intervalId;
 let rowNum = 8;
 let basket = [2.1, 1.2, 1.0, 0.8, 0.5, 0.8, 1.0, 1.2, 2.1];
@@ -305,15 +236,15 @@ const bet = () => {
   }
 };
 
-function startInterval() {
+const startInterval = () => {
   intervalId = setInterval(dropParticle, 500);
-}
+};
 
-function stopInterval() {
+const stopInterval = () => {
   clearInterval(intervalId);
-}
+};
 
-function dropParticle() {
+const dropParticle = () => {
   let target = 0;
   let sum = 0;
   const randomNumber = Math.random();
@@ -327,13 +258,16 @@ function dropParticle() {
     }
   }
   plinko.add(rowNum, target);
-}
+};
 
 const activeButton = (buttonId) => {
   isManualButton.value = buttonId === "manualButton";
   isAutoButton.value = buttonId === "autoButton";
 };
 
+const betAmountTimes = (times) => {
+  amount.value = amount.value * times;
+};
 onMounted(() => {
   percentage = changePercent([1, 8, 28, 56, 70, 56, 28, 8, 1]);
 });
