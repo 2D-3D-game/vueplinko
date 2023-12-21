@@ -2,7 +2,7 @@
   <div :class="'container'">
     <div :class="'spanstyle'">Bet Amount: {{ amount }}</div>
     <input
-      :class="'tempstyle'"
+      :class="['tempstyle', { warning: isEmpty }]"
       v-model="amount"
       placeholder="100.0000"
       type="number"
@@ -54,23 +54,26 @@
 
 <style scoped>
 .container {
-  background-color: #082537;
-  padding: 50px;
-  border-radius: 20px;
-  margin-top: 5vh;
+  background-color: #213743;
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   height: 60vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 .tempstyle {
   width: 100%;
   height: 30px;
-  background-color: #05121c;
+  background-color: #2F4553;
   border: none;
   border-radius: 5px;
   color: #fff;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 input {
   padding-block: 0px;
@@ -81,7 +84,7 @@ input {
 }
 
 .buttonstyle {
-  background-color: #0094ea;
+  background-color: #00E701;
   border-radius: 5px;
   border: none;
 }
@@ -91,10 +94,7 @@ input {
   gap: 10px;
   border-radius: 1000px;
   background-color: #04131c;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 2px;
   margin-bottom: 20px;
 }
 .betButtonStyle {
@@ -109,13 +109,20 @@ input {
   border: 2px solid #000000;
   background-color: #0094ea;
 }
+
+.warning {
+  border: 2px solid #ff0000;
+}
 </style>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import { Plinko } from "./Plinko";
 
-const amount = ref("100.0000");
+const isManualButton = ref(true);
+const isAutoButton = ref(false);
+const isEmpty = ref(true);
+const amount = ref("0");
 const risk = ref("Low");
 const rows = ref("8");
 const numberofbet = ref(0);
@@ -218,23 +225,27 @@ const changePercent = (values) => {
 };
 
 const bet = () => {
-  let target = 0;
-  let sum = 0;
-  const randomNumber = Math.random();
-  for (let i = 0; i < percentage.length; i++) {
-    sum += percentage[i];
-    if (randomNumber >= sum - percentage[i] && randomNumber < sum) {
-      target = i + 1;
-      break;
-    } else {
-      continue;
+  if (amount.value == 0 || amount.value == undefined || amount.value == "") {
+    isEmpty.value = true;
+    return;
+  } else {
+    isEmpty.value = false;
+    console.log(amount.value);
+    let target = 0;
+    let sum = 0;
+    const randomNumber = Math.random();
+    for (let i = 0; i < percentage.length; i++) {
+      sum += percentage[i];
+      if (randomNumber >= sum - percentage[i] && randomNumber < sum) {
+        target = i + 1;
+        break;
+      } else {
+        continue;
+      }
     }
+    plinko.add(rowNum, target);
   }
-  plinko.add(rowNum, target, percentage, basket_risk.value);
 };
-
-const isManualButton = ref(true);
-const isAutoButton = ref(false);
 
 const activeButton = (buttonId) => {
   isManualButton.value = buttonId === "manualButton";

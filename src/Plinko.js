@@ -41,8 +41,8 @@ export function Plinko(element) {
   Runner.run(engine);
   Events.on(engine, "collisionStart", collision);
 
-  const ParticleRadius = 12;
-  const PointRadius = 10;
+  const ParticleRadius = 6;
+  const PointRadius = 5;
   const MapGap = 3;
   let score = 10000;
   let scoreArray = [];
@@ -62,17 +62,17 @@ export function Plinko(element) {
       isStatic: true,
     };
 
-    const metter = Bodies.circle(x, y, 8, options);
+    const metter = Bodies.circle(x, y, 4, options);
     metter.label = "point";
     Composite.add(engine.world, metter);
 
     const graphics = new PIXI.Graphics();
     graphics.beginFill(color);
-    graphics.drawCircle(x, y, 8);
+    graphics.drawCircle(x, y, 4);
     graphics.zIndex = 2;
     graphics.endFill();
     app.stage.addChild(graphics);
-    let Point = [x, y, 8];
+    let Point = [x, y, 4];
     Points.push(Point);
   }
 
@@ -135,8 +135,8 @@ export function Plinko(element) {
 
     const style = new PIXI.TextStyle({
       fontFamily: "Arial",
-      fontSize: 14,
-      fill: "#ffffff",
+      fontSize: 6,
+      fill: "#000000",
       align: "center",
     });
 
@@ -415,48 +415,48 @@ export function Plinko(element) {
       case 10:
       case parseFloat(Math.pow(10, 1.4).toFixed(2)):
       case parseFloat(Math.pow(10, 2).toFixed(2)):
-        color = 0xfb3434;
+        color = 0xfa223e;
         break;
       case 7.2:
       case parseFloat(Math.pow(7.2, 1.4).toFixed(2)):
       case parseFloat(Math.pow(7.2, 2).toFixed(2)):
-        color = 0xef6060;
+        color = 0xfa223e;
         break;
       case 5.6:
       case parseFloat(Math.pow(5.6, 1.4).toFixed(2)):
       case parseFloat(Math.pow(5.6, 2).toFixed(2)):
-        color = 0xea842c;
+        color = 0xfa223e;
         break;
       case 3.6:
       case parseFloat(Math.pow(3.6, 1.4).toFixed(2)):
       case parseFloat(Math.pow(3.6, 2).toFixed(2)):
-        color = 0xfaa425;
+        color = 0xfa302f;
         break;
       case 2.1:
       case parseFloat(Math.pow(2.1, 1.4).toFixed(2)):
       case parseFloat(Math.pow(2.1, 2).toFixed(2)):
-        color = 0xd9a425;
+        color = 0xfa5224;
         break;
       case 1.2:
       case parseFloat(Math.pow(1.2, 1.4).toFixed(2)):
       case parseFloat(Math.pow(1.2, 2).toFixed(2)):
-        color = 0xdad323;
+        color = 0xfa681e;
         break;
       case 1:
-        color = 0xb2d023;
+        color = 0xfa8c10;
         break;
       case 0.8:
       case parseFloat(Math.pow(0.8, 1.4).toFixed(2)):
       case parseFloat(Math.pow(0.8, 2).toFixed(2)):
-        color = 0x5dc421;
+        color = 0xfaa00c;
         break;
       case 0.5:
       case parseFloat(Math.pow(0.5, 1.4).toFixed(2)):
       case parseFloat(Math.pow(0.5, 2).toFixed(2)):
-        color = 0x38c121;
+        color = 0xfac000;
         break;
       default:
-        color = 0x38c121;
+        color = 0xfac000;
     }
     return color;
   }
@@ -545,16 +545,16 @@ export function Plinko(element) {
       if (road === 0) {
         setTimeout(() => {
           Body.setVelocity(body, {
-            x: -3.2,
-            y: -1.6 + Math.random(),
+            x: -1.6,
+            y: -0.8 + Math.random(),
           });
         }, 0);
         engine.timing.timeScale = 1.2;
       } else if (road === 1) {
         setTimeout(() => {
           Body.setVelocity(body, {
-            x: 3.2,
-            y: -1.6 + Math.random(),
+            x: 1.6,
+            y: -0.8 + Math.random(),
           });
         }, 0);
         engine.timing.timeScale = 1.2;
@@ -565,8 +565,8 @@ export function Plinko(element) {
         });
         setTimeout(() => {
           Body.setVelocity(body, {
-            x: -1,
-            y: -3.2,
+            x: -0.5,
+            y: -1.6,
           });
         }, 0);
         engine.timing.timeScale = 1.5;
@@ -577,8 +577,8 @@ export function Plinko(element) {
         });
         setTimeout(() => {
           Body.setVelocity(body, {
-            x: 1,
-            y: -3.2,
+            x: 0.5,
+            y: -1.6,
           });
         }, 0);
         engine.timing.timeScale = 1.5;
@@ -606,7 +606,7 @@ export function Plinko(element) {
         setTimeout(() => {
           Body.setVelocity(body, {
             x: 0,
-            y: -3.5,
+            y: -1.8,
           });
         }, 0);
         engine.timing.timeScale = 1.5;
@@ -616,7 +616,7 @@ export function Plinko(element) {
       setTimeout(() => {
         Body.setVelocity(body, {
           x: Math.random() < 0.5 ? -1 : 1,
-          y: -3.5,
+          y: -1.8,
         });
       }, 0);
     }
@@ -651,7 +651,7 @@ export function Plinko(element) {
     scale = 9 / rows.length;
     app.stage.scale.set(scale);
     app.stage.position._x += ((1 - scale) * canvasWidth) / 2;
-    if(percentage === undefined){
+    if (percentage === undefined) {
       return;
     }
     percentage_list = percentage;
