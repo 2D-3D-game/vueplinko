@@ -264,6 +264,7 @@ const onRiskChange = () => {
     basket_risk.value = basket.map((item) => (item ** 2).toFixed(2));
   }
   plinko.map(basket_risk.value, percentage);
+  plinko.getRowNum(basket_risk.value.length);
 };
 
 const changePercent = (values) => {

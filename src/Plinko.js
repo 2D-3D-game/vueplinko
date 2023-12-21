@@ -56,7 +56,7 @@ export function Plinko(element) {
   let last = 0;
   let bet = 100;
   let currency = 1300;
-  let rowNum = 8;
+  let rowNumForBasket = 8;
 
   function Point(x, y, r, color = 0xd3d3d3) {
     const options = {
@@ -182,8 +182,7 @@ export function Plinko(element) {
 
     container.on("mousedown", function (e) {
       let target = getIndexFromText(text, x);
-      console.log(target);
-      add(rowNum, target);
+      add(rowNumForBasket, target);
     });
 
     metter.metter = {
@@ -478,6 +477,14 @@ export function Plinko(element) {
     return percentage_list[id];
   }
 
+  function getRowNum(val) {
+    if(val === undefined) {
+      return;
+    } else{
+      rowNumForBasket = val - 1;
+    }
+  }
+
   function getIndexFromText(text, x) {
     let id = 0;
     for (let i = 0; i < basket_list.length; i++) {
@@ -682,36 +689,7 @@ export function Plinko(element) {
   }
 
   function add(rowNum, target) {
-    // let col = 3;
-    // const increment = 1;
-    // const radius = PointRadius;
-    // const gap = PointRadius * 2 * MapGap;
-    // for (let i = 1; i <= rowNum; i++) {
-    //   const space = (canvasWidth - gap * col) / 2;
-    //   for (let j = 1; j <= col; j++) {
-    //     if (i <= rowNum) {
-    //       const index = getIndexFromCoordinate(i, j);
-    //       // console.log("getIndex", i, j, index);
-    //       if (routes.indexOf(index) >= 0) {
-    //         new Point(
-    //           space + j * gap - radius * MapGap,
-    //           i * gap,
-    //           radius,
-    //           0xff0000
-    //         );
-    //       } else {
-    //         new Point(space + j * gap - radius * MapGap, i * gap, radius);
-    //       }
-    //     }
-    //   }
-    //   col += increment;
-    // }
-    if (rowNum === undefined) {
-      return;
-    }
-    rowNum = rowNum;
     let [routes, dirRoute] = searchRoute(rowNum, target);
-    console.log(dirRoute);
     new Particle(canvasWidth / 2, 0, ParticleRadius, dirRoute);
   }
 
@@ -724,5 +702,6 @@ export function Plinko(element) {
     map,
     add,
     clear,
+    getRowNum,
   };
 }
