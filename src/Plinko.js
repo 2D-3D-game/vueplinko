@@ -56,6 +56,7 @@ export function Plinko(element) {
   let last = 0;
   let bet = 100;
   let currency = 1300;
+  let rowNum = 8;
 
   function Point(x, y, r, color = 0xd3d3d3) {
     const options = {
@@ -158,25 +159,31 @@ export function Plinko(element) {
 
     sceneObjects.push(object);
     app.stage.addChild(container);
-    container.on("mouseover", function (e) {
-      let sum = 0;
-      for (let i = 0; i < scoreArray.length; i++) {
-        if (scoreArray[i] === text) {
-          sum += (scoreArray[i] - 1) * bet;
-        }
-      }
-      let percent = getPercentFromText(text);
-      document.getElementById("profit").textContent =
-        "$" + Math.round(sum * currency).toFixed(2);
-      document.getElementById("bitProfit").value = Math.round(
-        (text - 1) * bet
-      ).toFixed(2);
-      document.getElementById("chance").value = percent * 100;
-      document.getElementById("overlay").style.display = "flex";
-    });
+    // container.on("mouseover", function (e) {
+    //   let sum = 0;
+    //   for (let i = 0; i < scoreArray.length; i++) {
+    //     if (scoreArray[i] === text) {
+    //       sum += (scoreArray[i] - 1) * bet;
+    //     }
+    //   }
+    //   let percent = getPercentFromText(text);
+    //   document.getElementById("profit").textContent =
+    //     "$" + Math.round(sum * currency).toFixed(2);
+    //   document.getElementById("bitProfit").value = Math.round(
+    //     (text - 1) * bet
+    //   ).toFixed(2);
+    //   document.getElementById("chance").value = percent * 100;
+    //   document.getElementById("overlay").style.display = "flex";
+    // });
 
-    container.on("mouseout", function (e) {
-      document.getElementById("overlay").style.display = "none";
+    // container.on("mouseout", function (e) {
+    //   document.getElementById("overlay").style.display = "none";
+    // });
+
+    container.on("mousedown", function (e) {
+      let target = getIndexFromText(text, x);
+      console.log(target);
+      add(rowNum, target);
     });
 
     metter.metter = {
@@ -471,6 +478,20 @@ export function Plinko(element) {
     return percentage_list[id];
   }
 
+  function getIndexFromText(text, x) {
+    let id = 0;
+    for (let i = 0; i < basket_list.length; i++) {
+      if (basket_list[i] === text) {
+        if (x <= canvasWidth / 2) {
+          id = basket_list.length - i;
+        } else {
+          id = i + 1;
+        }
+      }
+    }
+    return id;
+  }
+
   function searchRoute(rowNum, target) {
     let selfPos = 0;
     const result = [];
@@ -484,14 +505,16 @@ export function Plinko(element) {
         flag = 0;
       }
       if (flag === 0) {
-        last = Math.random() < 0.2 ? 6 : Math.random() < 0.4 ? 1 : 3;
+        // last = Math.random() < 0.2 ? 6 : Math.random() < 0.4 ? 1 : 3;
+        last = Math.random() < 0.5 ? 1 : 3;
         if (last === 6) {
           selfPos = 3;
         }
         gapLeft--;
       }
       if (flag === 1) {
-        last = Math.random() < 0.2 ? 6 : Math.random() < 0.4 ? 0 : 2;
+        last = Math.random() < 0.5 ? 0 : 2;
+        // last = Math.random() < 0.2 ? 6 : Math.random() < 0.4 ? 0 : 2;
         if (last === 6) {
           selfPos = 2;
         }
@@ -683,6 +706,10 @@ export function Plinko(element) {
     //   }
     //   col += increment;
     // }
+    if (rowNum === undefined) {
+      return;
+    }
+    rowNum = rowNum;
     let [routes, dirRoute] = searchRoute(rowNum, target);
     new Particle(canvasWidth / 2, 0, ParticleRadius, dirRoute);
   }

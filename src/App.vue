@@ -1,13 +1,17 @@
 <template>
   <div :class="'container'">
     <div :class="'spanstyle'">Bet Amount: {{ amount }}</div>
-    <input
-      :class="['baseStyle', { warning: isEmpty }]"
-      v-model="amount"
-      placeholder="0.0000"
-      type="number"
-      min="0"
-    />
+    <div :class="'betAmountContainer'">
+      <input
+        :class="['betAmountInput', { warning: isEmpty }]"
+        v-model="amount"
+        placeholder="0.0000"
+        type="number"
+        min="0"
+      />
+      <button :class="'betAmountTimesBtn-left'">1/2</button>
+      <button :class="'betAmountTimesBtn-right'">2x</button>
+    </div>
     <button :class="['baseStyle', 'betButton']" @click="bet">
       {{ isManualButton ? "Bet" : isAutoBetting ? "Stop Bet" : "Auto Bet" }}
     </button>
@@ -71,6 +75,29 @@
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
+
+.betAmountContainer {
+  display: flex;
+  flex-direction: row;
+}
+.betAmountTimesBtn-left {
+  width: 15%;
+  height: 30px;
+  background-color: #2f4553;
+  border: none;
+  color: #fff;
+  border-right: 2px solid #1a2c37;
+}
+
+.betAmountTimesBtn-right {
+  width: 15%;
+  height: 30px;
+  background-color: #2f4553;
+  border: none;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  color: #fff;
+}
 .baseStyle {
   width: 100%;
   height: 30px;
@@ -78,6 +105,17 @@
   border-radius: 4px;
   border: 2px solid #2f4553;
   color: #fff;
+  margin-bottom: 20px;
+}
+
+.betAmountInput {
+  width: 100%;
+  height: 30px;
+  background-color: #0f212e;
+  border: 2px solid #2f4553;
+  color: #fff;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
   margin-bottom: 20px;
 }
 input,
@@ -130,7 +168,7 @@ import { Plinko } from "./Plinko";
 const isManualButton = ref(true);
 const isAutoButton = ref(false);
 const isAutoBetting = ref(false);
-const isEmpty = ref(true);
+const isEmpty = ref(false);
 const amount = ref("0");
 const risk = ref("Low");
 const rows = ref("8");
