@@ -711,6 +711,7 @@ export function Plinko(element) {
     }
     rowNum = rowNum;
     let [routes, dirRoute] = searchRoute(rowNum, target);
+    console.log(dirRoute);
     new Particle(canvasWidth / 2, 0, ParticleRadius, dirRoute);
   }
 
