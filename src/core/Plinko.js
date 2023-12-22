@@ -15,7 +15,7 @@ export function Plinko(element) {
   const canvasWidth = element.offsetWidth;
   const canvasHeight = element.offsetHeight;
   const engine = Engine.create();
-  engine.timing.timeScale = 1;
+  engine.timing.timeScale = 1.5;
 
   const sceneObjects = [];
 
@@ -63,6 +63,7 @@ export function Plinko(element) {
   let scoreArray = [];
   let last = 0;
   let currency = 1300;
+  let originalY = 0;
   /********** End Local Variables  **********/
 
   /********** Begin Draw functions  **********/
@@ -170,31 +171,31 @@ export function Plinko(element) {
 
     sceneObjects.push(object);
     app.stage.addChild(container);
-    container.on("mouseover", function (e) {
-      let sum = 0;
-      for (let i = 0; i < scoreArray.length; i++) {
-        if (scoreArray[i] === text) {
-          sum += (scoreArray[i] - 1) * amountState;
-        }
-      }
-      let percent = globalFunc.selectFromText(
-        rowNumState,
-        levelState,
-        text,
-        "percent"
-      );
-      document.getElementById("profit").textContent =
-        "$" + Math.round(sum * currency).toFixed(2);
-      document.getElementById("bitProfit").value = Math.round(
-        (text - 1) * amountState
-      ).toFixed(2);
-      document.getElementById("chance").value = percent * 100;
-      document.getElementById("overlay").style.display = "flex";
-    });
+    // container.on("mouseover", function (e) {
+    //   let sum = 0;
+    //   for (let i = 0; i < scoreArray.length; i++) {
+    //     if (scoreArray[i] === text) {
+    //       sum += (scoreArray[i] - 1) * amountState;
+    //     }
+    //   }
+    //   let percent = globalFunc.selectFromText(
+    //     rowNumState,
+    //     levelState,
+    //     text,
+    //     "percent"
+    //   );
+    //   document.getElementById("profit").textContent =
+    //     "$" + Math.round(sum * currency).toFixed(2);
+    //   document.getElementById("bitProfit").value = Math.round(
+    //     (text - 1) * amountState
+    //   ).toFixed(2);
+    //   document.getElementById("chance").value = percent * 100;
+    //   document.getElementById("overlay").style.display = "flex";
+    // });
 
-    container.on("mouseout", function (e) {
-      document.getElementById("overlay").style.display = "none";
-    });
+    // container.on("mouseout", function (e) {
+    //   document.getElementById("overlay").style.display = "none";
+    // });
 
     container.on("mousedown", function (e) {
       let target = GetIndexFromText(text, x);
@@ -276,6 +277,8 @@ export function Plinko(element) {
       y: y,
       gap: gap,
     };
+
+    return object;
   }
   /********** End Draw functions  **********/
 
@@ -376,8 +379,7 @@ export function Plinko(element) {
     setTimeout(() => {
       app.stage.removeChild(graphics);
     }, 400);
-    
-    const originalY = body.position.y;
+
     const targetY = originalY + 10;
     if (body.position.y !== targetY) {
       const moveDownTween = new TWEEN.Tween(body.position)
@@ -453,7 +455,6 @@ export function Plinko(element) {
         flag = 0;
       }
       if (flag === 0) {
-        // last = Math.random() < 0.2 ? 6 : Math.random() < 0.4 ? 1 : 3;
         last = Math.random() < 0.5 ? 1 : 3;
         if (last === 6) {
           selfPos = 3;
@@ -462,7 +463,6 @@ export function Plinko(element) {
       }
       if (flag === 1) {
         last = Math.random() < 0.5 ? 0 : 2;
-        // last = Math.random() < 0.2 ? 6 : Math.random() < 0.4 ? 0 : 2;
         if (last === 6) {
           selfPos = 2;
         }
@@ -489,15 +489,35 @@ export function Plinko(element) {
 
     const startIndex = Math.max(scoreArray.length - 4, 0);
     const lastFourScores = scoreArray.slice(startIndex);
+    let objects = [];
 
     for (let i = 0; i < lastFourScores.length; i++) {
-      ScoreBoard(
+      const object = ScoreBoard(
         canvasWidth - 40,
         (canvasHeight / 2 + 30 * (i - 2)) / scale,
         50,
         lastFourScores[i]
       );
+      objects.push(object)
     }
+
+    for (let i = 0; i < lastFourScores.length; i++) {
+      const prevScoreboard = objects[i].sprite;
+      const targetY = (canvasHeight / 2 + 30 * (i - 2)) / scale;
+
+      if (prevScoreboard.tween) {
+        prevScoreboard.tween.stop();
+      }
+
+      prevScoreboard.tween = new TWEEN.Tween(prevScoreboard.position)
+        .to({ y: targetY }, 500)
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .start();
+    }
+
+    app.ticker.add(() => {
+      TWEEN.update();
+    });
   }
   /********** End Assist Functions  **********/
 
@@ -533,7 +553,6 @@ export function Plinko(element) {
     if (!body.road.id.includes(point.id)) {
       const road = body.road.list.shift();
       let velocity = { x: 0, y: 0 };
-      let timeScale = 1.5;
       if (road === 0) {
         velocity = { x: -3.2, y: -1.6 + Math.random() };
       } else if (road === 1) {
@@ -560,7 +579,6 @@ export function Plinko(element) {
         Body.setVelocity(body, velocity);
       }, 0);
 
-      engine.timing.timeScale = timeScale;
       body.road.id.push(point.id);
     } else {
       setTimeout(() => {
@@ -579,6 +597,7 @@ export function Plinko(element) {
     let col = 3;
     const increment = 1;
     const gap = GapWidth * 2 * MapGap;
+    originalY = rows.length * gap;
 
     for (let i = 1; i <= rows.length; i++) {
       const space = (canvasWidth - gap * col) / 2;
