@@ -1,0 +1,40 @@
+.footer-container {
+  width: 80vw;
+  height: 64px;
+  margin-top: 5px;
+  background-color: #0f212e;
+  display: flex;
+  align-items: center;
+}
+
+.button-group-container {
+  width: 25%;
+  display: flex;
+}
+.button-group {
+  background-color: transparent;
+  border: none;
+  margin-left: 20px;
+}
+
+.divider {
+  width: 2px;
+  height: 40px;
+  background-color: #2f4552;
+  margin-left: 20px;
+}
+
+.footer-image {
+  width: 69%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-span {
+  color: #b1bad3;
+  font-family: PingFang SC;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+}

@@ -1,5 +1,4 @@
 export function GlobalFunc() {
-
   const changePercent = (req) => {
     const sum = req.reduce((acc, val) => acc + val, 0);
     const res = req.map((val) => val / sum);
@@ -96,7 +95,7 @@ export function GlobalFunc() {
       460, 120, 16, 1,
     ]),
   };
-  
+
   const colors = {
     _8: [
       0xfa223e, 0xfa302f, 0xfa6020, 0xfa8f11, 0xfac000, 0xfa8f11, 0xfa6020,

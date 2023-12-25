@@ -1,0 +1,95 @@
+<template>
+  <div :class="'statistics-container'">
+    <button :class="'statistics-button'" @click="expandReward">
+      <div :class="'span-group'">
+        <span :class="'span-white'">Plinko</span>
+        <span :class="'span-gray'">Stake</span>
+        <span :class="'span-gray'">原创游戏</span>
+      </div>
+      <div :class="'reward'">
+        <img :src="'/image/cup.png'" alt="Image" width="16" height="16" />
+        <span :class="'span1'">1,000.00x</span>
+        <img :src="'/image/cap.png'" alt="Image" width="14" height="14" />
+        <span :class="'span2'">隐身 </span>
+      </div>
+      <img
+        :src="'/image/arrow.png'"
+        alt="Image"
+        width="16"
+        height="16"
+        id="arrow"
+        :class="{ rotate: expand }"
+      />
+    </button>
+    <div :class="'RewardTypeContainer'" v-if="expand">
+      <button
+        :class="['RewardTypeButton', { RewardTypeActive: active1 }]"
+        id="active1"
+        @click="activeButton('active1')"
+      >
+        大赢家
+      </button>
+      <button
+        :class="['RewardTypeButton', { RewardTypeActive: active2 }]"
+        id="active2"
+        @click="activeButton('active2')"
+      >
+        幸运赢家
+      </button>
+      <button
+        :class="['RewardTypeButton', { RewardTypeActive: active3 }]"
+        id="active3"
+        @click="activeButton('active3')"
+      >
+        挑战
+      </button>
+      <button
+        :class="['RewardTypeButton', { RewardTypeActive: active4 }]"
+        id="active4"
+        @click="activeButton('active4')"
+      >
+        描述
+      </button>
+    </div>
+    <div v-if="active1 && expand">
+      <BigReward />
+    </div>
+    <div v-if="active2 && expand">
+      <BigReward />
+    </div>
+    <div v-if="active3 && expand">
+      <Challenge />
+    </div>
+    <div v-if="active4 && expand">
+      <Persuade />
+    </div>
+  </div>
+</template>
+
+<style scoped>
+@import "../assets/css/statistics.css";
+</style>
+
+<script setup>
+import { ref } from "vue";
+import BigReward from "./Statistics/BigReward.vue";
+import Challenge from "./Statistics/Challenge.vue";
+import Persuade from "./Statistics/Persuade.vue";
+
+const expand = ref(false);
+const active1 = ref(true);
+const active2 = ref(false);
+const active3 = ref(false);
+const active4 = ref(false);
+
+const activeButton = (buttonId) => {
+  active1.value = buttonId === "active1";
+  active2.value = buttonId === "active2";
+  active3.value = buttonId === "active3";
+  active4.value = buttonId === "active4";
+};
+
+const expandReward = () => {
+  expand.value = !expand.value;
+};
+</script>

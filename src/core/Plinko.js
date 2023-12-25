@@ -69,7 +69,6 @@ export function Plinko(element) {
   let objects = [];
   let tweensArray = [];
 
-  const circle = new PIXI.Graphics();
   const mask = new PIXI.Graphics();
   /********** End Local Variables  **********/
 
@@ -330,7 +329,7 @@ export function Plinko(element) {
     }
 
     object.sprite.mask = mask;
-    
+
     return object;
   }
   /********** End Draw functions  **********/
@@ -574,12 +573,7 @@ export function Plinko(element) {
       const moveDown = new TWEEN.Tween(object.body.position)
         .to({ y: targetY }, 200)
         .easing(TWEEN.Easing.Quadratic.Out)
-        .start()
-        .onComplete(() => {
-          if (object.body.position.y > canvasHeight / 3 / scale + 80 / scale) {
-            object.sprite.mask = mask;
-          }
-        });
+        .start();
       tweensArray.push(moveDown);
     }
   }
@@ -701,9 +695,7 @@ export function Plinko(element) {
     app.stage.position._x += ((1 - scale) * canvasWidth) / 2;
     stageLength = app.stage.children.length;
 
-    circle.clear();
     mask.clear();
-    // circle.beginFill(0x0f212e);
     mask.beginFill(0x0f212e);
     mask.drawRect(
       canvasWidth - 100 + 20 * (rowNumState - 8),
@@ -711,7 +703,7 @@ export function Plinko(element) {
       100 / scale,
       110 / scale
     );
-    mask.endFill();    
+    mask.endFill();
     app.stage.addChild(mask);
   }
 

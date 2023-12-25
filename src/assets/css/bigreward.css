@@ -1,0 +1,24 @@
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  color: #b1bad3;
+  font-family: PingFang SC;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-left: 2%;
+  width: 96%;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #213743;
+  border-radius: 4px;
+}

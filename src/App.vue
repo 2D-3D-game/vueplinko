@@ -86,6 +86,8 @@
       }}
     </button>
   </div>
+  <Footer />
+  <Statistics />
 </template>
 
 <style scoped>
@@ -96,6 +98,8 @@
 import { ref, onMounted } from "vue";
 import { Plinko } from "./core/Plinko";
 import { GlobalFunc } from "./core/GlobalFunc";
+import Footer from "./components/Footer.vue";
+import Statistics from "./components/Statistics.vue";
 
 const isManualButton = ref(true);
 const isAutoButton = ref(false);
