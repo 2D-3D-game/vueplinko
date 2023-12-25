@@ -156,7 +156,7 @@ const bet = () => {
 };
 
 const startInterval = () => {
-  intervalId = setInterval(dropParticle, 500);
+  intervalId = setInterval(dropParticle, 300);
 };
 
 const stopInterval = () => {

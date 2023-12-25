@@ -60,10 +60,14 @@ export function Plinko(element) {
   let levelState = "Low";
   let rowNumState = 8;
   let numState = 0;
-  let scoreArray = [];
   let last = 0;
   let currency = 1300;
   let originalY = 0;
+  let stageLength = 0;
+
+  let scoreArray = [];
+  let objects = [];
+  let tweensArray = [];
   /********** End Local Variables  **********/
 
   /********** Begin Draw functions  **********/
@@ -217,8 +221,7 @@ export function Plinko(element) {
     };
 
     const metter = Bodies.rectangle(x, y, gap, gap, options);
-    metter.label = "basket";
-    Composite.add(engine.world, metter);
+    metter.label = "scoreboard";
 
     if (text === undefined) {
       return;
@@ -233,14 +236,11 @@ export function Plinko(element) {
 
     const rectangle = new PIXI.Graphics();
     rectangle.beginFill(color);
-
-    const cornerRadius = (gap * 10) / 120;
-    rectangle.drawRoundedRect(
+    rectangle.drawRect(
       -gap / 2 / scale,
       -gap / 4 / scale,
       (gap - 4) / scale,
-      gap / 2 / scale,
-      cornerRadius
+      gap / 2 / scale
     );
     rectangle.endFill();
 
@@ -278,6 +278,52 @@ export function Plinko(element) {
       gap: gap,
     };
 
+    if (parseFloat(text) > 1) {
+      const graphics = new PIXI.Graphics();
+
+      var reqAnim;
+      var breathSpeed = 2;
+      var rMax = 15;
+      var rMin = 0;
+      var r = rMin;
+      var opacity = 0.7;
+      var rDiff = rMax - rMin;
+      var opacityIncr = 1 / rDiff / 1.2;
+
+      animate();
+
+      function animate() {
+        graphics.clear();
+        graphics.lineStyle(r, color, opacity);
+        graphics.beginFill(0, 0);
+
+        const rectWidth = gap / scale;
+        const rectHeight = gap / 2 / scale;
+        const rectX = x - rectWidth / 2;
+        const rectY = y + 25 / scale - rectHeight / 2;
+        graphics.drawRoundedRect(rectX, rectY, rectWidth, rectHeight, 5);
+        graphics.endFill();
+
+        app.stage.addChild(graphics);
+        if (r === rMax) {
+          cancelAnimationFrame(reqAnim);
+          reqAnim = undefined;
+          return;
+        }
+        r += breathSpeed;
+        opacity -= opacityIncr;
+        reqAnim = requestAnimationFrame(animate);
+      }
+
+      setTimeout(() => {
+        if (reqAnim) {
+          cancelAnimationFrame(reqAnim);
+          reqAnim = undefined;
+        }
+        graphics.destroy();
+      }, 400);
+    }
+
     return object;
   }
   /********** End Draw functions  **********/
@@ -298,14 +344,6 @@ export function Plinko(element) {
     animate();
     function animate() {
       graphics.clear();
-      if (
-        localStorage.getItem("style") &&
-        localStorage.getItem("style") == "light"
-      ) {
-        graphics.lineStyle(r, 0xb2de27, opacity);
-      } else {
-        graphics.lineStyle(r, 0xffffff, opacity);
-      }
       graphics.lineStyle(r, 0xb2de27, opacity);
       graphics.beginFill(0, 0);
       graphics.drawCircle(
@@ -325,9 +363,12 @@ export function Plinko(element) {
       opacity -= opacityIncr;
       reqAnim = requestAnimationFrame(animate);
     }
-
     setTimeout(() => {
-      app.stage.removeChild(graphics);
+      if (reqAnim) {
+        cancelAnimationFrame(reqAnim);
+        reqAnim = undefined;
+      }
+      graphics.destroy();
     }, 400);
   }
 
@@ -377,7 +418,11 @@ export function Plinko(element) {
     }
 
     setTimeout(() => {
-      app.stage.removeChild(graphics);
+      if (reqAnim) {
+        cancelAnimationFrame(reqAnim);
+        reqAnim = undefined;
+      }
+      graphics.destroy();
     }, 400);
 
     const targetY = originalY + 10;
@@ -483,41 +528,59 @@ export function Plinko(element) {
   }
 
   function UpdateScore(body) {
+    let lastPos = canvasHeight / 3 / scale - 25 / scale;
+    if (objects.length > 1) {
+      lastPos = objects[objects.length - 1].body.position.y - 25 / scale;
+    }
     const text = body.metter.text;
     scoreState += (text - 1) * 100;
     scoreArray.push(text);
+    const object = ScoreBoard(
+      canvasWidth - 40 + 20 * (rowNumState - 8),
+      lastPos,
+      50,
+      text
+    );
 
-    const startIndex = Math.max(scoreArray.length - 4, 0);
-    const lastFourScores = scoreArray.slice(startIndex);
-    let objects = [];
+    stopTween();
+    objects.push(object);
+    tweenUpdate();
+  }
 
-    for (let i = 0; i < lastFourScores.length; i++) {
-      const object = ScoreBoard(
-        canvasWidth - 40,
-        (canvasHeight / 2 + 30 * (i - 2)) / scale,
-        50,
-        lastFourScores[i]
-      );
-      objects.push(object)
+  function stopTween() {
+    for (let i = 0; i < tweensArray.length; i++) {
+      tweensArray[i].stop();
     }
+    tweensArray = [];
+    removeScoreboard();
+  }
 
-    for (let i = 0; i < lastFourScores.length; i++) {
-      const prevScoreboard = objects[i].sprite;
-      const targetY = (canvasHeight / 2 + 30 * (i - 2)) / scale;
-
-      if (prevScoreboard.tween) {
-        prevScoreboard.tween.stop();
-      }
-
-      prevScoreboard.tween = new TWEEN.Tween(prevScoreboard.position)
-        .to({ y: targetY }, 500)
+  function tweenUpdate() {
+    let distance = -25 / scale;
+    if (objects.length > 1) {
+      distance =
+        objects[objects.length - 1].body.position.y - canvasHeight / 3 / scale;
+    }
+    for (let i = 0; i < objects.length; i++) {
+      const targetY = objects[i].body.position.y - distance;
+      const object = objects[i];
+      const moveDown = new TWEEN.Tween(object.body.position)
+        .to({ y: targetY }, 200)
         .easing(TWEEN.Easing.Quadratic.Out)
         .start();
+      tweensArray.push(moveDown);
     }
+  }
 
-    app.ticker.add(() => {
-      TWEEN.update();
-    });
+  function removeScoreboard() {
+    for (let i = 0; i < objects.length; i++) {
+      if (objects[i].body.position.y > canvasHeight / 3 / scale + 100 / scale) {
+        const object = objects.splice(i, 1);
+        app.stage.removeChild(object[0].sprite);
+        delete object[0];
+        i--;
+      }
+    }
   }
   /********** End Assist Functions  **********/
 
@@ -527,8 +590,12 @@ export function Plinko(element) {
     for (let i = 0; i < pairs.length; i++) {
       const bodyA = pairs[i].bodyA;
       const bodyB = pairs[i].bodyB;
-      if (bodyA.label === "point") new Splash(bodyA);
-      if (bodyB.label === "point") new Splash(bodyB);
+      if (bodyA.label === "point") {
+        Splash(bodyA);
+      }
+      if (bodyB.label === "point") {
+        Splash(bodyB);
+      }
       if (bodyA.label === "particle" && bodyB.label === "point") {
         Road(bodyA, bodyB);
       }
@@ -537,12 +604,12 @@ export function Plinko(element) {
       }
       if (bodyA.label === "basket" && bodyB.label === "particle") {
         RemoveParticle(bodyB);
-        new BasketSplash(bodyA);
+        BasketSplash(bodyA);
         UpdateScore(bodyA);
       }
       if (bodyB.label === "basket" && bodyA.label === "particle") {
         RemoveParticle(bodyA);
-        new BasketSplash(bodyB);
+        BasketSplash(bodyB);
         UpdateScore(bodyB);
       }
     }
@@ -620,6 +687,21 @@ export function Plinko(element) {
     scale = 9 / rows.length;
     app.stage.scale.set(scale);
     app.stage.position._x += ((1 - scale) * canvasWidth) / 2;
+    stageLength = app.stage.children.length;
+
+    // var graphics = new PIXI.Graphics();
+    // graphics.beginFill(0x848484);
+    // graphics.drawPolygon([0, 0, 100, 0, 100, 100, 0, 100, 0, 0]);
+    // graphics.endFill();
+
+    // var dropShadowFilter = new PIXI.filters.DropShadowFilter();
+    // dropShadowFilter.alpha = 1;
+    // dropShadowFilter.blur = 2;
+    // dropShadowFilter.distance = 20;
+
+    // graphics.filters = [dropShadowFilter];
+
+    // stage.addChild(graphics);
   }
 
   function add(target) {
@@ -637,7 +719,9 @@ export function Plinko(element) {
       if (sceneObjects[i].body.id === body.id) {
         Composite.remove(engine.world, sceneObjects[i].body);
         app.stage.removeChild(sceneObjects[i].sprite);
+        delete sceneObjects[i];
         sceneObjects.splice(i, 1);
+        break;
       }
     }
   }
