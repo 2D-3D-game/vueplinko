@@ -68,6 +68,9 @@ export function Plinko(element) {
   let scoreArray = [];
   let objects = [];
   let tweensArray = [];
+
+  const circle = new PIXI.Graphics();
+  const mask = new PIXI.Graphics();
   /********** End Local Variables  **********/
 
   /********** Begin Draw functions  **********/
@@ -567,7 +570,12 @@ export function Plinko(element) {
       const moveDown = new TWEEN.Tween(object.body.position)
         .to({ y: targetY }, 200)
         .easing(TWEEN.Easing.Quadratic.Out)
-        .start();
+        .start()
+        .onComplete(() => {
+          if (object.body.position.y > canvasHeight / 3 / scale + 80 / scale) {
+            object.sprite.mask = mask;
+          }
+        });
       tweensArray.push(moveDown);
     }
   }
@@ -689,19 +697,19 @@ export function Plinko(element) {
     app.stage.position._x += ((1 - scale) * canvasWidth) / 2;
     stageLength = app.stage.children.length;
 
-    // var graphics = new PIXI.Graphics();
-    // graphics.beginFill(0x848484);
-    // graphics.drawPolygon([0, 0, 100, 0, 100, 100, 0, 100, 0, 0]);
-    // graphics.endFill();
-
-    // var dropShadowFilter = new PIXI.filters.DropShadowFilter();
-    // dropShadowFilter.alpha = 1;
-    // dropShadowFilter.blur = 2;
-    // dropShadowFilter.distance = 20;
-
-    // graphics.filters = [dropShadowFilter];
-
-    // stage.addChild(graphics);
+    circle.clear();
+    mask.clear();
+    circle.beginFill(0x0f212e);
+    // circle.beginFill(0xffffff);
+    circle.drawRect(
+      canvasWidth - 100 + 20 * (rowNumState - 8),
+      canvasHeight / 3 / scale + 88 / scale,
+      100 / scale,
+      80 / scale
+    );
+    circle.endFill();
+    app.stage.addChild(circle);
+    mask.beginFill(0x0f212e).drawRect(100, 100, 100, 100).endFill();
   }
 
   function add(target) {
@@ -712,6 +720,9 @@ export function Plinko(element) {
   function clear() {
     Composite.clear(engine.world);
     app.stage.removeChildren();
+    app.stage.children.forEach(function (child) {
+      child.destroy(true);
+    });
   }
 
   function RemoveParticle(body) {
