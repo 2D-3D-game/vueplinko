@@ -262,6 +262,8 @@ export function Plinko(element) {
     container.position.y = y;
     container.interactive = true;
     container.buttonMode = true;
+    rectangle.blendMode = PIXI.BLEND_MODES.NORMAL;
+    label.blendMode = PIXI.BLEND_MODES.NORMAL;
     container.addChild(rectangle);
     container.addChild(label);
 
@@ -327,6 +329,8 @@ export function Plinko(element) {
       }, 400);
     }
 
+    object.sprite.mask = mask;
+    
     return object;
   }
   /********** End Draw functions  **********/
@@ -699,17 +703,16 @@ export function Plinko(element) {
 
     circle.clear();
     mask.clear();
-    circle.beginFill(0x0f212e);
-    // circle.beginFill(0xffffff);
-    circle.drawRect(
+    // circle.beginFill(0x0f212e);
+    mask.beginFill(0x0f212e);
+    mask.drawRect(
       canvasWidth - 100 + 20 * (rowNumState - 8),
-      canvasHeight / 3 / scale + 88 / scale,
+      canvasHeight / 3 / scale - 25 / scale,
       100 / scale,
-      80 / scale
+      110 / scale
     );
-    circle.endFill();
-    app.stage.addChild(circle);
-    mask.beginFill(0x0f212e).drawRect(100, 100, 100, 100).endFill();
+    mask.endFill();    
+    app.stage.addChild(mask);
   }
 
   function add(target) {
