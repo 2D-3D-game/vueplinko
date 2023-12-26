@@ -16,48 +16,54 @@
         自动投注
       </button>
     </div>
-    <div :class="'spanstyle'">投注额: {{ amount }}</div>
-    <div :class="'betAmountContainer'">
-      <input
-        :class="['betAmountInput', { warning: isEmpty }]"
-        v-model="amount"
-        placeholder="0.0000"
-        type="number"
-        min="0"
-        @change="changeState"
-      />
-      <button :class="'betAmountTimesBtn-left'" @click="betAmountTimes(0.5)">
-        1/2
-      </button>
-      <button :class="'betAmountTimesBtn-right'" @click="betAmountTimes(2)">
-        2x
-      </button>
-      <img
-        :src="'/image/bit.png'"
-        width="16"
-        height="16"
-        alt="Image"
-        :class="'bitImage'"
-      />
+    <div :class="'amountorder'">
+      <div :class="'spanstyle'">投注额: {{ amount }}</div>
+      <div :class="'betAmountContainer'">
+        <input
+          :class="['betAmountInput', { warning: isEmpty }]"
+          v-model="amount"
+          placeholder="0.0000"
+          type="number"
+          min="0"
+          @change="changeState"
+        />
+        <button :class="'betAmountTimesBtn-left'" @click="betAmountTimes(0.5)">
+          1/2
+        </button>
+        <button :class="'betAmountTimesBtn-right'" @click="betAmountTimes(2)">
+          2x
+        </button>
+        <img
+          :src="'/image/bit.png'"
+          width="16"
+          height="16"
+          alt="Image"
+          :class="'bitImage'"
+        />
+      </div>
     </div>
-    <div :class="'spanstyle'">风险:</div>
-    <select :class="'baseStyle'" v-model="level" @change="changeState">
-      <option value="Low">下等</option>
-      <option value="Medium">中等</option>
-      <option value="High">上等</option>
-    </select>
-    <div :class="'spanstyle'">排数:</div>
-    <select :class="'baseStyle'" v-model="rows" @change="changeState">
-      <option value="8">8</option>
-      <option value="9">9</option>
-      <option value="10">10</option>
-      <option value="11">11</option>
-      <option value="12">12</option>
-      <option value="13">13</option>
-      <option value="14">14</option>
-      <option value="15">15</option>
-      <option value="16">16</option>
-    </select>
+    <div :class="'levelorder'">
+      <div :class="'spanstyle'">风险:</div>
+      <select :class="'baseStyle'" v-model="level" @change="changeState">
+        <option value="Low">下等</option>
+        <option value="Medium">中等</option>
+        <option value="High">上等</option>
+      </select>
+    </div>
+    <div :class="'roworder'">
+      <div :class="'spanstyle'">排数:</div>
+      <select :class="'baseStyle'" v-model="rows" @change="changeState">
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+      </select>
+    </div>
     <div :class="'betNumberContainer'" v-if="isAutoButton">
       <div :class="'spanstyle'">投注次数:</div>
       <input
@@ -76,15 +82,17 @@
         :class="'infinitiveImage'"
       />
     </div>
-    <button :class="['baseStyle', 'betButton']" @click="bet">
-      {{
-        isManualButton
-          ? "投注"
-          : isAutoBetting
-          ? "停止自动投注"
-          : "开始自动投注"
-      }}
-    </button>
+    <div :class="'betbuttonorder'">
+      <button :class="['baseStyle', 'betButton']" @click="bet">
+        {{
+          isManualButton
+            ? "投注"
+            : isAutoBetting
+            ? "停止自动投注"
+            : "开始自动投注"
+        }}
+      </button>
+    </div>
   </div>
   <Footer />
   <Statistics />
@@ -95,7 +103,7 @@
 </style>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { Plinko } from "./core/Plinko";
 import { GlobalFunc } from "./core/GlobalFunc";
 import Footer from "./components/Footer.vue";

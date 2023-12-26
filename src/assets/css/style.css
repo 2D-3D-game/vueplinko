@@ -8,15 +8,16 @@ body {
   color: "#FFF";
 }
 
-.container {
+.mycontainer {
   display: flex;
   flex-direction: row;
 }
 
-.container .app-container {
+.mycontainer .app-container {
   margin-left: 10vw;
   width: 20vw;
   height: 80vh;
+  order: 1;
 }
 
 .canvas {
@@ -24,28 +25,9 @@ body {
   height: 80vh;
   margin: 0 auto;
   color: #fff;
-  background-color: #0f212e;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-.scourBoard-container {
-  display: none;
-  flex-direction: column;
-  width: 50px;
-  height: 120px;
-  background-color: #ff0000;
-  position: absolute;
-  top: 35vh;
-  right: 15vw;
-  border-radius: 5px;
-}
-
-.scourBoard {
-  width: 50px;
-  height: 30px;
-  background-color: #fff;
-  border: 1px solid #000000;
+  border-radius: 0px 8px 0px 0px;
+  background: #0f212e;
+  order: 2;
 }
 
 .overlay-container {
@@ -87,4 +69,69 @@ body {
   border: none;
   border-radius: 5px;
   color: #fff;
+}
+
+@media screen and (max-width: 920px) {
+  .mycontainer {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+  }
+
+  .mycontainer .app-container {
+    width: 400px;
+    height: 500px;
+    order: 2;
+    margin-left: 0;
+    position: relative;
+  }
+
+  .canvas {
+    width: 400px;
+    height: 310px;
+    border-radius: 8px 8px 0px 0px;
+    order: 1;
+    margin-top: 10px;
+  }
+
+  /* .overlay-container {
+    position: absolute;
+    bottom: 18vh;
+    left: 40vw;
+    width: 36vw;
+    background-color: #082537;
+    pointer-events: none;
+    border-radius: 5px;
+    border: 1px solid #000000;
+    flex-direction: row;
+    gap: 10px;
+    padding: 20px;
+    display: none;
+  }
+
+  .profit-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    width: 100%;
+  }
+
+  .span-group {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .span-color {
+    color: #fff;
+  }
+
+  .profit-input {
+    background-color: #05121c;
+    height: 30px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+  } */
 }

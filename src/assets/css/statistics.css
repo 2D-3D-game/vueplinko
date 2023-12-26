@@ -103,3 +103,17 @@
 .rotate {
   transform: rotate(-90deg);
 }
+
+@media screen and (max-width: 920px) {
+  .statistics-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    align-self: center;
+    margin-top: 10px;
+    background-color: #0f212e;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+}

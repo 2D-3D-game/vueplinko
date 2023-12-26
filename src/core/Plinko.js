@@ -52,6 +52,7 @@ export function Plinko(element) {
   const GapWidth = globalFunc.initialDrawValue.GapWidth;
   const PointRadius = globalFunc.initialDrawValue.PointRadius;
   const MapGap = globalFunc.initialDrawValue.MapGap;
+  const screenResolution = window.innerWidth > 920 ? 1 : 2;
   /********** End Global Variables  **********/
 
   /********** Begin Local Variables  **********/
@@ -690,7 +691,7 @@ export function Plinko(element) {
       }
       col += increment;
     }
-    scale = 9 / rows.length;
+    scale = 9 / rows.length / screenResolution;
     app.stage.scale.set(scale);
     app.stage.position._x += ((1 - scale) * canvasWidth) / 2;
     stageLength = app.stage.children.length;
@@ -705,6 +706,17 @@ export function Plinko(element) {
     );
     mask.endFill();
     app.stage.addChild(mask);
+
+    const rectangle = new PIXI.Graphics();
+    rectangle.beginFill(0xffffff);
+    rectangle.drawRect(
+      -gap / 2 / scale,
+      -gap / 4 / scale,
+      (gap - 4) / scale,
+      gap / 2 / scale
+    );
+    rectangle.endFill();
+    rectangle.mask = mask;
   }
 
   function add(target) {
