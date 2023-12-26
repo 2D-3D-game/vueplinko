@@ -103,7 +103,7 @@
 </style>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from "vue";
+import { ref, onMounted, onUnmounted, reactive } from "vue";
 import { Plinko } from "./core/Plinko";
 import { GlobalFunc } from "./core/GlobalFunc";
 import Footer from "./components/Footer.vue";

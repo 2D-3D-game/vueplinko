@@ -542,12 +542,22 @@ export function Plinko(element) {
     const text = body.metter.text;
     scoreState += (text - 1) * 100;
     scoreArray.push(text);
-    const object = ScoreBoard(
-      canvasWidth - 40 + 20 * (rowNumState - 8),
-      lastPos,
-      50,
-      text
-    );
+
+    console.log(scale);
+    const object =
+      screenResolution === 1
+        ? ScoreBoard(
+            canvasWidth - 40 + 20 * (rowNumState - 8),
+            lastPos,
+            50,
+            text
+          )
+        : ScoreBoard(
+            canvasWidth + 120 * 0.5 / scale + 10 * (rowNumState - 8),
+            lastPos,
+            50,
+            text
+          );
 
     stopTween();
     objects.push(object);
@@ -697,13 +707,20 @@ export function Plinko(element) {
     stageLength = app.stage.children.length;
 
     mask.clear();
-    mask.beginFill(0x0f212e);
-    mask.drawRect(
-      canvasWidth - 100 + 20 * (rowNumState - 8),
-      canvasHeight / 3 / scale - 25 / scale,
-      100 / scale,
-      110 / scale
-    );
+    mask.beginFill(0xffffff);
+    screenResolution === 1
+      ? mask.drawRect(
+          canvasWidth - 100 + 20 * (rowNumState - 8),
+          canvasHeight / 3 / scale - 25 / scale,
+          100 / scale,
+          110 / scale
+        )
+      : mask.drawRect(
+          canvasWidth + 10 * (rowNumState - 8),
+          canvasHeight / 3 / scale - 25 / scale,
+          100 / scale,
+          110 / scale
+        );
     mask.endFill();
     app.stage.addChild(mask);
 
