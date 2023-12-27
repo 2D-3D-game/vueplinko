@@ -321,9 +321,9 @@ export function Plinko(element) {
         graphics.beginFill(0, 0);
 
         const rectWidth = gap / scale;
-        const rectHeight = gap / 2 / scale;
+        const rectHeight = gap / scale;
         const rectX = x - rectWidth / 2;
-        const rectY = y + 25 / scale - rectHeight / 2;
+        const rectY = y + 25 / scale;
         graphics.drawRoundedRect(rectX, rectY, rectWidth, rectHeight, 5);
         graphics.endFill();
 
@@ -413,14 +413,7 @@ export function Plinko(element) {
 
     function animate() {
       graphics.clear();
-      if (
-        localStorage.getItem("style") &&
-        localStorage.getItem("style") == "light"
-      ) {
-        graphics.lineStyle(r, body.metter.color, opacity);
-      } else {
-        graphics.lineStyle(r, body.metter.color, opacity);
-      }
+      graphics.lineStyle(r, body.metter.color, opacity);
       graphics.beginFill(0, 0);
 
       const rectWidth = 60;
