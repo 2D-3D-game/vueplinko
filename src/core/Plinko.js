@@ -12,8 +12,10 @@ export function Plinko(element) {
   const Body = Matter.Body;
   const Composite = Matter.Composite;
   const Events = Matter.Events;
-  const canvasWidth = element.offsetWidth;
-  const canvasHeight = element.offsetHeight;
+  // const canvasWidth = element.offsetWidth;
+  // const canvasHeight = element.offsetHeight;
+  const canvasWidth = 700;
+  const canvasHeight = 630;
   const engine = Engine.create();
   engine.timing.timeScale = 1.5;
 
@@ -52,7 +54,6 @@ export function Plinko(element) {
   const GapWidth = globalFunc.initialDrawValue.GapWidth;
   const PointRadius = globalFunc.initialDrawValue.PointRadius;
   const MapGap = globalFunc.initialDrawValue.MapGap;
-  const screenResolution = window.innerWidth > 920 ? 1 : 2;
   /********** End Global Variables  **********/
 
   /********** Begin Local Variables  **********/
@@ -65,6 +66,11 @@ export function Plinko(element) {
   let currency = 1300;
   let originalY = 0;
   let stageLength = 0;
+
+  let maskX = 0;
+  let maskY = 0;
+  let maskWidth = 0;
+  let maskHeight = 0;
 
   let scoreArray = [];
   let objects = [];
@@ -140,22 +146,35 @@ export function Plinko(element) {
       "color"
     );
 
+    let fontSize = 14;
+
     const rectangle = new PIXI.Graphics();
     rectangle.beginFill(color);
 
     const cornerRadius = (gap * 10) / 120;
-    rectangle.drawRoundedRect(
-      -gap / 2,
-      -gap / 4,
-      gap - 4,
-      gap / 2,
-      cornerRadius
-    );
+    if (window.innerWidth < 920) {
+      rectangle.drawRoundedRect(
+        -gap / 2,
+        -gap / 6 / scale,
+        gap - 4,
+        (2 * gap) / 6 / scale,
+        cornerRadius
+      );
+      fontSize = 7;
+    } else {
+      rectangle.drawRoundedRect(
+        -gap / 2,
+        -gap / 3 / scale,
+        gap - 4,
+        (2 * gap) / 3 / scale,
+        cornerRadius
+      );
+    }
     rectangle.endFill();
 
     const style = new PIXI.TextStyle({
       fontFamily: "Arial",
-      fontSize: 14,
+      fontSize: fontSize / scale,
       fill: "#000000",
       align: "center",
     });
@@ -222,7 +241,6 @@ export function Plinko(element) {
     const options = {
       isStatic: true,
     };
-
     const metter = Bodies.rectangle(x, y, gap, gap, options);
     metter.label = "scoreboard";
 
@@ -241,9 +259,9 @@ export function Plinko(element) {
     rectangle.beginFill(color);
     rectangle.drawRect(
       -gap / 2 / scale,
-      -gap / 4 / scale,
-      (gap - 4) / scale,
-      gap / 2 / scale
+      -gap / 2 / scale,
+      gap / scale,
+      gap / scale
     );
     rectangle.endFill();
 
@@ -535,29 +553,25 @@ export function Plinko(element) {
   }
 
   function UpdateScore(body) {
-    let lastPos = canvasHeight / 3 / scale - 25 / scale;
+    let lastPos = canvasHeight / 3 / scale - 50 / scale;
     if (objects.length > 1) {
-      lastPos = objects[objects.length - 1].body.position.y - 25 / scale;
+      lastPos = objects[objects.length - 1].body.position.y - 50 / scale;
+    }
+    if (window.innerWidth < 920) {
+      lastPos = canvasHeight / 8 / scale - 35 / scale / 2;
+      if (objects.length > 1) {
+        lastPos = objects[objects.length - 1].body.position.y - 35 / scale;
+      }
     }
     const text = body.metter.text;
     scoreState += (text - 1) * 100;
     scoreArray.push(text);
-
-    console.log(scale);
-    const object =
-      screenResolution === 1
-        ? ScoreBoard(
-            canvasWidth - 40 + 20 * (rowNumState - 8),
-            lastPos,
-            50,
-            text
-          )
-        : ScoreBoard(
-            canvasWidth + 120 * 0.5 / scale + 10 * (rowNumState - 8),
-            lastPos,
-            50,
-            text
-          );
+    const object = ScoreBoard(
+      maskX + maskWidth / 2,
+      lastPos,
+      maskWidth * scale,
+      text
+    );
 
     stopTween();
     objects.push(object);
@@ -573,10 +587,19 @@ export function Plinko(element) {
   }
 
   function tweenUpdate() {
-    let distance = -25 / scale;
+    let distance = -50 / scale;
     if (objects.length > 1) {
       distance =
         objects[objects.length - 1].body.position.y - canvasHeight / 3 / scale;
+    }
+    if (window.innerWidth < 920) {
+      distance = -35 / scale;
+      if (objects.length > 1) {
+        distance =
+          objects[objects.length - 1].body.position.y -
+          canvasHeight / 8 / scale -
+          maskHeight / 8;
+      }
     }
     for (let i = 0; i < objects.length; i++) {
       const targetY = objects[i].body.position.y - distance;
@@ -591,11 +614,26 @@ export function Plinko(element) {
 
   function removeScoreboard() {
     for (let i = 0; i < objects.length; i++) {
-      if (objects[i].body.position.y > canvasHeight / 3 / scale + 100 / scale) {
-        const object = objects.splice(i, 1);
-        app.stage.removeChild(object[0].sprite);
-        delete object[0];
-        i--;
+      if (window.innerWidth < 920) {
+        if (
+          objects[i].body.position.y >
+          canvasHeight / 8 / scale + 150 / scale
+        ) {
+          const object = objects.splice(i, 1);
+          app.stage.removeChild(object[0].sprite);
+          delete object[0];
+          i--;
+        }
+      } else {
+        if (
+          objects[i].body.position.y >
+          canvasHeight / 3 / scale + 200 / scale
+        ) {
+          const object = objects.splice(i, 1);
+          app.stage.removeChild(object[0].sprite);
+          delete object[0];
+          i--;
+        }
       }
     }
   }
@@ -676,6 +714,10 @@ export function Plinko(element) {
   }
 
   function map() {
+    let newCanvasHeight = element.offsetHeight;
+    let newWidth = window.innerWidth;
+    let heightScale = newCanvasHeight / canvasHeight;
+
     let rows = globalFunc.baskets[levelState]["_" + rowNumState];
     app.stage.position._x = 0;
     let col = 3;
@@ -683,6 +725,8 @@ export function Plinko(element) {
     const gap = GapWidth * 2 * MapGap;
     originalY = rows.length * gap;
 
+    clear();
+    scale = (9 * heightScale) / rows.length;
     for (let i = 1; i <= rows.length; i++) {
       const space = (canvasWidth - gap * col) / 2;
       for (let j = 1; j <= col; j++) {
@@ -701,26 +745,36 @@ export function Plinko(element) {
       }
       col += increment;
     }
-    scale = 9 / rows.length / screenResolution;
     app.stage.scale.set(scale);
-    app.stage.position._x += ((1 - scale) * canvasWidth) / 2;
+    if (newWidth > 920) {
+      app.stage.position.x = ((1 - scale) * canvasWidth) / 2;
+    } else {
+      app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 150;
+    }
     stageLength = app.stage.children.length;
 
     mask.clear();
     mask.beginFill(0xffffff);
-    screenResolution === 1
-      ? mask.drawRect(
-          canvasWidth - 100 + 20 * (rowNumState - 8),
-          canvasHeight / 3 / scale - 25 / scale,
-          100 / scale,
-          110 / scale
-        )
-      : mask.drawRect(
-          canvasWidth + 10 * (rowNumState - 8),
-          canvasHeight / 3 / scale - 25 / scale,
-          100 / scale,
-          110 / scale
-        );
+    if (newWidth > 920) {
+      if (scale === 1) {
+        maskX = 600;
+        maskY = canvasHeight / 3 / scale - 25 / scale;
+        maskHeight = 200 / scale;
+        maskWidth = 50 / scale;
+      } else {
+        maskX = app.stage.position.x / (1 - scale) + 200 / scale + 50 / scale;
+        maskY = canvasHeight / 3 / scale - 25 / scale;
+        maskHeight = 200 / scale;
+        maskWidth = 50 / scale;
+      }
+    } else {
+      maskX =
+        canvasWidth / scale / 2 + 5 / scale - app.stage.position.x / scale;
+      maskY = canvasHeight / 8 / scale;
+      maskHeight = 140 / scale;
+      maskWidth = 35 / scale;
+    }
+    mask.drawRoundedRect(maskX, maskY, maskWidth, maskHeight, 10 / scale);
     mask.endFill();
     app.stage.addChild(mask);
 

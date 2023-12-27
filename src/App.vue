@@ -94,7 +94,7 @@
       </button>
     </div>
   </div>
-  <Footer />
+  <Setting />
   <Statistics />
 </template>
 
@@ -106,7 +106,7 @@
 import { ref, onMounted, onUnmounted, reactive } from "vue";
 import { Plinko } from "./core/Plinko";
 import { GlobalFunc } from "./core/GlobalFunc";
-import Footer from "./components/Footer.vue";
+import Setting from "./components/Setting.vue";
 import Statistics from "./components/Statistics.vue";
 
 const isManualButton = ref(true);
@@ -118,6 +118,8 @@ const level = ref("Low");
 const rows = ref("8");
 const numberofbet = ref(0);
 let intervalId;
+
+let initialWidth = window.innerWidth;
 
 const plinko = Plinko(document.body.querySelector("#canvas"));
 plinko.map();
@@ -201,6 +203,16 @@ const betAmountTimes = (times) => {
   amount.value = amount.value * times;
 };
 
+const changeWidth = () => {
+  setInterval(() => {
+    let w = window.innerWidth;
+    if (w !== initialWidth) {
+      plinko.map();
+      initialWidth = w;
+    }
+  }, 200);
+};
+
 onMounted(() => {
   plinko.GetSettings(
     amount.value,
@@ -209,5 +221,6 @@ onMounted(() => {
     numberofbet.value,
     1000
   );
+  changeWidth();
 });
 </script>

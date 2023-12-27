@@ -1,5 +1,5 @@
 .statistics-container {
-  width: 80vw;
+  width: 1000px;
   margin-top: 10px;
   background-color: #0f212e;
   border: none;
@@ -106,6 +106,7 @@
 
 @media screen and (max-width: 920px) {
   .statistics-container {
+    width: 80vw;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
