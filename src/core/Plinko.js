@@ -146,7 +146,7 @@ export function Plinko(element) {
       "color"
     );
 
-    let fontSize = 14;
+    let fontSize = 12;
 
     const rectangle = new PIXI.Graphics();
     rectangle.beginFill(color);
@@ -155,18 +155,18 @@ export function Plinko(element) {
     if (window.innerWidth < 920) {
       rectangle.drawRoundedRect(
         -gap / 2,
-        -gap / 6 / scale,
+        -gap / 8 / scale,
         gap - 4,
-        (2 * gap) / 6 / scale,
+        (2 * gap) / 8 / scale,
         cornerRadius
       );
-      fontSize = 7;
+      fontSize = 6;
     } else {
       rectangle.drawRoundedRect(
         -gap / 2,
-        -gap / 3 / scale,
+        -gap / 4 / scale,
         gap - 4,
-        (2 * gap) / 3 / scale,
+        (2 * gap) / 4 / scale,
         cornerRadius
       );
     }
@@ -174,6 +174,7 @@ export function Plinko(element) {
 
     const style = new PIXI.TextStyle({
       fontFamily: "Arial",
+      fontWeight: 600,
       fontSize: fontSize / scale,
       fill: "#000000",
       align: "center",
@@ -268,6 +269,7 @@ export function Plinko(element) {
     const style = new PIXI.TextStyle({
       fontFamily: "Arial",
       fontSize: 14 / scale,
+      fontWeight: 600,
       fill: "#000000",
       align: "center",
     });
