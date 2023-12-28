@@ -6,6 +6,11 @@ body {
   min-height: 100vh;
   background-color: #1a2c38;
   color: "#FFF";
+  font-family: PingFang SC;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .mycontainer {

@@ -59,8 +59,8 @@ export function Plinko(element) {
   /********** Begin Local Variables  **********/
   let scoreState = 10000;
   let amountState = 0;
-  let levelState = "Low";
-  let rowNumState = 8;
+  let levelState = "Medium";
+  let rowNumState = 16;
   let numState = 0;
   let last = 0;
   let currency = 1300;
@@ -146,16 +146,32 @@ export function Plinko(element) {
       "color"
     );
 
+    let shadowColor = globalFunc.selectFromText(
+      rowNumState,
+      levelState,
+      text,
+      "shadow"
+    );
+
     let fontSize = 12;
 
     const rectangle = new PIXI.Graphics();
+    const shadow = new PIXI.Graphics();
     rectangle.beginFill(color);
+    shadow.beginFill(shadowColor);
 
     const cornerRadius = (gap * 10) / 120;
     if (window.innerWidth < 920) {
       rectangle.drawRoundedRect(
         -gap / 2,
         -gap / 8 / scale,
+        gap - 4,
+        (2 * gap) / 8 / scale,
+        cornerRadius
+      );
+      shadow.drawRoundedRect(
+        -gap / 2,
+        -gap / 8 / scale + 2 / scale,
         gap - 4,
         (2 * gap) / 8 / scale,
         cornerRadius
@@ -169,8 +185,16 @@ export function Plinko(element) {
         (2 * gap) / 4 / scale,
         cornerRadius
       );
+      shadow.drawRoundedRect(
+        -gap / 2,
+        -gap / 4 / scale + 2 / scale,
+        gap - 4,
+        (2 * gap) / 4 / scale,
+        cornerRadius
+      );
     }
     rectangle.endFill();
+    shadow.endFill();
 
     const style = new PIXI.TextStyle({
       fontFamily: "Arial",
@@ -188,6 +212,7 @@ export function Plinko(element) {
     container.position.y = y;
     container.interactive = true;
     container.buttonMode = true;
+    container.addChild(shadow);
     container.addChild(rectangle);
     container.addChild(label);
 

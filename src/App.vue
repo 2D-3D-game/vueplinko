@@ -17,7 +17,10 @@
       </button>
     </div>
     <div :class="'amountorder'">
-      <div :class="'spanstyle'">{{ $t("amount") }}: {{ amount }}</div>
+      <div :class="'betamountcontainer'">
+        <div :class="'spanstyle'">{{ $t("amount") }}</div>
+        <div :class="'spanstyle'" :style="{ fontSize: '12px' }">US$0.00</div>
+      </div>
       <div :class="'betAmountContainer'">
         <input
           :class="['betAmountInput', { warning: isEmpty }]"
@@ -28,7 +31,7 @@
           @change="changeState"
         />
         <button :class="'betAmountTimesBtn-left'" @click="betAmountTimes(0.5)">
-          1/2
+          ½
         </button>
         <button :class="'betAmountTimesBtn-right'" @click="betAmountTimes(2)">
           2x
@@ -43,7 +46,7 @@
       </div>
     </div>
     <div :class="'levelorder'">
-      <div :class="'spanstyle'">{{ $t("risk") }}:</div>
+      <div :class="'spanstyle'">{{ $t("risk") }}</div>
       <select :class="'baseStyle'" v-model="level" @change="changeState">
         <option value="Low">{{ $t("level1") }}</option>
         <option value="Medium">{{ $t("level2") }}</option>
@@ -51,7 +54,7 @@
       </select>
     </div>
     <div :class="'roworder'">
-      <div :class="'spanstyle'">{{ $t("rows") }}:</div>
+      <div :class="'spanstyle'">{{ $t("rows") }}</div>
       <select :class="'baseStyle'" v-model="rows" @change="changeState">
         <option value="8">8</option>
         <option value="9">9</option>
@@ -65,7 +68,7 @@
       </select>
     </div>
     <div :class="'betNumberContainer'" v-if="isAutoButton">
-      <div :class="'spanstyle'">{{ $t("betNumbers") }}:</div>
+      <div :class="'spanstyle'">{{ $t("betNumbers") }}</div>
       <input
         :class="'baseStyle'"
         v-model="numberofbet"
@@ -122,9 +125,9 @@ export default {
     const isAutoButton = ref(false);
     const isAutoBetting = ref(false);
     const isEmpty = ref(false);
-    const amount = ref("0");
-    const level = ref("Low");
-    const rows = ref("8");
+    const amount = ref("0.000000000");
+    const level = ref("Medium");
+    const rows = ref("16");
     const numberofbet = ref(0);
     let intervalId;
 
