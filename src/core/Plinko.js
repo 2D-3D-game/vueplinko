@@ -17,7 +17,7 @@ export function Plinko(element) {
   const canvasWidth = 700;
   const canvasHeight = 630;
   const engine = Engine.create();
-  engine.timing.timeScale = 1.0;
+  engine.timing.timeScale = 1.1;
 
   const sceneObjects = [];
 
@@ -282,13 +282,22 @@ export function Plinko(element) {
     );
 
     const rectangle = new PIXI.Graphics();
+    const border = new PIXI.Graphics();
     rectangle.beginFill(color);
+    border.beginFill(0x000000);
     rectangle.drawRect(
       -gap / 2 / scale,
       -gap / 2 / scale,
       gap / scale,
-      gap / scale
+      gap / scale - 2 / scale
     );
+    border.drawRect(
+      -gap / 2 / scale,
+      -gap / 2 / scale - 2 / scale,
+      gap / scale,
+      2 / scale
+    );
+    border.endFill();
     rectangle.endFill();
 
     const style = new PIXI.TextStyle({
@@ -310,6 +319,7 @@ export function Plinko(element) {
     rectangle.blendMode = PIXI.BLEND_MODES.NORMAL;
     label.blendMode = PIXI.BLEND_MODES.NORMAL;
     container.addChild(rectangle);
+    container.addChild(border);
     container.addChild(label);
 
     const object = {
@@ -444,7 +454,7 @@ export function Plinko(element) {
       graphics.beginFill(0, 0);
 
       const rectWidth = 60;
-      const rectHeight = 40;
+      const rectHeight = 40 / scale;
       const rectX = body.position.x - rectWidth / 2;
       const rectY = body.position.y - rectHeight / 2;
       graphics.drawRoundedRect(rectX, rectY, rectWidth, rectHeight, 10);
@@ -743,10 +753,10 @@ export function Plinko(element) {
     let col = 3;
     const increment = 1;
     const gap = GapWidth * 2 * MapGap;
-    originalY = rows.length * gap;
 
     clear();
     scale = (9 * heightScale) / rows.length;
+    originalY = rows.length * gap - 15 * scale;
     for (let i = 1; i <= rows.length; i++) {
       const space = (canvasWidth - gap * col) / 2;
       for (let j = 1; j <= col; j++) {
@@ -756,7 +766,7 @@ export function Plinko(element) {
           if (j > 1) {
             new Basket(
               space + j * gap - GapWidth * MapGap,
-              i * gap,
+              i * gap - 15 * scale,
               gap,
               rows[j - 2]
             );
@@ -779,19 +789,19 @@ export function Plinko(element) {
       if (scale === 1) {
         maskX = 600;
         maskY = canvasHeight / 3 / scale - 25 / scale;
-        maskHeight = 200 / scale;
+        maskHeight = 198 / scale;
         maskWidth = 50 / scale;
       } else {
         maskX = app.stage.position.x / (1 - scale) + 200 / scale + 50 / scale;
         maskY = canvasHeight / 3 / scale - 25 / scale;
-        maskHeight = 200 / scale;
+        maskHeight = 198 / scale;
         maskWidth = 50 / scale;
       }
     } else {
       maskX =
         canvasWidth / scale / 2 + 5 / scale - app.stage.position.x / scale;
       maskY = canvasHeight / 8 / scale;
-      maskHeight = 140 / scale;
+      maskHeight = 138 / scale;
       maskWidth = 35 / scale;
     }
     mask.drawRoundedRect(maskX, maskY, maskWidth, maskHeight, 10 / scale);

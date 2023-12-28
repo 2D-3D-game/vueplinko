@@ -28,6 +28,7 @@
           placeholder="0.0000"
           type="number"
           min="0"
+          @focus="selectInput"
           @change="changeState"
         />
         <button :class="'betAmountTimesBtn-left'" @click="betAmountTimes(0.5)">
@@ -147,7 +148,12 @@ export default {
       plinko.clear();
       plinko.map();
     };
-
+    const selectInput = () => {
+      const inputField = document.querySelector(".betAmountInput");
+      if (inputField) {
+        inputField.select();
+      }
+    };
     const bet = () => {
       if (
         amount.value == 0 ||
@@ -249,6 +255,7 @@ export default {
       rows,
       numberofbet,
       activeButton,
+      selectInput,
       betAmountTimes,
       changeState,
       bet,
