@@ -1,12 +1,12 @@
 <template>
   <table>
     <tr>
-      <th>排名</th>
-      <th>玩家</th>
-      <th>日期</th>
-      <th>投注</th>
-      <th>乘数</th>
-      <th>支付额</th>
+      <th>{{ $t("rank") }}</th>
+      <th>{{ $t("user") }}</th>
+      <th>{{ $t("date") }}</th>
+      <th>{{ $t("multiplier") }}</th>
+      <th>{{ $t("bet") }}</th>
+      <th>{{ $t("payout") }}</th>
     </tr>
     <tr>
       <td>

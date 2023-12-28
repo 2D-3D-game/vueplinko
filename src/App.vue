@@ -6,18 +6,18 @@
         id="manualButton"
         @click="activeButton('manualButton')"
       >
-        手动投注
+        {{ $t("manual") }}
       </button>
       <button
         :class="['typeButton', { betTypeActive: isAutoButton }]"
         id="autoButton"
         @click="activeButton('autoButton')"
       >
-        自动投注
+        {{ $t("auto") }}
       </button>
     </div>
     <div :class="'amountorder'">
-      <div :class="'spanstyle'">投注额: {{ amount }}</div>
+      <div :class="'spanstyle'">{{ $t("amount") }}: {{ amount }}</div>
       <div :class="'betAmountContainer'">
         <input
           :class="['betAmountInput', { warning: isEmpty }]"
@@ -43,15 +43,15 @@
       </div>
     </div>
     <div :class="'levelorder'">
-      <div :class="'spanstyle'">风险:</div>
+      <div :class="'spanstyle'">{{ $t("risk") }}:</div>
       <select :class="'baseStyle'" v-model="level" @change="changeState">
-        <option value="Low">下等</option>
-        <option value="Medium">中等</option>
-        <option value="High">上等</option>
+        <option value="Low">{{ $t("level1") }}</option>
+        <option value="Medium">{{ $t("level2") }}</option>
+        <option value="High">{{ $t("level3") }}</option>
       </select>
     </div>
     <div :class="'roworder'">
-      <div :class="'spanstyle'">排数:</div>
+      <div :class="'spanstyle'">{{ $t("rows") }}:</div>
       <select :class="'baseStyle'" v-model="rows" @change="changeState">
         <option value="8">8</option>
         <option value="9">9</option>
@@ -65,7 +65,7 @@
       </select>
     </div>
     <div :class="'betNumberContainer'" v-if="isAutoButton">
-      <div :class="'spanstyle'">投注次数:</div>
+      <div :class="'spanstyle'">{{ $t("betNumbers") }}:</div>
       <input
         :class="'baseStyle'"
         v-model="numberofbet"
@@ -86,141 +86,170 @@
       <button :class="['baseStyle', 'betButton']" @click="bet">
         {{
           isManualButton
-            ? "投注"
+            ? $t("bet")
             : isAutoBetting
-            ? "停止自动投注"
-            : "开始自动投注"
+            ? $t("autobetstop")
+            : $t("autobetstart")
         }}
       </button>
     </div>
   </div>
   <Setting />
   <Statistics />
+  <Language />
 </template>
 
 <style scoped>
 @import "./assets/css/sidebar.css";
 </style>
 
-<script setup>
-import { ref, onMounted, onUnmounted, reactive } from "vue";
+<script>
+import { ref, onMounted } from "vue";
 import { Plinko } from "./core/Plinko";
 import { GlobalFunc } from "./core/GlobalFunc";
 import Setting from "./components/Setting.vue";
 import Statistics from "./components/Statistics.vue";
+import Language from "./components/Language.vue";
 
-const isManualButton = ref(true);
-const isAutoButton = ref(false);
-const isAutoBetting = ref(false);
-const isEmpty = ref(false);
-const amount = ref("0");
-const level = ref("Low");
-const rows = ref("8");
-const numberofbet = ref(0);
-let intervalId;
+export default {
+  components: {
+    Setting,
+    Statistics,
+    Language,
+  },
+  setup() {
+    const isManualButton = ref(true);
+    const isAutoButton = ref(false);
+    const isAutoBetting = ref(false);
+    const isEmpty = ref(false);
+    const amount = ref("0");
+    const level = ref("Low");
+    const rows = ref("8");
+    const numberofbet = ref(0);
+    let intervalId;
 
-let initialWidth = window.innerWidth;
+    let initialWidth = window.innerWidth;
 
-const plinko = Plinko(document.body.querySelector("#canvas"));
-plinko.map();
+    const plinko = Plinko(document.body.querySelector("#canvas"));
+    plinko.map();
 
-const changeState = () => {
-  plinko.GetSettings(
-    amount.value,
-    level.value,
-    rows.value,
-    numberofbet.value,
-    1000
-  );
-  plinko.clear();
-  plinko.map();
-};
+    const changeState = () => {
+      plinko.GetSettings(
+        amount.value,
+        level.value,
+        rows.value,
+        numberofbet.value,
+        1000
+      );
+      plinko.clear();
+      plinko.map();
+    };
 
-const bet = () => {
-  if (amount.value == 0 || amount.value == undefined || amount.value == "") {
-    isEmpty.value = true;
-    return;
-  } else {
-    isEmpty.value = false;
-    if (isManualButton.value) {
-      dropParticle();
-    } else {
+    const bet = () => {
       if (
-        parseInt(numberofbet.value) === 0 ||
-        numberofbet.value === undefined ||
-        numberofbet.value === ""
+        amount.value == 0 ||
+        amount.value == undefined ||
+        amount.value == ""
       ) {
-        if (!isAutoBetting.value) {
-          isAutoBetting.value = true;
-          startInterval();
-        } else {
-          isAutoBetting.value = false;
-          stopInterval();
-        }
+        isEmpty.value = true;
+        return;
       } else {
-        for (let i = 0; i < numberofbet.value; i++) {
-          setTimeout(() => {
-            dropParticle();
-            numberofbet.value = parseInt(numberofbet.value) - 1;
-          }, 500 * i);
+        isEmpty.value = false;
+        if (isManualButton.value) {
+          dropParticle();
+        } else {
+          if (
+            parseInt(numberofbet.value) === 0 ||
+            numberofbet.value === undefined ||
+            numberofbet.value === ""
+          ) {
+            if (!isAutoBetting.value) {
+              isAutoBetting.value = true;
+              startInterval();
+            } else {
+              isAutoBetting.value = false;
+              stopInterval();
+            }
+          } else {
+            for (let i = 0; i < numberofbet.value; i++) {
+              setTimeout(() => {
+                dropParticle();
+                numberofbet.value = parseInt(numberofbet.value) - 1;
+              }, 500 * i);
+            }
+          }
         }
       }
-    }
-  }
-};
+    };
 
-const startInterval = () => {
-  intervalId = setInterval(dropParticle, 300);
-};
+    const startInterval = () => {
+      intervalId = setInterval(dropParticle, 300);
+    };
 
-const stopInterval = () => {
-  clearInterval(intervalId);
-};
+    const stopInterval = () => {
+      clearInterval(intervalId);
+    };
 
-const dropParticle = () => {
-  let target = 0;
-  let sum = 0;
-  const percentage = GlobalFunc().probabilities["_" + rows.value];
-  const randomNumber = Math.random();
-  for (let i = 0; i < percentage.length; i++) {
-    sum += percentage[i];
-    if (randomNumber >= sum - percentage[i] && randomNumber < sum) {
-      target = i + 1;
-      break;
-    } else {
-      continue;
-    }
-  }
-  plinko.add(target);
-};
+    const dropParticle = () => {
+      let target = 0;
+      let sum = 0;
+      const percentage = GlobalFunc().probabilities["_" + rows.value];
+      const randomNumber = Math.random();
+      for (let i = 0; i < percentage.length; i++) {
+        sum += percentage[i];
+        if (randomNumber >= sum - percentage[i] && randomNumber < sum) {
+          target = i + 1;
+          break;
+        } else {
+          continue;
+        }
+      }
+      plinko.add(target);
+    };
 
-const activeButton = (buttonId) => {
-  isManualButton.value = buttonId === "manualButton";
-  isAutoButton.value = buttonId === "autoButton";
-};
+    const activeButton = (buttonId) => {
+      isManualButton.value = buttonId === "manualButton";
+      isAutoButton.value = buttonId === "autoButton";
+    };
 
-const betAmountTimes = (times) => {
-  amount.value = amount.value * times;
-};
+    const betAmountTimes = (times) => {
+      amount.value = amount.value * times;
+    };
 
-const changeWidth = () => {
-  setInterval(() => {
-    let w = window.innerWidth;
-    if (w !== initialWidth) {
-      plinko.map();
-      initialWidth = w;
-    }
-  }, 200);
-};
+    const changeWidth = () => {
+      setInterval(() => {
+        let w = window.innerWidth;
+        if (w !== initialWidth) {
+          plinko.map();
+          initialWidth = w;
+        }
+      }, 200);
+    };
 
-onMounted(() => {
-  plinko.GetSettings(
-    amount.value,
-    level.value,
-    rows.value,
-    numberofbet.value,
-    1000
-  );
-  changeWidth();
-});
+    onMounted(() => {
+      plinko.GetSettings(
+        amount.value,
+        level.value,
+        rows.value,
+        numberofbet.value,
+        1000
+      );
+      changeWidth();
+    });
+    return {
+      isManualButton,
+      isAutoButton,
+      isAutoBetting,
+      isEmpty,
+      amount,
+      level,
+      rows,
+      numberofbet,
+      activeButton,
+      betAmountTimes,
+      changeState,
+      bet,
+    };
+  },
+};
 </script>

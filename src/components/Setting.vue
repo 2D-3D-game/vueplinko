@@ -18,7 +18,9 @@
     <div :class="'footer-image'">
       <img :src="'/image/Vector.png'" alt="Image" width="68" height="25" />
     </div>
-    <div><span :class="'footer-span'">公平性</span></div>
+    <div>
+      <span :class="'footer-span'">{{ $t("fairness") }}</span>
+    </div>
   </div>
 </template>
 

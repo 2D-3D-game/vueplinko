@@ -4,13 +4,13 @@
       <div :class="'span-group'">
         <span :class="'span-white'">Plinko</span>
         <span :class="'span-gray'">Stake</span>
-        <span :class="'span-gray'">原创游戏</span>
+        <span :class="'span-gray'">{{ $t("original") }}</span>
       </div>
       <div :class="'reward'">
         <img :src="'/image/cup.png'" alt="Image" width="16" height="16" />
         <span :class="'span1'">1,000.00x</span>
         <img :src="'/image/cap.png'" alt="Image" width="14" height="14" />
-        <span :class="'span2'">隐身 </span>
+        <span :class="'span2'">{{ $t("stealth") }} </span>
       </div>
       <img
         :src="'/image/arrow.png'"
@@ -27,28 +27,28 @@
         id="active1"
         @click="activeButton('active1')"
       >
-        大赢家
+        {{ $t("bigwins") }}
       </button>
       <button
         :class="['RewardTypeButton', { RewardTypeActive: active2 }]"
         id="active2"
         @click="activeButton('active2')"
       >
-        幸运赢家
+        {{ $t("luckwins") }}
       </button>
       <button
         :class="['RewardTypeButton', { RewardTypeActive: active3 }]"
         id="active3"
         @click="activeButton('active3')"
       >
-        挑战
+        {{ $t("challenges") }}
       </button>
       <button
         :class="['RewardTypeButton', { RewardTypeActive: active4 }]"
         id="active4"
         @click="activeButton('active4')"
       >
-        描述
+        {{ $t("description") }}
       </button>
     </div>
     <div v-if="active1 && expand">
