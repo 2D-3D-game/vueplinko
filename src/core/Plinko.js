@@ -453,8 +453,11 @@ export function Plinko(element) {
       graphics.lineStyle(r, body.metter.color, opacity);
       graphics.beginFill(0, 0);
 
-      const rectWidth = 60;
-      const rectHeight = 40 / scale;
+      let rectWidth = 60;
+      let rectHeight = 40 / scale;
+      if(window.innerWidth < 920) {
+        rectHeight = 20 / scale;
+      }
       const rectX = body.position.x - rectWidth / 2;
       const rectY = body.position.y - rectHeight / 2;
       graphics.drawRoundedRect(rectX, rectY, rectWidth, rectHeight, 10);
