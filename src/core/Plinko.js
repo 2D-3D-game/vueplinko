@@ -187,7 +187,7 @@ export function Plinko(element) {
       );
       shadow.drawRoundedRect(
         -gap / 2,
-        -gap / 4 / scale + 2 / scale,
+        -gap / 4 / scale + 4 / scale,
         gap - 4,
         (2 * gap) / 4 / scale,
         cornerRadius
