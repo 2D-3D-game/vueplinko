@@ -25,15 +25,17 @@
         <input
           :class="['betAmountInput', { warning: isEmpty }]"
           v-model="amount"
-          placeholder="0.0000"
+          placeholder="0.000000000"
           type="number"
           min="0"
+          step="0.000000001"
           @focus="selectInput"
           @change="changeState"
         />
         <button :class="'betAmountTimesBtn-left'" @click="betAmountTimes(0.5)">
           ½
         </button>
+        <div :class="'divider'"></div>
         <button :class="'betAmountTimesBtn-right'" @click="betAmountTimes(2)">
           2x
         </button>
@@ -48,6 +50,13 @@
     </div>
     <div :class="'levelorder'">
       <div :class="'spanstyle'">{{ $t("risk") }}</div>
+      <img
+        :src="'/image/arrow-down.png'"
+        width="14"
+        height="14"
+        alt="Image"
+        :class="'arrow-down'"
+      />
       <select :class="'baseStyle'" v-model="level" @change="changeState">
         <option value="Low">{{ $t("level1") }}</option>
         <option value="Medium">{{ $t("level2") }}</option>
@@ -56,6 +65,13 @@
     </div>
     <div :class="'roworder'">
       <div :class="'spanstyle'">{{ $t("rows") }}</div>
+      <img
+        :src="'/image/arrow-down.png'"
+        width="14"
+        height="14"
+        alt="Image"
+        :class="'arrow-down'"
+      />
       <select :class="'baseStyle'" v-model="rows" @change="changeState">
         <option value="8">8</option>
         <option value="9">9</option>
