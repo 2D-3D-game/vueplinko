@@ -243,11 +243,19 @@ export default {
     };
 
     const handleResize = () => {
-      // let newWidth = window.innerWidth;
-      // document.getElementById("app").style.height =
-      //   (630 * newWidth) / initialWidth + "px";
-      // document.getElementById("canvas-container").style.height =
-      //   (630 * newWidth) / initialWidth + "px";
+      let newWidth = window.innerWidth;
+      if (newWidth > 1050) {
+        document.getElementById("app").style.height =
+          (630 * newWidth) / initialWidth + "px";
+        document.getElementById("canvas-container").style.height =
+          (630 * newWidth) / initialWidth + "px";
+        document.getElementById("canvas").style.height =
+          (630 * newWidth) / initialWidth + "px";
+      } else {
+        document.getElementById("app").style.height = "500px";
+        document.getElementById("canvas-container").style.height = "310px";
+        document.getElementById("canvas").style.height = "310px";
+      }
       plinko.map();
     };
 
@@ -265,7 +273,7 @@ export default {
         1000
       );
     });
-    
+
     return {
       isManualButton,
       isAutoButton,

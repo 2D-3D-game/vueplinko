@@ -8,7 +8,7 @@ a:hover {
 }
 .dropdown {
   display: inline-block;
-  position: absolute;
+  position: fixed;
   top: 50px;
   right: 100px;
 }
@@ -78,23 +78,4 @@ a:hover {
   display: block;
   margin: -10px -20px;
   padding: 10px 20px;
-}
-
-@media screen and (max-width: 1050px) {
-  .dropdown {
-    top: -300px;
-    right: 10px;
-  }
-  .dd-button {
-    padding: 5px;
-  }
-  .dd-menu li {
-    padding: 0 5px;
-    cursor: pointer;
-  }
-  .dd-menu li a {
-    display: block;
-    margin: 0 -5px;
-    padding: 0 5px;
-  }
 }

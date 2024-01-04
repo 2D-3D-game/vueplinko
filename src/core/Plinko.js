@@ -17,6 +17,9 @@ export function Plinko(element) {
   const canvasWidth = 700;
   const canvasHeight = 630;
   const engine = Engine.create();
+
+  const initialWidth = window.innerWidth;
+  const initialHeight = window.innerHeight;
   // engine.timing.timeScale = 1.1;
   engine.timing.timeScale = 2;
 
@@ -26,7 +29,7 @@ export function Plinko(element) {
     backgroundAlpha: 0,
     resizeTo: element,
     width: canvasWidth,
-    height: canvasWidth,
+    height: canvasHeight,
     antialias: true,
     resolution: 2,
     autoDensity: true,
@@ -759,9 +762,14 @@ export function Plinko(element) {
   }
 
   function map() {
+    let newWindowWidth = window.innerWidth;
+    console.log(initialWidth, newWindowWidth);
     let newCanvasHeight = element.offsetHeight;
     let newWidth = window.innerWidth;
     let heightScale = newCanvasHeight / canvasHeight;
+    if(newCanvasHeight > 310) {
+      heightScale = newWindowWidth / initialWidth;
+    }
 
     let rows = globalFunc.baskets[levelState]["_" + rowNumState];
     app.stage.position._x = 0;

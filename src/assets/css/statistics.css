@@ -1,6 +1,6 @@
 .statistics-container {
   width: calc(300px + 60vw);
-  min-width: 1000px;
+  min-width: 950px;
   min-height: 80px;
   margin-top: 32px;
   background-color: #0f212e;
