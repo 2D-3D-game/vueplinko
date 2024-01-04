@@ -124,7 +124,7 @@
 </style>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { Plinko } from "./core/Plinko";
 import { GlobalFunc } from "./core/GlobalFunc";
 import Setting from "./components/Setting.vue";
@@ -148,7 +148,8 @@ export default {
     const numberofbet = ref(0);
     let intervalId;
 
-    let initialWidth = window.innerWidth;
+    const initialWidth = window.innerWidth;
+    const initialHeight = window.innerHeight;
 
     const plinko = Plinko(document.body.querySelector("#canvas"));
     plinko.map();
@@ -208,7 +209,7 @@ export default {
     };
 
     const startInterval = () => {
-      intervalId = setInterval(dropParticle, 300);
+      intervalId = setInterval(dropParticle, 500);
     };
 
     const stopInterval = () => {
@@ -241,17 +242,21 @@ export default {
       amount.value = amount.value * times;
     };
 
-    const changeWidth = () => {
-      setInterval(() => {
-        let w = window.innerWidth;
-        if (w !== initialWidth) {
-          plinko.map();
-          initialWidth = w;
-        }
-      }, 200);
+    const handleResize = () => {
+      // let newWidth = window.innerWidth;
+      // document.getElementById("app").style.height =
+      //   (630 * newWidth) / initialWidth + "px";
+      // document.getElementById("canvas-container").style.height =
+      //   (630 * newWidth) / initialWidth + "px";
+      plinko.map();
     };
 
+    onUnmounted(() => {
+      window.removeEventListener("resize", handleResize);
+    });
+
     onMounted(() => {
+      window.addEventListener("resize", handleResize);
       plinko.GetSettings(
         amount.value,
         level.value,
@@ -259,8 +264,8 @@ export default {
         numberofbet.value,
         1000
       );
-      changeWidth();
     });
+    
     return {
       isManualButton,
       isAutoButton,

@@ -1,6 +1,8 @@
 .statistics-container {
-  width: 1000px;
-  margin-top: 10px;
+  width: calc(300px + 60vw);
+  min-width: 1000px;
+  min-height: 80px;
+  margin-top: 32px;
   background-color: #0f212e;
   border: none;
   border-radius: 8px;
@@ -104,7 +106,7 @@
   transform: rotate(-90deg);
 }
 
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 1050px) {
   .statistics-container {
     width: 80vw;
     position: absolute;
@@ -116,5 +118,6 @@
     border: none;
     border-radius: 8px;
     margin-bottom: 20px;
+    min-width: 400px;
   }
 }

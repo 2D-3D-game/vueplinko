@@ -17,6 +17,7 @@ body {
   display: flex;
   flex-direction: row;
   margin: auto;
+  border-bottom: 3px solid #213743;
 }
 
 .mycontainer .app-container {
@@ -25,14 +26,21 @@ body {
   order: 1;
 }
 
-.canvas {
-  width: 700px;
+.canvas-container {
+  width: 60vw;
   height: 630px;
-  margin: 0 auto;
+  margin: auto;
   color: #fff;
   border-radius: 0px 8px 0px 0px;
   background: #0f212e;
   order: 2;
+}
+
+.canvas {
+  width: 700px;
+  height: 630px;
+  margin: auto;
+  background: #0f212e;
 }
 
 .overlay-container {
@@ -76,7 +84,7 @@ body {
   color: #fff;
 }
 
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 1050px) {
   .mycontainer {
     display: flex;
     flex-direction: column;
@@ -91,12 +99,18 @@ body {
     position: relative;
   }
 
-  .canvas {
+  .canvas-container {
     width: 400px;
     height: 310px;
     border-radius: 8px 8px 0px 0px;
     order: 1;
     margin-top: 10px;
+  }
+
+  .canvas {
+    width: 400px;
+    height: 310px;
+    border-radius: 8px 8px 0px 0px;
   }
 
   /* .overlay-container {

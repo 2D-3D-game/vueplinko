@@ -17,7 +17,8 @@ export function Plinko(element) {
   const canvasWidth = 700;
   const canvasHeight = 630;
   const engine = Engine.create();
-  engine.timing.timeScale = 1.1;
+  // engine.timing.timeScale = 1.1;
+  engine.timing.timeScale = 2;
 
   const sceneObjects = [];
 
@@ -80,17 +81,19 @@ export function Plinko(element) {
   /********** End Local Variables  **********/
 
   /********** Begin Draw functions  **********/
-  function Point(x, y) {
+  function Point(x, y, row, col, color = 0xd3d3d3) {
     const options = {
       isStatic: true,
     };
 
     const metter = Bodies.circle(x, y, PointRadius, options);
     metter.label = "point";
+    metter.row = row;
+    metter.col = col;
     Composite.add(engine.world, metter);
 
     const graphics = new PIXI.Graphics();
-    graphics.beginFill(0xd3d3d3);
+    graphics.beginFill(color);
     graphics.drawCircle(x, y, PointRadius);
     graphics.zIndex = 2;
     graphics.endFill();
@@ -114,6 +117,13 @@ export function Plinko(element) {
     };
     Composite.add(engine.world, metter);
     let texture = PIXI.Texture.from("/image/ball.png?8");
+    if (levelState === "Low") {
+      texture = PIXI.Texture.from("/image/ball-low.png?8");
+    } else if (levelState === "Medium") {
+      texture = PIXI.Texture.from("/image/ball.png?8");
+    } else {
+      texture = PIXI.Texture.from("/image/ball-high.png?8");
+    }
     const sprite = new PIXI.Sprite(texture);
     sprite.width = ParticleRadius * 2;
     sprite.height = ParticleRadius * 2;
@@ -161,7 +171,7 @@ export function Plinko(element) {
     shadow.beginFill(shadowColor);
 
     const cornerRadius = (gap * 10) / 120;
-    if (window.innerWidth < 920) {
+    if (window.innerWidth < 1050) {
       rectangle.drawRoundedRect(
         -gap / 2,
         -gap / 8 / scale,
@@ -295,7 +305,7 @@ export function Plinko(element) {
       -gap / 2 / scale,
       -gap / 2 / scale - 2 / scale,
       gap / scale,
-      2 / scale
+      1 / 8
     );
     border.endFill();
     rectangle.endFill();
@@ -399,19 +409,19 @@ export function Plinko(element) {
     var rMax = 15;
     var rMin = 0;
     var r = rMin;
-    var opacity = 0.7;
+    var opacity = 0.9;
     var rDiff = rMax - rMin;
     var opacityIncr = 1 / rDiff / 1.2;
 
     animate();
     function animate() {
       graphics.clear();
-      graphics.lineStyle(r, 0xb2de27, opacity);
+      graphics.lineStyle(r, 0xffffff, opacity);
       graphics.beginFill(0, 0);
       graphics.drawCircle(
         body.position.x,
         body.position.y,
-        body.circleRadius * 2
+        body.circleRadius * 1.5
       );
       graphics.endFill();
 
@@ -455,7 +465,7 @@ export function Plinko(element) {
 
       let rectWidth = 60;
       let rectHeight = 40 / scale;
-      if(window.innerWidth < 920) {
+      if (window.innerWidth < 1050) {
         rectHeight = 20 / scale;
       }
       const rectX = body.position.x - rectWidth / 2;
@@ -542,14 +552,23 @@ export function Plinko(element) {
     return id;
   }
 
+  function CheckBounds(row, pointId) {
+    if (pointId === 1 + ((row - 1) * (row + 4)) / 2) {
+      return "left";
+    } else if (pointId === (row * (row + 5)) / 2) {
+      return "right";
+    } else {
+      return "notBound";
+    }
+  }
+
   function SearchRoute(target) {
     const pointIds = [];
-    const particleDir = [];
+    const pointDirs = [];
 
     let rows = parseInt(rowNumState);
-    let selfPos = 0;
-    let gapLeft = target - 1;
-    let gapRight = rows + 1 - target;
+    let gapLeft = target;
+    let gapRight = rows + 2 - target;
     let currentIndex = getIndexFromCoordinate(rows, target);
 
     for (let i = rows; i > 0; i--) {
@@ -559,30 +578,22 @@ export function Plinko(element) {
       }
       if (flag === 0) {
         last = Math.random() < 0.5 ? 1 : 3;
-        if (last === 6) {
-          selfPos = 3;
-        }
         gapLeft--;
       }
       if (flag === 1) {
         last = Math.random() < 0.5 ? 0 : 2;
-        if (last === 6) {
-          selfPos = 2;
-        }
         gapRight--;
       }
       currentIndex += flag;
       pointIds.push(currentIndex);
-      if (last === 1 || last === 0) {
-        particleDir.push(last, last + 4);
-      } else if (last === 6) {
-        particleDir.push(last, selfPos);
+      if (last === 0 || last === 1) {
+        pointDirs.push(last, last + 4);
       } else {
-        particleDir.push(last);
+        pointDirs.push(last);
       }
       currentIndex -= i + 2;
     }
-    return [pointIds, particleDir];
+    return [pointIds, pointDirs];
   }
 
   function UpdateScore(body) {
@@ -590,7 +601,7 @@ export function Plinko(element) {
     if (objects.length > 1) {
       lastPos = objects[objects.length - 1].body.position.y - 50 / scale;
     }
-    if (window.innerWidth < 920) {
+    if (window.innerWidth < 1050) {
       lastPos = canvasHeight / 8 / scale - 35 / scale / 2;
       if (objects.length > 1) {
         lastPos = objects[objects.length - 1].body.position.y - 35 / scale;
@@ -625,7 +636,7 @@ export function Plinko(element) {
       distance =
         objects[objects.length - 1].body.position.y - canvasHeight / 3 / scale;
     }
-    if (window.innerWidth < 920) {
+    if (window.innerWidth < 1050) {
       distance = -35 / scale;
       if (objects.length > 1) {
         distance =
@@ -647,7 +658,7 @@ export function Plinko(element) {
 
   function removeScoreboard() {
     for (let i = 0; i < objects.length; i++) {
-      if (window.innerWidth < 920) {
+      if (window.innerWidth < 1050) {
         if (
           objects[i].body.position.y >
           canvasHeight / 8 / scale + 150 / scale
@@ -705,13 +716,22 @@ export function Plinko(element) {
 
   function Road(body, point) {
     Body.setStatic(body, true);
+    let bound = CheckBounds(point.row, point.col);
+    if (bound === "left" && body.road.list[0] === 0) {
+      body.road.list.splice(0, 2);
+      body.road.list.splice(0, 0, 2);
+    } else if (bound === "right" && body.road.list[0] === 1) {
+      body.road.list.splice(0, 2);
+      body.road.list.splice(0, 0, 3);
+    }
+
     if (!body.road.id.includes(point.id)) {
       const road = body.road.list.shift();
       let velocity = { x: 0, y: 0 };
       if (road === 0) {
-        velocity = { x: -3.2, y: -1.6 + Math.random() };
+        velocity = { x: -3.2, y: -1.6 };
       } else if (road === 1) {
-        velocity = { x: 3.2, y: -1.6 + Math.random() };
+        velocity = { x: 3.2, y: -1.6 };
       } else if (road === 2 || road === 3) {
         Body.setPosition(body, {
           x: point.position.x,
@@ -722,18 +742,10 @@ export function Plinko(element) {
         velocity = { x: 0.7, y: 0 };
       } else if (road === 5) {
         velocity = { x: -0.7, y: 0 };
-      } else {
-        Body.setPosition(body, {
-          x: point.position.x,
-          y: point.position.y - point.circleRadius * 2,
-        });
-        velocity = { x: 0, y: -3.5 };
       }
-
       setTimeout(() => {
         Body.setVelocity(body, velocity);
       }, 0);
-
       body.road.id.push(point.id);
     } else {
       setTimeout(() => {
@@ -760,11 +772,19 @@ export function Plinko(element) {
     clear();
     scale = (9 * heightScale) / rows.length;
     originalY = rows.length * gap - 15 * scale;
+    let id = 0;
     for (let i = 1; i <= rows.length; i++) {
       const space = (canvasWidth - gap * col) / 2;
       for (let j = 1; j <= col; j++) {
         if (i < rows.length) {
-          new Point(space + j * gap - GapWidth * MapGap, i * gap);
+          id++;
+          // const index = getIndexFromCoordinate(i, j);
+          // if (routes.indexOf(index) >= 0) {
+          //   new Point(space + j * gap - GapWidth * MapGap, i * gap, 0xff0000);
+          // } else {
+          //   new Point(space + j * gap - GapWidth * MapGap, i * gap);
+          // }
+          new Point(space + j * gap - GapWidth * MapGap, i * gap, i, id);
         } else {
           if (j > 1) {
             new Basket(
@@ -779,7 +799,7 @@ export function Plinko(element) {
       col += increment;
     }
     app.stage.scale.set(scale);
-    if (newWidth > 920) {
+    if (newWidth > 1050) {
       app.stage.position.x = ((1 - scale) * canvasWidth) / 2;
     } else {
       app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 150;
@@ -788,7 +808,7 @@ export function Plinko(element) {
 
     mask.clear();
     mask.beginFill(0xffffff);
-    if (newWidth > 920) {
+    if (newWidth > 1050) {
       if (scale === 1) {
         maskX = 600;
         maskY = canvasHeight / 3 / scale - 25 / scale;
@@ -825,7 +845,35 @@ export function Plinko(element) {
 
   function add(target) {
     let [routes, dirRoute] = SearchRoute(target);
-    new Particle(canvasWidth / 2, 0, ParticleRadius, dirRoute);
+    routes.reverse();
+    if (routes[0] === 1) {
+      if (routes[1] === 5) {
+        Math.random() > 0.5
+          ? new Particle(canvasWidth / 2 - 60, 0, ParticleRadius, dirRoute)
+          : new Particle(canvasWidth / 2 - 30, 0, ParticleRadius, dirRoute);
+      } else {
+        new Particle(canvasWidth / 2 - 60, 0, ParticleRadius, dirRoute);
+      }
+    } else if (routes[0] === 2) {
+      if (routes[1] === 5) {
+        Math.random() > 0.5
+          ? new Particle(canvasWidth / 2, 0, ParticleRadius, dirRoute)
+          : new Particle(canvasWidth / 2 - 30, 0, ParticleRadius, dirRoute);
+      } else {
+        Math.random() > 0.5
+          ? new Particle(canvasWidth / 2, 0, ParticleRadius, dirRoute)
+          : new Particle(canvasWidth / 2 + 30, 0, ParticleRadius, dirRoute);
+      }
+    } else if (routes[0] === 3) {
+      if (routes[1] === 5) {
+        Math.random() > 0.5
+          ? new Particle(canvasWidth / 2 + 60, 0, ParticleRadius, dirRoute)
+          : new Particle(canvasWidth / 2 + 30, 0, ParticleRadius, dirRoute);
+      } else {
+        new Particle(canvasWidth / 2 + 60, 0, ParticleRadius, dirRoute);
+      }
+    }
+    // new Particle(canvasWidth / 2, 0, ParticleRadius, dirRoute);
   }
 
   function clear() {

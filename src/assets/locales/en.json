@@ -22,5 +22,17 @@
     "level1": "Low",
     "level2": "Medium",
     "level3": "High",
-    "stealth": "Stealth"
+    "stealth": "Stealth",
+    "live": "Instant Bet",
+    "animation": "Animations",
+    "maxvalue": "Max Bet",
+    "info": "Game Info",
+    "keyboard": "Hotkeys",
+    "maxquestion1": "Are you sure you want to be enable the Max Bet button?",
+    "maxquestion2": "Are you sure you want to be disable the Max Bet button?",
+    "turnOn": "Turn On",
+    "turnOff": "Turn Off",
+    "info1": "1.The allocation model will determine different potential payouts through risk and multipliers.",
+    "info2": "2.Do not turn your device or display to defy gravity while the game is in progress.",
+    "rules": "Game Rules"
 }

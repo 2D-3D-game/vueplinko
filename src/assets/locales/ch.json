@@ -22,5 +22,17 @@
     "level1": "下等",
     "level2": "中等",
     "level3": "上等",
-    "stealth": "隐身"
+    "stealth": "隐身",
+    "live": "即时下注",
+    "animation": "动画",
+    "maxvalue": "最大投注额",
+    "info": "游戏信息",
+    "keyboard": "快捷键",
+    "maxquestion1": "您确定要启用最大投注额按钮吗？",
+    "maxquestion2": "您确定要启用最大投注额按钮吗？",
+    "turnOn": "开启",
+    "turnOff": "开启",
+    "info1": "1.配置模式将通过风险和乘数来决定不同的潜在支付额。",
+    "info2": "2.请勿在游戏进行时转动您的设备或显示屏来逆重力。",
+    "rules": "游戏规则"
 }

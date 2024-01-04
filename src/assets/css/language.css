@@ -80,7 +80,7 @@ a:hover {
   padding: 10px 20px;
 }
 
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 1050px) {
   .dropdown {
     top: -300px;
     right: 10px;
