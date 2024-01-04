@@ -34,5 +34,11 @@
     "turnOff": "Turn Off",
     "info1": "1.The allocation model will determine different potential payouts through risk and multipliers.",
     "info2": "2.Do not turn your device or display to defy gravity while the game is in progress.",
-    "rules": "Game Rules"
+    "rules": "Game Rules",
+    "hotkey1": "Make a bet",
+    "hotkey2": "Double bet amount",
+    "hotkey3": "Halve bet amount",
+    "hotkey4": "Zero bet amount",
+    "hotkeyInfo": "When the hotkeys are enabled, they will remain on for all games until disabled. Despite some games sharing similar key binds, it's always advised to confirm what key interactions are set for each game.",
+    "hotkeyUse": "Hotkeys Enabled"
 }

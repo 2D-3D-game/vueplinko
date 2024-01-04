@@ -56,7 +56,7 @@
             <img :src="'/image/info.png'" width="14" height="14" alt="Image" />
             <span>{{ $t("info") }}</span>
           </div>
-          <div>
+          <div @click="showHotkeySetting">
             <img :src="'/image/key.png'" width="14" height="14" alt="Image" />
             <span>{{ $t("keyboard") }}</span>
           </div>
@@ -86,6 +86,7 @@
     </div>
     <MaxValue :isMaximum="isMaximum" @update:isMaximum="isMaximum = $event" />
     <GameInfo />
+    <Hotkeys />
   </div>
 </template>
 
@@ -97,11 +98,13 @@
 import { ref } from "vue";
 import MaxValue from "./Modals/MaxValue.vue";
 import GameInfo from "./Modals/GameInfo.vue";
+import Hotkeys from "./Modals/Hotkeys.vue";
 
 export default {
   components: {
     MaxValue,
     GameInfo,
+    Hotkeys,
   },
   setup() {
     const isFavorite = ref(false);
@@ -139,6 +142,12 @@ export default {
       isShowSetting.value = false;
     };
 
+    const showHotkeySetting = () => {
+      const modal = document.getElementById("hotkeys-modal");
+      modal.classList.toggle("active");
+      isShowSetting.value = false;
+    };
+
     return {
       isFavorite,
       isShowSetting,
@@ -152,6 +161,7 @@ export default {
       animationSetting,
       showMaxSetting,
       showGameInfo,
+      showHotkeySetting,
     };
   },
 };

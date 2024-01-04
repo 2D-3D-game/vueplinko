@@ -2,12 +2,7 @@
   <div id="gameinfo-modal" :class="'modal'">
     <div :class="'modal__content'">
       <div :class="'modal-title'">
-        <img
-          :src="'/image/info.png'"
-          alt="Image"
-          width="16"
-          height="16"
-        />
+        <img :src="'/image/info.png'" alt="Image" width="16" height="16" />
         <span>{{ $t("info") }}</span>
       </div>
       <div :class="'modal__footer'">
@@ -27,7 +22,7 @@
 .modal {
   visibility: hidden;
   opacity: 0;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
@@ -62,12 +57,14 @@
   line-height: normal;
 }
 .modal__content {
-  border-radius: 4px;
   position: relative;
   width: 500px;
   max-width: 90%;
-  background: #1a2c37;
   padding: 1em 2em;
+  border-radius: 8px;
+  background: #1a2c37;
+  box-shadow: 0px 1px 0px 0px #253541 inset,
+    0px 11px 0px 0px rgba(0, 0, 0, 0.14);
 }
 
 .modal-title {
@@ -84,7 +81,7 @@
 .modal-body {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-between;
   gap: 10px;
   margin-top: 30px;
