@@ -55,18 +55,25 @@
 
 .dropdown-content {
   position: absolute;
-  background-image: url("/image/setting-back.png");
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: #fff;
+  border-radius: 4px;
   width: 118px;
-  height: 240px;
+  height: 220px;
   z-index: 1;
   top: -10px;
   left: -25px;
   transform: translateY(-100%);
 }
-
-.dropdown-content div {
+.dropdown-content .triangle {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  transform: translateX(-50%) rotate(45deg);
+}
+.dropdown-content .contents {
   color: black;
   padding: 9px 12px;
   text-decoration: none;
@@ -74,12 +81,12 @@
   align-items: center;
 }
 
-.dropdown-content div input {
+.dropdown-content .contents input {
   width: 70px;
   margin-left: 5px;
 }
 
-.dropdown-content div span {
+.dropdown-content .contents span {
   color: #2f4553;
   font-family: PingFang SC;
   font-size: 14px;
@@ -93,8 +100,9 @@
   color: #1475e1 !important;
 }
 
-.dropdown-content div:hover {
+.dropdown-content .contents:hover {
   background-color: #f1f1f1;
+  border-radius: 4px;
   cursor: pointer;
 }
 

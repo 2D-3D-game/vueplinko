@@ -40,5 +40,18 @@
     "hotkey3": "减半投注额",
     "hotkey4": "零数投注额",
     "hotkeyInfo": "快捷键一旦启用后将会影响所有游戏至禁用为止。虽然部分游戏的绑定键相同，还是建议您确认不同游戏的锁定按键交互之后再使用。",
-    "hotkeyUse": "启用快捷键"
+    "hotkeyUse": "启用快捷键",
+    "statistics": "实时统计",
+    "type1": "全部",
+    "type2": "投注",
+    "type3": "竞赛",
+    "type4": "隐藏",
+    "left1": "利润",
+    "left2": "总投注额",
+    "right1": "赢",
+    "right2": "输",
+    "max": "最大值",
+    "autobetalert1": "自动投注开始",
+    "autobetalert2": "自动投注完成",
+    "betamountalert": "您的投注额不能大于余额！"
 }

@@ -126,6 +126,21 @@ export default {
     setMaximum() {
       this.$emit("update:isMaximum", !this.isMaximum);
       this.hideModal();
+      if (!this.isMaximum) {
+        document.getElementById("times1").style.display = "none";
+        document.getElementById("times2").style.display = "flex";
+        document.getElementById("timesmax").style.display = "flex";
+        if (window.innerWidth > 1050) {
+          document.getElementById("bitImage").style.right = "170px";
+        } else {
+          document.getElementById("bitImage").style.right = "180px";
+        }
+      } else {
+        document.getElementById("times1").style.display = "flex";
+        document.getElementById("times2").style.display = "none";
+        document.getElementById("timesmax").style.display = "none";
+        document.getElementById("bitImage").style.right = "100px";
+      }
     },
   },
 };

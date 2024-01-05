@@ -22,24 +22,45 @@
         <div :class="'spanstyle'" :style="{ fontSize: '12px' }">US$0.00</div>
       </div>
       <div :class="'betAmountContainer'">
-        <input
-          :class="['betAmountInput', { warning: isEmpty }]"
-          v-model="amount"
-          placeholder="0.000000000"
-          type="number"
-          min="0"
-          step="0.000000001"
-          @focus="selectInput"
-          @change="changeState"
-        />
+        <div :class="'tooltip'">
+          <input
+            :class="['betAmountInput', { warning: isEmpty }]"
+            v-model="amount"
+            placeholder="0.000000000"
+            type="number"
+            min="0"
+            step="0.000000001"
+            @focus="selectInput"
+            @change="changeState"
+          />
+          <span class="tooltiptext">{{ $t("betamountalert") }}</span>
+        </div>
         <button :class="'betAmountTimesBtn-left'" @click="betAmountTimes(0.5)">
-          ½
+          <div :class="'border-span'">½</div>
         </button>
-        <div :class="'divider'"></div>
-        <button :class="'betAmountTimesBtn-right'" @click="betAmountTimes(2)">
+        <button
+          id="times1"
+          :class="'betAmountTimesBtn-right'"
+          @click="betAmountTimes(2)"
+        >
           2x
         </button>
+        <button
+          id="times2"
+          :class="'betAmountTimesBtn-left'"
+          @click="betAmountTimes(2)"
+        >
+          <div :class="'border-span'">2x</div>
+        </button>
+        <button
+          id="timesmax"
+          :class="'betAmountTimesBtn-max'"
+          @click="betAmountTimes(999)"
+        >
+          {{ $t("max") }}
+        </button>
         <img
+          id="bitImage"
           :src="'/image/bit.png'"
           width="16"
           height="16"
@@ -112,6 +133,27 @@
             : $t("autobetstart")
         }}
       </button>
+    </div>
+  </div>
+  <div id="alert" :class="'autobet-alert'">
+    <div :class="'auto-image'">
+      <img
+        :src="'/image/auto.png'"
+        width="20"
+        height="20"
+        alt="Image"
+        :class="'infinitiveImage'"
+      />
+    </div>
+    <span>{{ isAutoBetting ? $t("autobetalert1") : $t("autobetalert2") }}</span>
+    <div :class="'close'">
+      <img
+        :src="'/image/times.png'"
+        width="14"
+        height="14"
+        alt="Image"
+        :class="'infinitiveImage'"
+      />
     </div>
   </div>
   <Setting />
@@ -192,9 +234,21 @@ export default {
             if (!isAutoBetting.value) {
               isAutoBetting.value = true;
               startInterval();
+              document.getElementById("alert").style.opacity = 1;
+              document.getElementById("alert").style.visibility = "visible";
+              setTimeout(() => {
+                document.getElementById("alert").style.opacity = 0;
+                document.getElementById("alert").style.visibility = "hidden";
+              }, 2000);
             } else {
               isAutoBetting.value = false;
               stopInterval();
+              document.getElementById("alert").style.opacity = 1;
+              document.getElementById("alert").style.visibility = "visible";
+              setTimeout(() => {
+                document.getElementById("alert").style.opacity = 0;
+                document.getElementById("alert").style.visibility = "hidden";
+              }, 2000);
             }
           } else {
             for (let i = 0; i < numberofbet.value; i++) {
@@ -239,6 +293,9 @@ export default {
     };
 
     const betAmountTimes = (times) => {
+      if (times === 999) {
+        amount.value = 999999;
+      }
       amount.value = amount.value * times;
     };
 

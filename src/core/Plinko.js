@@ -763,7 +763,6 @@ export function Plinko(element) {
 
   function map() {
     let newWindowWidth = window.innerWidth;
-    console.log(initialWidth, newWindowWidth);
     let newCanvasHeight = element.offsetHeight;
     let newWidth = window.innerWidth;
     let heightScale = newCanvasHeight / canvasHeight;

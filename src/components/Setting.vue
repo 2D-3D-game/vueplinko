@@ -6,7 +6,8 @@
           <img :src="'/image/setting.png'" width="14" height="14" alt="Image" />
         </button>
         <div v-if="isShowSetting" class="dropdown-content">
-          <div>
+          <div :class="'triangle'"></div>
+          <div :class="'contents'">
             <img
               :src="volumn > 0 ? '/image/voice-active.png' : '/image/voice.png'"
               width="14"
@@ -15,7 +16,7 @@
             />
             <input type="range" v-model="volumn" max="100" min="0" />
           </div>
-          <div @click="liveSetting">
+          <div :class="'contents'" @click="liveSetting">
             <img
               :src="isLive ? '/image/live-active.png' : '/image/live.png'"
               width="14"
@@ -24,7 +25,7 @@
             />
             <span :class="isLive ? 'active' : null">{{ $t("live") }}</span>
           </div>
-          <div @click="animationSetting">
+          <div :class="'contents'" @click="animationSetting">
             <img
               :src="
                 isAnimation
@@ -39,7 +40,7 @@
               $t("animation")
             }}</span>
           </div>
-          <div @click="showMaxSetting">
+          <div :class="'contents'" @click="showMaxSetting">
             <img
               :src="
                 isMaximum ? '/image/maxvalue-active.png' : '/image/maxvalue.png'
@@ -52,11 +53,11 @@
               $t("maxvalue")
             }}</span>
           </div>
-          <div @click="showGameInfo">
+          <div :class="'contents'" @click="showGameInfo">
             <img :src="'/image/info.png'" width="14" height="14" alt="Image" />
             <span>{{ $t("info") }}</span>
           </div>
-          <div @click="showHotkeySetting">
+          <div :class="'contents'" @click="showHotkeySetting">
             <img :src="'/image/key.png'" width="14" height="14" alt="Image" />
             <span>{{ $t("keyboard") }}</span>
           </div>
@@ -65,7 +66,7 @@
       <button :class="'button-group'">
         <img :src="'/image/rect.png'" width="14" height="14" alt="Image" />
       </button>
-      <button :class="'button-group'">
+      <button :class="'button-group'" @click="showStatistics">
         <img :src="'/image/total.png'" width="14" height="14" alt="Image" />
       </button>
       <button id="favorite" :class="'button-group'" @click="changeImage">
@@ -87,6 +88,7 @@
     <MaxValue :isMaximum="isMaximum" @update:isMaximum="isMaximum = $event" />
     <GameInfo />
     <Hotkeys />
+    <RealTimeStatistics />
   </div>
 </template>
 
@@ -99,12 +101,14 @@ import { ref } from "vue";
 import MaxValue from "./Modals/MaxValue.vue";
 import GameInfo from "./Modals/GameInfo.vue";
 import Hotkeys from "./Modals/Hotkeys.vue";
+import RealTimeStatistics from "./Modals/RealTimeStatistics.vue";
 
 export default {
   components: {
     MaxValue,
     GameInfo,
     Hotkeys,
+    RealTimeStatistics,
   },
   setup() {
     const isFavorite = ref(false);
@@ -148,6 +152,12 @@ export default {
       isShowSetting.value = false;
     };
 
+    const showStatistics = () => {
+      const modal = document.getElementById("realtime-modal");
+      modal.classList.toggle("active");
+      isShowSetting.value = false;
+    };
+
     return {
       isFavorite,
       isShowSetting,
@@ -162,6 +172,7 @@ export default {
       showMaxSetting,
       showGameInfo,
       showHotkeySetting,
+      showStatistics,
     };
   },
 };

@@ -40,5 +40,18 @@
     "hotkey3": "Halve bet amount",
     "hotkey4": "Zero bet amount",
     "hotkeyInfo": "When the hotkeys are enabled, they will remain on for all games until disabled. Despite some games sharing similar key binds, it's always advised to confirm what key interactions are set for each game.",
-    "hotkeyUse": "Hotkeys Enabled"
+    "hotkeyUse": "Hotkeys Enabled",
+    "statistics": "Real-time statistics",
+    "type1": "All",
+    "type2": "Bet",
+    "type3": "Competition",
+    "type4": "Hide",
+    "left1": "Profit",
+    "left2": "Total Bet",
+    "right1": "Win",
+    "right2": "Lose",
+    "max": "Max",
+    "autobetalert1": "Auto Bet Start!",
+    "autobetalert2": "Auto Bet End!",
+    "betamountalert": "Your bet cannot be greater than your balance!"
 }
