@@ -570,8 +570,8 @@ export function Plinko(element) {
     const pointDirs = [];
 
     let rows = parseInt(rowNumState);
-    let gapLeft = target;
-    let gapRight = rows + 2 - target;
+    let gapLeft = target - 1;
+    let gapRight = rows + 1 - target;
     let currentIndex = getIndexFromCoordinate(rows, target);
 
     for (let i = rows; i > 0; i--) {
@@ -588,13 +588,32 @@ export function Plinko(element) {
         gapRight--;
       }
       currentIndex += flag;
-      pointIds.push(currentIndex);
-      if (last === 0 || last === 1) {
-        pointDirs.push(last, last + 4);
+      if (i === 1 && flag === 0) {
+        currentIndex = Math.random() > 0.5 ? 2 : 3;
+        last = currentIndex === 2 ? 3 : 2;
+        pointIds.push(currentIndex);
+        currentIndex === 3 ? pointDirs.unshift(last) : pointDirs.push(last);
+      } else if (i === 1 && flag === 1) {
+        currentIndex = Math.random() > 0.5 ? 2 : 1;
+        last = currentIndex === 2 ? 2 : 3;
+        pointIds.push(currentIndex);
+        currentIndex === 1 ? pointDirs.unshift(last) : pointDirs.push(last);
       } else {
-        pointDirs.push(last);
+        pointIds.push(currentIndex);
+        if (last === 0 || last === 1) {
+          pointDirs.push(last, last + 4);
+        } else {
+          pointDirs.push(last);
+        }
+        currentIndex -= i + 2;
       }
-      currentIndex -= i + 2;
+      // pointIds.push(currentIndex);
+      // if (last === 0 || last === 1) {
+      //   pointDirs.push(last, last + 4);
+      // } else {
+      //   pointDirs.push(last);
+      // }
+      // currentIndex -= i + 2;
     }
     return [pointIds, pointDirs];
   }
@@ -719,14 +738,14 @@ export function Plinko(element) {
 
   function Road(body, point) {
     Body.setStatic(body, true);
-    let bound = CheckBounds(point.row, point.col);
-    if (bound === "left" && body.road.list[0] === 0) {
-      body.road.list.splice(0, 2);
-      body.road.list.splice(0, 0, 2);
-    } else if (bound === "right" && body.road.list[0] === 1) {
-      body.road.list.splice(0, 2);
-      body.road.list.splice(0, 0, 3);
-    }
+    // let bound = CheckBounds(point.row, point.col);
+    // if (bound === "left" && body.road.list[0] === 0) {
+    //   body.road.list.splice(0, 2);
+    //   body.road.list.splice(0, 0, 2);
+    // } else if (bound === "right" && body.road.list[0] === 1) {
+    //   body.road.list.splice(0, 2);
+    //   body.road.list.splice(0, 0, 3);
+    // }
 
     if (!body.road.id.includes(point.id)) {
       const road = body.road.list.shift();
@@ -766,7 +785,7 @@ export function Plinko(element) {
     let newCanvasHeight = element.offsetHeight;
     let newWidth = window.innerWidth;
     let heightScale = newCanvasHeight / canvasHeight;
-    if(newCanvasHeight > 310) {
+    if (newCanvasHeight > 310) {
       heightScale = newWindowWidth / initialWidth;
     }
 
@@ -854,13 +873,7 @@ export function Plinko(element) {
     let [routes, dirRoute] = SearchRoute(target);
     routes.reverse();
     if (routes[0] === 1) {
-      if (routes[1] === 5) {
-        Math.random() > 0.5
-          ? new Particle(canvasWidth / 2 - 60, 0, ParticleRadius, dirRoute)
-          : new Particle(canvasWidth / 2 - 30, 0, ParticleRadius, dirRoute);
-      } else {
-        new Particle(canvasWidth / 2 - 60, 0, ParticleRadius, dirRoute);
-      }
+      new Particle(canvasWidth / 2 - 60, 0, ParticleRadius, dirRoute);
     } else if (routes[0] === 2) {
       if (routes[1] === 5) {
         Math.random() > 0.5
@@ -872,15 +885,8 @@ export function Plinko(element) {
           : new Particle(canvasWidth / 2 + 30, 0, ParticleRadius, dirRoute);
       }
     } else if (routes[0] === 3) {
-      if (routes[1] === 5) {
-        Math.random() > 0.5
-          ? new Particle(canvasWidth / 2 + 60, 0, ParticleRadius, dirRoute)
-          : new Particle(canvasWidth / 2 + 30, 0, ParticleRadius, dirRoute);
-      } else {
-        new Particle(canvasWidth / 2 + 60, 0, ParticleRadius, dirRoute);
-      }
+      new Particle(canvasWidth / 2 + 60, 0, ParticleRadius, dirRoute);
     }
-    // new Particle(canvasWidth / 2, 0, ParticleRadius, dirRoute);
   }
 
   function clear() {

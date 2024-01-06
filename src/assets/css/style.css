@@ -84,6 +84,24 @@ body {
   color: #fff;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f212e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0f212e;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1a3a38;
+}
+
 @media screen and (max-width: 1050px) {
   .mycontainer {
     display: flex;

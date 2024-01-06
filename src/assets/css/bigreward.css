@@ -1,7 +1,6 @@
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  width: 100%;
   color: #b1bad3;
   font-family: PingFang SC;
   font-size: 14px;
@@ -11,6 +10,7 @@ table {
   margin-left: 2%;
   width: 96%;
   background-color: #0f212e;
+  min-width: 700px;
 }
 
 th,

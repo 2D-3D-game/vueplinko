@@ -13,6 +13,7 @@
               width="14"
               height="14"
               alt="Image"
+              @click="volumn === 0 ? (volumn = 50) : (volumn = 0)"
             />
             <input type="range" v-model="volumn" max="100" min="0" />
           </div>
