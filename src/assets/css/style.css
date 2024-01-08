@@ -12,7 +12,9 @@ body {
   font-weight: 600;
   line-height: normal;
 }
-
+#myapp {
+  margin: auto;
+}
 .mycontainer {
   display: flex;
   flex-direction: row;

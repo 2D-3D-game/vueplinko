@@ -1,351 +1,37 @@
 <template>
-  <div :class="'container'">
-    <div :class="'betTypeContainer'">
-      <button
-        :class="['typeButton', { betTypeActive: isManualButton }]"
-        id="manualButton"
-        @click="activeButton('manualButton')"
-      >
-        {{ $t("manual") }}
-      </button>
-      <button
-        :class="['typeButton', { betTypeActive: isAutoButton }]"
-        id="autoButton"
-        @click="activeButton('autoButton')"
-      >
-        {{ $t("auto") }}
-      </button>
+  <div class="mycontainer">
+    <div id="app" class="app-container"></div>
+    <div id="canvas-container" class="canvas-container">
+      <div id="canvas" class="canvas"></div>
     </div>
-    <div :class="'amountorder'">
-      <div :class="'betamountcontainer'">
-        <div :class="'spanstyle'">{{ $t("amount") }}</div>
-        <div :class="'spanstyle'" :style="{ fontSize: '12px' }">US$0.00</div>
-      </div>
-      <div :class="'betAmountContainer'">
-        <div :class="'tooltip'">
-          <input
-            :class="['betAmountInput', { warning: isEmpty }]"
-            v-model="amount"
-            placeholder="0.000000000"
-            type="number"
-            min="0"
-            step="0.000000001"
-            @focus="selectInput"
-            @change="changeState"
-          />
-          <span class="tooltiptext">{{ $t("betamountalert") }}</span>
+    <div id="overlay" class="overlay-container">
+      <div class="profit-container">
+        <div class="span-group">
+          <span class="span-color">Profit to win</span>
+          <span class="span-color" id="profit">$0.00</span>
         </div>
-        <button :class="'betAmountTimesBtn-left'" @click="betAmountTimes(0.5)">
-          <div :class="'border-span'">½</div>
-        </button>
-        <button
-          id="times1"
-          :class="'betAmountTimesBtn-right'"
-          @click="betAmountTimes(2)"
-        >
-          2x
-        </button>
-        <button
-          id="times2"
-          :class="'betAmountTimesBtn-left'"
-          @click="betAmountTimes(2)"
-        >
-          <div :class="'border-span'">2x</div>
-        </button>
-        <button
-          id="timesmax"
-          :class="'betAmountTimesBtn-max'"
-          @click="betAmountTimes(999)"
-        >
-          {{ $t("max") }}
-        </button>
-        <img
-          id="bitImage"
-          :src="'/image/bit.png'"
-          width="16"
-          height="16"
-          alt="Image"
-          :class="'bitImage'"
+        <input
+          class="profit-input"
+          id="bitProfit"
+          type="text"
+          value="25.00000"
+          readonly
+        />
+      </div>
+      <div class="profit-container">
+        <span class="span-color">Chance</span>
+        <input
+          class="profit-input"
+          id="chance"
+          type="text"
+          value="0.396"
+          readonly
         />
       </div>
     </div>
-    <div :class="'levelorder'">
-      <div :class="'spanstyle'">{{ $t("risk") }}</div>
-      <img
-        :src="'/image/arrow-down.png'"
-        width="14"
-        height="14"
-        alt="Image"
-        :class="'arrow-down'"
-      />
-      <select :class="'baseStyle'" v-model="level" @change="changeState">
-        <option value="Low">{{ $t("level1") }}</option>
-        <option value="Medium">{{ $t("level2") }}</option>
-        <option value="High">{{ $t("level3") }}</option>
-      </select>
-    </div>
-    <div :class="'roworder'">
-      <div :class="'spanstyle'">{{ $t("rows") }}</div>
-      <img
-        :src="'/image/arrow-down.png'"
-        width="14"
-        height="14"
-        alt="Image"
-        :class="'arrow-down'"
-      />
-      <select :class="'baseStyle'" v-model="rows" @change="changeState">
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-        <option value="16">16</option>
-      </select>
-    </div>
-    <div :class="'betNumberContainer'" v-if="isAutoButton">
-      <div :class="'spanstyle'">{{ $t("betNumbers") }}</div>
-      <input
-        :class="'baseStyle'"
-        v-model="numberofbet"
-        placeholder="0"
-        type="number"
-        min="0"
-        @change="changeState"
-      />
-      <img
-        :src="'/image/infinitive.png'"
-        width="14"
-        height="14"
-        alt="Image"
-        :class="'infinitiveImage'"
-      />
-    </div>
-    <div :class="'betbuttonorder'">
-      <button :class="['baseStyle', 'betButton']" @click="bet">
-        {{
-          isManualButton
-            ? $t("bet")
-            : isAutoBetting
-            ? $t("autobetstop")
-            : $t("autobetstart")
-        }}
-      </button>
-    </div>
   </div>
-  <div id="alert" :class="'autobet-alert'">
-    <div :class="'auto-image'">
-      <img
-        :src="'/image/auto.png'"
-        width="20"
-        height="20"
-        alt="Image"
-        :class="'infinitiveImage'"
-      />
-    </div>
-    <span>{{ isAutoBetting ? $t("autobetalert1") : $t("autobetalert2") }}</span>
-    <div :class="'close'">
-      <img
-        :src="'/image/times.png'"
-        width="14"
-        height="14"
-        alt="Image"
-        :class="'infinitiveImage'"
-      />
-    </div>
-  </div>
-  <Setting />
-  <Statistics />
-  <Language />
 </template>
 
 <style scoped>
-@import "./assets/css/sidebar.css";
+@import "./assets/css/style.css";
 </style>
-
-<script>
-import { ref, onMounted, onUnmounted } from "vue";
-import { Plinko } from "./core/Plinko";
-import { GlobalFunc } from "./core/GlobalFunc";
-import Setting from "./components/Setting.vue";
-import Statistics from "./components/Statistics.vue";
-import Language from "./components/Language.vue";
-
-export default {
-  components: {
-    Setting,
-    Statistics,
-    Language,
-  },
-  setup() {
-    const isManualButton = ref(true);
-    const isAutoButton = ref(false);
-    const isAutoBetting = ref(false);
-    const isEmpty = ref(false);
-    const amount = ref("0.000000000");
-    const level = ref("Medium");
-    const rows = ref("16");
-    const numberofbet = ref(0);
-    let intervalId;
-
-    const initialWidth = window.innerWidth;
-    const initialHeight = window.innerHeight;
-
-    const plinko = Plinko(document.body.querySelector("#canvas"));
-    plinko.map();
-
-    const changeState = () => {
-      plinko.GetSettings(
-        amount.value,
-        level.value,
-        rows.value,
-        numberofbet.value,
-        1000
-      );
-      plinko.clear();
-      plinko.map();
-    };
-    const selectInput = () => {
-      const inputField = document.querySelector(".betAmountInput");
-      if (inputField) {
-        inputField.select();
-      }
-    };
-    const bet = () => {
-      if (
-        amount.value == 0 ||
-        amount.value == undefined ||
-        amount.value == ""
-      ) {
-        isEmpty.value = true;
-        return;
-      } else {
-        isEmpty.value = false;
-        if (isManualButton.value) {
-          dropParticle();
-        } else {
-          if (
-            parseInt(numberofbet.value) === 0 ||
-            numberofbet.value === undefined ||
-            numberofbet.value === ""
-          ) {
-            if (!isAutoBetting.value) {
-              isAutoBetting.value = true;
-              startInterval();
-              document.getElementById("alert").style.opacity = 1;
-              document.getElementById("alert").style.visibility = "visible";
-              setTimeout(() => {
-                document.getElementById("alert").style.opacity = 0;
-                document.getElementById("alert").style.visibility = "hidden";
-              }, 2000);
-            } else {
-              isAutoBetting.value = false;
-              stopInterval();
-              document.getElementById("alert").style.opacity = 1;
-              document.getElementById("alert").style.visibility = "visible";
-              setTimeout(() => {
-                document.getElementById("alert").style.opacity = 0;
-                document.getElementById("alert").style.visibility = "hidden";
-              }, 2000);
-            }
-          } else {
-            for (let i = 0; i < numberofbet.value; i++) {
-              setTimeout(() => {
-                dropParticle();
-                numberofbet.value = parseInt(numberofbet.value) - 1;
-              }, 500 * i);
-            }
-          }
-        }
-      }
-    };
-
-    const startInterval = () => {
-      intervalId = setInterval(dropParticle, 500);
-    };
-
-    const stopInterval = () => {
-      clearInterval(intervalId);
-    };
-
-    const dropParticle = () => {
-      let target = 0;
-      let sum = 0;
-      const percentage = GlobalFunc().probabilities["_" + rows.value];
-      const randomNumber = Math.random();
-      for (let i = 0; i < percentage.length; i++) {
-        sum += percentage[i];
-        if (randomNumber >= sum - percentage[i] && randomNumber < sum) {
-          target = i + 1;
-          break;
-        } else {
-          continue;
-        }
-      }
-      plinko.add(target);
-    };
-
-    const activeButton = (buttonId) => {
-      isManualButton.value = buttonId === "manualButton";
-      isAutoButton.value = buttonId === "autoButton";
-    };
-
-    const betAmountTimes = (times) => {
-      if (times === 999) {
-        amount.value = 999999;
-      }
-      amount.value = amount.value * times;
-    };
-
-    const handleResize = () => {
-      let newWidth = window.innerWidth;
-      if (newWidth > 1050) {
-        document.getElementById("app").style.height =
-          (630 * newWidth) / initialWidth + "px";
-        document.getElementById("canvas-container").style.height =
-          (630 * newWidth) / initialWidth + "px";
-        document.getElementById("canvas").style.height =
-          (630 * newWidth) / initialWidth + "px";
-      } else {
-        document.getElementById("app").style.height = "500px";
-        document.getElementById("canvas-container").style.height = "310px";
-        document.getElementById("canvas").style.height = "310px";
-      }
-      plinko.map();
-    };
-
-    onUnmounted(() => {
-      window.removeEventListener("resize", handleResize);
-    });
-
-    onMounted(() => {
-      window.addEventListener("resize", handleResize);
-      plinko.GetSettings(
-        amount.value,
-        level.value,
-        rows.value,
-        numberofbet.value,
-        1000
-      );
-    });
-
-    return {
-      isManualButton,
-      isAutoButton,
-      isAutoBetting,
-      isEmpty,
-      amount,
-      level,
-      rows,
-      numberofbet,
-      activeButton,
-      selectInput,
-      betAmountTimes,
-      changeState,
-      bet,
-    };
-  },
-};
-</script>
