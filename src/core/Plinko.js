@@ -841,6 +841,7 @@ export function Plinko(element) {
     mask.clear();
     mask.beginFill(0xffffff);
     if (newWidth > 1050) {
+      console.log(scale);
       if (scale === 1) {
         maskX = 600;
         maskY = canvasHeight / 3 / scale - 25 / scale;

@@ -29,7 +29,7 @@ body {
 }
 
 .canvas-container {
-  width: 60vw;
+  width: 900px;
   height: 630px;
   margin: auto;
   color: #fff;
@@ -39,9 +39,10 @@ body {
 }
 
 .canvas {
-  width: 650px;
+  width: 700px;
   height: 630px;
   margin: auto;
+  border-radius: 0px 8px 0px 0px;
   background: #0f212e;
 }
 
