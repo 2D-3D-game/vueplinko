@@ -1,7 +1,7 @@
 <template>
   <div :class="'persuade-container'">
     <img
-      :src="'/image/plinko.png'"
+      :src="'/image/plinko.svg'"
       alt="Image"
       width="150"
       height="200"

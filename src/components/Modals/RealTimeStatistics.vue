@@ -2,20 +2,19 @@
   <div id="realtime-modal" :class="'modal'">
     <div :class="'modal__content'">
       <div :class="'modal-title'">
-        <img :src="'/image/total.png'" alt="Image" width="16" height="16" />
+        <img :src="'/image/total.svg'" alt="Image" width="16" height="16" />
         <span>{{ $t("statistics") }}</span>
       </div>
       <div :class="'modal-body'">
         <div :class="'type-container'">
           <div :class="'type-selector'">
             <img
-              :src="'/image/arrow-down.png'"
+              :src="'/image/arrow-down.svg'"
               width="14"
               height="14"
               alt="Image"
               :class="'arrow-down'"
             />
-            <!-- <select :class="'baseStyle'" v-model="level" @change="changeState"> -->
             <select :class="'baseStyle'">
               <option value="all">{{ $t("type1") }}</option>
               <option value="bet" selected>{{ $t("type2") }}</option>
@@ -23,17 +22,16 @@
               <option value="hide">{{ $t("type4") }}</option>
             </select>
           </div>
-          <img :src="'/image/refresh.png'" alt="Image" width="14" height="14" />
+          <img :src="'/image/refresh.svg'" alt="Image" width="14" height="14" />
         </div>
         <div :class="'game-selector'">
           <img
-            :src="'/image/arrow-down.png'"
+            :src="'/image/arrow-down.svg'"
             width="14"
             height="14"
             alt="Image"
             :class="'arrow-down'"
           />
-          <!-- <select :class="'baseStyle'" v-model="level" @change="changeState"> -->
           <select :class="'baseStyle'">
             <option value="all">{{ $t("type1") }}</option>
             <option value="plinko">Plinko</option>
@@ -44,12 +42,12 @@
             <span>{{ $t("left1") }}</span>
             <span :class="['number', 'success']">
               0.00000000
-              <img :src="'/image/bit.png'" width="14" height="14" alt="Image" />
+              <img :src="'/image/bit.svg'" width="14" height="14" alt="Image" />
             </span>
             <span>{{ $t("left2") }}</span>
             <span :class="['number']">
               0.00000000
-              <img :src="'/image/bit.png'" width="14" height="14" alt="Image" />
+              <img :src="'/image/bit.svg'" width="14" height="14" alt="Image" />
             </span>
           </div>
           <div :class="'right'">
@@ -66,7 +64,7 @@
         </div>
       </div>
       <a href="#" class="modal__close" @click="hideModal">
-        <img :src="'/image/times.png'" alt="Image" width="14" height="14" />
+        <img :src="'/image/times.svg'" alt="Image" width="14" height="14" />
       </a>
     </div>
   </div>

@@ -7,13 +7,13 @@
         <span :class="'span-gray'">{{ $t("original") }}</span>
       </div>
       <div :class="'reward'">
-        <img :src="'/image/cup.png'" alt="Image" width="16" height="16" />
+        <img :src="'/image/cup.svg'" alt="Image" width="16" height="16" />
         <span :class="'span1'">1,000.00x</span>
-        <img :src="'/image/cap.png'" alt="Image" width="14" height="14" />
+        <img :src="'/image/cap.svg'" alt="Image" width="14" height="14" />
         <span :class="'span2'">{{ $t("stealth") }} </span>
       </div>
       <img
-        :src="'/image/arrow.png'"
+        :src="'/image/arrow.svg'"
         alt="Image"
         width="16"
         height="16"

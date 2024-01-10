@@ -11,53 +11,134 @@
       </tr>
       <tr>
         <td>
-          <img :src="'/image/reward1.png'" alt="Image" width="20" height="21" />
+          <div>
+            <img
+              :src="'/image/reward1.svg'"
+              alt="Image"
+              width="20"
+              height="21"
+            />
+          </div>
         </td>
-        <td>Los</td>
-        <td>2023年11月22日</td>
         <td>
-          2999.400119...
-          <img :src="'/image/crypto1.png'" alt="Image" width="14" height="14" />
+          <div>Los</div>
         </td>
-        <td>1,000x</td>
         <td>
-          2999.400119...
-          <img :src="'/image/crypto1.png'" alt="Image" width="14" height="14" />
+          <div>2023年11月22日</div>
+        </td>
+        <td>
+          <div>
+            2999.400119...
+            <img
+              :src="'/image/crypto1.svg'"
+              alt="Image"
+              width="14"
+              height="14"
+            />
+          </div>
+        </td>
+        <td>
+          <div>1,000x</div>
+        </td>
+        <td>
+          <div>
+            2999.400119...
+            <img
+              :src="'/image/crypto1.svg'"
+              alt="Image"
+              width="14"
+              height="14"
+            />
+          </div>
         </td>
       </tr>
       <tr>
         <td>
-          <img :src="'/image/reward2.png'" alt="Image" width="20" height="21" />
+          <div>
+            <img
+              :src="'/image/reward2.svg'"
+              alt="Image"
+              width="20"
+              height="21"
+            />
+          </div>
         </td>
         <td>
-          <img :src="'/image/cap.png'" alt="Image" width="14" height="14" />
-          隐身
+          <div>
+            <img :src="'/image/cap.svg'" alt="Image" width="14" height="14" />
+            隐身
+          </div>
         </td>
-        <td>2023年9月24日</td>
         <td>
-          1.411109923
-          <img :src="'/image/crypto2.png'" alt="Image" width="14" height="14" />
+          <div>2023年9月24日</div>
         </td>
-        <td>1,000x</td>
         <td>
-          1880.4010119...
-          <img :src="'/image/crypto2.png'" alt="Image" width="14" height="14" />
+          <div>
+            1.411109923
+            <img
+              :src="'/image/crypto2.svg'"
+              alt="Image"
+              width="14"
+              height="14"
+            />
+          </div>
+        </td>
+        <td>
+          <div>1,000x</div>
+        </td>
+        <td>
+          <div>
+            1880.4010119...
+            <img
+              :src="'/image/crypto2.svg'"
+              alt="Image"
+              width="14"
+              height="14"
+            />
+          </div>
         </td>
       </tr>
       <tr>
         <td>
-          <img :src="'/image/reward3.png'" alt="Image" width="20" height="21" />
+          <div>
+            <img
+              :src="'/image/reward3.svg'"
+              alt="Image"
+              width="20"
+              height="21"
+            />
+          </div>
         </td>
-        <td>Los</td>
-        <td>2023年11月22日</td>
         <td>
-          2999.400119...
-          <img :src="'/image/crypto1.png'" alt="Image" width="14" height="14" />
+          <div>Los</div>
         </td>
-        <td>1,000x</td>
         <td>
-          2999.400119...
-          <img :src="'/image/crypto1.png'" alt="Image" width="14" height="14" />
+          <div>2023年11月22日</div>
+        </td>
+        <td>
+          <div>
+            2999.400119...
+            <img
+              :src="'/image/crypto1.svg'"
+              alt="Image"
+              width="14"
+              height="14"
+            />
+          </div>
+        </td>
+        <td>
+          <div>1,000x</div>
+        </td>
+        <td>
+          <div>
+            2999.400119...
+            <img
+              :src="'/image/crypto1.svg'"
+              alt="Image"
+              width="14"
+              height="14"
+            />
+          </div>
         </td>
       </tr>
     </table>

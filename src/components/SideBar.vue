@@ -18,7 +18,10 @@
         {{ $t("auto") }}
       </button>
     </div>
-    <div :class="['amountorder', isAutoBetting ? 'disabled' : '']">
+    <div
+      id="amountorder"
+      :class="['amountorder', isAutoBetting ? 'disabled' : '']"
+    >
       <div :class="'betamountcontainer'">
         <div :class="'spanstyle'">{{ $t("amount") }}</div>
         <div :class="'spanstyle'" :style="{ fontSize: '12px' }">US$0.00</div>
@@ -36,53 +39,46 @@
             @change="changeState"
             :disabled="isAutoBetting"
           />
+          <img
+            id="bitImage"
+            :src="'/image/bit.svg'"
+            width="16"
+            height="16"
+            alt="Image"
+            :class="'bitImage'"
+          />
           <span class="tooltiptext">{{ $t("betamountalert") }}</span>
         </div>
-        <button
-          :class="'betAmountTimesBtn-left'"
-          @click="betAmountTimes(0.5)"
-          :disabled="isAutoBetting"
-        >
-          <div :class="'border-span'">½</div>
-        </button>
-        <button
-          id="times1"
-          :class="'betAmountTimesBtn-right'"
-          @click="betAmountTimes(2)"
-          :disabled="isAutoBetting"
-        >
-          2x
-        </button>
-        <button
-          id="times2"
-          :class="'betAmountTimesBtn-left'"
-          @click="betAmountTimes(2)"
-          :disabled="isAutoBetting"
-        >
-          <div :class="'border-span'">2x</div>
-        </button>
-        <button
-          id="timesmax"
-          :class="'betAmountTimesBtn-max'"
-          @click="betAmountTimes(999)"
-          :disabled="isAutoBetting"
-        >
-          {{ $t("max") }}
-        </button>
-        <img
-          id="bitImage"
-          :src="'/image/bit.png'"
-          width="16"
-          height="16"
-          alt="Image"
-          :class="'bitImage'"
-        />
+        <div :class="'buttons-container'">
+          <button
+            :class="'betAmountTimesBtn'"
+            @click="betAmountTimes(0.5)"
+            :disabled="isAutoBetting"
+          >
+            ½
+          </button>
+          <button
+            :class="'betAmountTimesBtn'"
+            @click="betAmountTimes(2)"
+            :disabled="isAutoBetting"
+          >
+            2x
+          </button>
+          <button
+            id="timesmax"
+            :class="'betAmountTimesBtn'"
+            @click="betAmountTimes(999)"
+            :disabled="isAutoBetting"
+          >
+            {{ $t("max") }}
+          </button>
+        </div>
       </div>
     </div>
     <div :class="['levelorder', isAutoBetting ? 'disabled' : '']">
       <div :class="'spanstyle'">{{ $t("risk") }}</div>
       <img
-        :src="'/image/arrow-down.png'"
+        :src="'/image/arrow-down.svg'"
         width="14"
         height="14"
         alt="Image"
@@ -102,7 +98,7 @@
     <div :class="['roworder', isAutoBetting ? 'disabled' : '']">
       <div :class="'spanstyle'">{{ $t("rows") }}</div>
       <img
-        :src="'/image/arrow-down.png'"
+        :src="'/image/arrow-down.svg'"
         width="14"
         height="14"
         alt="Image"
@@ -134,14 +130,14 @@
         :disabled="isAutoBetting"
       />
       <img
-        :src="'/image/infinitive.png'"
+        :src="'/image/infinitive.svg'"
         width="14"
         height="14"
         alt="Image"
         :class="'infinitiveImage'"
       />
     </div>
-    <div :class="'betbuttonorder'">
+    <div id="betbuttonorder" :class="'betbuttonorder'">
       <button :class="['baseStyle', 'betButton']" @click="bet">
         {{
           isManualButton
@@ -152,7 +148,7 @@
         }}
         <img
           v-if="isAutoBetting"
-          :src="'/image/betting.png'"
+          :src="'/image/betting.svg'"
           width="16"
           height="16"
           alt="Image"
@@ -171,7 +167,7 @@
     >
       <div :class="'auto-image'">
         <img
-          :src="'/image/auto.png'"
+          :src="'/image/auto.svg'"
           width="20"
           height="20"
           alt="Image"
@@ -181,7 +177,7 @@
       <span>{{ $t(`autobetalert${i}`) }}</span>
       <div :class="'close'">
         <img
-          :src="'/image/times.png'"
+          :src="'/image/times.svg'"
           width="14"
           height="14"
           alt="Image"
@@ -338,6 +334,20 @@ export default {
     const activeButton = (buttonId) => {
       isManualButton.value = buttonId === "manualButton";
       isAutoButton.value = buttonId === "autoButton";
+      changeOrder();
+    };
+
+    const changeOrder = () => {
+      if (window.innerWidth > 1050) {
+        document.getElementById("betbuttonorder").style.order = 6;
+        document.getElementById("amountorder").style.order = 1;
+      } else {
+        document.getElementById("betbuttonorder").style.order =
+          isAutoButton.value ? 1 : 2;
+        document.getElementById("amountorder").style.order = isAutoButton.value
+          ? 2
+          : 1;
+      }
     };
 
     const betAmountTimes = (times) => {
@@ -349,6 +359,7 @@ export default {
 
     const handleResize = () => {
       let newWidth = window.innerWidth;
+      changeOrder();
       if (newWidth > 1050) {
         document.getElementById("app").style.height =
           (630 * newWidth) / initialWidth + "px";

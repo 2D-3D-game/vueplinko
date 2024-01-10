@@ -70,6 +70,7 @@ export function Plinko(element) {
   let currency = 1300;
   let originalY = 0;
   let stageLength = 0;
+  
 
   let maskX = 0;
   let maskY = 0;
@@ -119,13 +120,13 @@ export function Plinko(element) {
       id: [],
     };
     Composite.add(engine.world, metter);
-    let texture = PIXI.Texture.from("/image/ball.png?8");
+    let texture = PIXI.Texture.from("/image/ball.svg?8");
     if (levelState === "Low") {
-      texture = PIXI.Texture.from("/image/ball-low.png?8");
+      texture = PIXI.Texture.from("/image/ball-low.svg?8");
     } else if (levelState === "Medium") {
-      texture = PIXI.Texture.from("/image/ball.png?8");
+      texture = PIXI.Texture.from("/image/ball.svg?8");
     } else {
-      texture = PIXI.Texture.from("/image/ball-high.png?8");
+      texture = PIXI.Texture.from("/image/ball-high.svg?8");
     }
     const sprite = new PIXI.Sprite(texture);
     sprite.width = ParticleRadius * 2;
@@ -308,14 +309,19 @@ export function Plinko(element) {
       -gap / 2 / scale,
       -gap / 2 / scale - 2 / scale,
       gap / scale,
-      1 / 8
+      1
     );
     border.endFill();
     rectangle.endFill();
 
+    let fontSize = 12;
+    if(window.innerWidth < 1050) {
+      fontSize = 8;
+    }
+
     const style = new PIXI.TextStyle({
       fontFamily: "Arial",
-      fontSize: 14 / scale,
+      fontSize: fontSize / scale,
       fontWeight: 600,
       fill: "#000000",
       align: "center",
@@ -624,9 +630,9 @@ export function Plinko(element) {
       lastPos = objects[objects.length - 1].body.position.y - 50 / scale;
     }
     if (window.innerWidth < 1050) {
-      lastPos = canvasHeight / 8 / scale - 35 / scale / 2;
+      lastPos = canvasHeight / 6 / scale - 25 / scale / 2;
       if (objects.length > 1) {
-        lastPos = objects[objects.length - 1].body.position.y - 35 / scale;
+        lastPos = objects[objects.length - 1].body.position.y - 25 / scale;
       }
     }
     const text = body.metter.text;
@@ -659,11 +665,11 @@ export function Plinko(element) {
         objects[objects.length - 1].body.position.y - canvasHeight / 3 / scale;
     }
     if (window.innerWidth < 1050) {
-      distance = -35 / scale;
+      distance = -25 / scale;
       if (objects.length > 1) {
         distance =
           objects[objects.length - 1].body.position.y -
-          canvasHeight / 8 / scale -
+          canvasHeight / 6 / scale -
           maskHeight / 8;
       }
     }
@@ -784,7 +790,7 @@ export function Plinko(element) {
     let newWindowWidth = window.innerWidth;
     let newCanvasHeight = element.offsetHeight;
     let newWidth = window.innerWidth;
-    let heightScale = newCanvasHeight / canvasHeight;
+    let heightScale = canvasWidth / 2 / canvasHeight;
     if (newCanvasHeight > 310) {
       heightScale = newWindowWidth / initialWidth;
     }
@@ -849,11 +855,11 @@ export function Plinko(element) {
     } else {
       maskX =
         canvasWidth / scale / 2 + 5 / scale - app.stage.position.x / scale;
-      maskY = canvasHeight / 8 / scale;
-      maskHeight = 138 / scale;
-      maskWidth = 35 / scale;
+      maskY = canvasHeight / 6 / scale;
+      maskHeight = 98 / scale;
+      maskWidth = 25 / scale;
     }
-    mask.drawRoundedRect(maskX, maskY, maskWidth, maskHeight, 10 / scale);
+    mask.drawRoundedRect(maskX, maskY, maskWidth, maskHeight, 5 / scale);
     mask.endFill();
     app.stage.addChild(mask);
 

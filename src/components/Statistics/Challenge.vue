@@ -1,6 +1,6 @@
 <template>
   <div :class="'challenge-container'">
-    <img :src="'/image/challenge.png'" alt="Image" width="80" height="80" />
+    <img :src="'/image/challenge.svg'" alt="Image" width="80" height="80" />
     <span>Plinko 暂无任何活跃的挑战</span>
   </div>
 </template>

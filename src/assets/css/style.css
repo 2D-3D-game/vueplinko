@@ -113,7 +113,7 @@ body {
 
   .mycontainer .app-container {
     width: 400px;
-    height: 500px;
+    height: 100%;
     order: 2;
     margin-left: 0;
     position: relative;

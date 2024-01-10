@@ -23,3 +23,9 @@ tr:nth-child(even) {
   background-color: #213743;
   border-radius: 4px;
 }
+
+td > div {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}

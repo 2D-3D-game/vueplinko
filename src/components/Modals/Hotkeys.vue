@@ -3,7 +3,7 @@
     <div :class="'modal__content'">
       <div :class="'modal-title'">
         <img
-          :src="'/image/hotkey-setting.png'"
+          :src="'/image/hotkey-setting.svg'"
           alt="Image"
           width="16"
           height="16"
@@ -29,7 +29,7 @@
         </div>
         <div :class="'hotkey-info'">
           <img
-            :src="'/image/information.png'"
+            :src="'/image/information.svg'"
             alt="Image"
             width="16"
             height="16"

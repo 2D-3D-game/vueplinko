@@ -2,7 +2,7 @@
   <div id="gameinfo-modal" :class="'modal'">
     <div :class="'modal__content'">
       <div :class="'modal-title'">
-        <img :src="'/image/info.png'" alt="Image" width="16" height="16" />
+        <img :src="'/image/info.svg'" alt="Image" width="16" height="16" />
         <span>{{ $t("info") }}</span>
       </div>
       <div :class="'modal__footer'">

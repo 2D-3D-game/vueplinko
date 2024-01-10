@@ -3,23 +3,31 @@
     <div :class="'button-group-container'">
       <div :class="'dropdown'">
         <button :class="['button-group', 'dropbtn']" @click="showSetting">
-          <img :src="'/image/setting.png'" width="14" height="14" alt="Image" />
+          <img :src="'/image/setting.svg'" width="14" height="14" alt="Image" />
         </button>
         <div v-if="isShowSetting" class="dropdown-content">
-          <div :class="'triangle'"></div>
           <div :class="'contents'">
             <img
-              :src="volumn > 0 ? '/image/voice-active.png' : '/image/voice.png'"
+              :src="volumn > 0 ? '/image/voice-active.svg' : '/image/voice.svg'"
               width="14"
               height="14"
               alt="Image"
-              @click="volumn === 0 ? (volumn = 50) : (volumn = 0)"
+              @click="volumn === 0 ? changeRange(50) : changeRange(0)"
             />
-            <input type="range" v-model="volumn" max="100" min="0" />
+            <div :style="{ position: 'relative' }">
+              <input
+                type="range"
+                v-model="volumn"
+                max="100"
+                min="0"
+                id="volumn"
+                @input="changeRange(volumn)"
+              />
+            </div>
           </div>
           <div :class="'contents'" @click="liveSetting">
             <img
-              :src="isLive ? '/image/live-active.png' : '/image/live.png'"
+              :src="isLive ? '/image/live-active.svg' : '/image/live.svg'"
               width="14"
               height="14"
               alt="Image"
@@ -30,8 +38,8 @@
             <img
               :src="
                 isAnimation
-                  ? '/image/animation-active.png'
-                  : '/image/animation.png'
+                  ? '/image/animation-active.svg'
+                  : '/image/animation.svg'
               "
               width="14"
               height="14"
@@ -44,7 +52,7 @@
           <div :class="'contents'" @click="showMaxSetting">
             <img
               :src="
-                isMaximum ? '/image/maxvalue-active.png' : '/image/maxvalue.png'
+                isMaximum ? '/image/maxvalue-active.svg' : '/image/maxvalue.svg'
               "
               width="14"
               height="14"
@@ -55,24 +63,25 @@
             }}</span>
           </div>
           <div :class="'contents'" @click="showGameInfo">
-            <img :src="'/image/info.png'" width="14" height="14" alt="Image" />
+            <img :src="'/image/info.svg'" width="14" height="14" alt="Image" />
             <span>{{ $t("info") }}</span>
           </div>
           <div :class="'contents'" @click="showHotkeySetting">
-            <img :src="'/image/key.png'" width="14" height="14" alt="Image" />
+            <img :src="'/image/key.svg'" width="14" height="14" alt="Image" />
             <span>{{ $t("keyboard") }}</span>
           </div>
+          <div :class="'triangle'"></div>
         </div>
       </div>
       <button :class="'button-group'">
-        <img :src="'/image/rect.png'" width="14" height="14" alt="Image" />
+        <img :src="'/image/rect.svg'" width="14" height="14" alt="Image" />
       </button>
       <button :class="'button-group'" @click="showStatistics">
-        <img :src="'/image/total.png'" width="14" height="14" alt="Image" />
+        <img :src="'/image/total.svg'" width="14" height="14" alt="Image" />
       </button>
       <button id="favorite" :class="'button-group'" @click="changeImage">
         <img
-          :src="isFavorite ? '/image/favorite.png' : '/image/unfavorite.png'"
+          :src="isFavorite ? '/image/favorite.svg' : '/image/unfavorite.svg'"
           width="14"
           height="14"
           alt="Image"
@@ -81,7 +90,7 @@
       <div :class="'divider'"></div>
     </div>
     <div :class="'footer-image'">
-      <img :src="'/image/Vector.png'" alt="Image" width="68" height="25" />
+      <img :src="'/image/Vector.svg'" alt="Image" width="68" height="25" />
     </div>
     <div>
       <span :class="'footer-span'">{{ $t("fairness") }}</span>
@@ -117,7 +126,7 @@ export default {
     const isLive = ref(false);
     const isAnimation = ref(false);
     const isMaximum = ref(false);
-    const volumn = ref(0);
+    const volumn = ref(50);
 
     const changeImage = () => {
       isFavorite.value = !isFavorite.value;
@@ -125,6 +134,11 @@ export default {
 
     const showSetting = () => {
       isShowSetting.value = !isShowSetting.value;
+      if (isShowSetting.value) {
+        setTimeout(() => {
+          changeRange(volumn.value);
+        }, 10);
+      }
     };
 
     const liveSetting = () => {
@@ -159,6 +173,14 @@ export default {
       isShowSetting.value = false;
     };
 
+    const changeRange = (req) => {
+      const volumeElement = document.getElementById("volumn");
+      if (volumeElement) {
+        volumn.value = req;
+        volumeElement.style.setProperty("--width", req * 0.86 + "%");
+      }
+    };
+
     return {
       isFavorite,
       isShowSetting,
@@ -174,6 +196,7 @@ export default {
       showGameInfo,
       showHotkeySetting,
       showStatistics,
+      changeRange,
     };
   },
 };
