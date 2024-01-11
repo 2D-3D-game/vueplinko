@@ -1,5 +1,5 @@
 <template>
-  <div id="gameinfo-modal" :class="'modal'">
+  <div id="gameinfo-modal" :class="'modal'" :ref="'gameinfomodal'">
     <div :class="'modal__content'">
       <div :class="'modal-title'">
         <img :src="'/image/info.svg'" alt="Image" width="16" height="16" />
@@ -81,7 +81,6 @@
 .modal-body {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   justify-content: space-between;
   gap: 10px;
   margin-top: 30px;
@@ -108,12 +107,20 @@
 </style>
 
 <script>
+import { ref } from "vue";
+
 export default {
-  methods: {
-    hideModal() {
-      const modal = document.getElementById("gameinfo-modal");
+  setup() {
+    const gameinfomodal = ref(null);
+
+    const hideModal = () => {
+      const modal = gameinfomodal.value;
       modal.classList.toggle("active");
-    },
+    };
+    return {
+      gameinfomodal,
+      hideModal,
+    };
   },
 };
 </script>

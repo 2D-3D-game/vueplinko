@@ -12,14 +12,12 @@ export function Plinko(element) {
   const Body = Matter.Body;
   const Composite = Matter.Composite;
   const Events = Matter.Events;
-  // const canvasWidth = element.offsetWidth;
-  // const canvasHeight = element.offsetHeight;
   const canvasWidth = 700;
   const canvasHeight = 630;
   const engine = Engine.create();
 
-  const initialWidth = window.innerWidth;
-  const initialHeight = window.innerHeight;
+  const initialWidth = 1100;
+  const secondWidth = 950;
   // engine.timing.timeScale = 1.1;
   engine.timing.timeScale = 2;
 
@@ -70,12 +68,12 @@ export function Plinko(element) {
   let currency = 1300;
   let originalY = 0;
   let stageLength = 0;
-  
 
   let maskX = 0;
   let maskY = 0;
   let maskWidth = 0;
   let maskHeight = 0;
+  let heightScale = 1;
 
   let scoreArray = [];
   let objects = [];
@@ -167,7 +165,7 @@ export function Plinko(element) {
       "shadow"
     );
 
-    let fontSize = 12;
+    let fontSize = (12 * heightScale) / scale;
 
     const rectangle = new PIXI.Graphics();
     const shadow = new PIXI.Graphics();
@@ -175,34 +173,34 @@ export function Plinko(element) {
     shadow.beginFill(shadowColor);
 
     const cornerRadius = (gap * 10) / 120;
-    if (window.innerWidth < 1050) {
+    if (window.innerWidth < 950) {
       rectangle.drawRoundedRect(
-        -gap / 2,
+        -gap / 2 + 4,
         -gap / 8 / scale,
-        gap - 4,
+        gap - 8,
         (2 * gap) / 8 / scale,
         cornerRadius
       );
       shadow.drawRoundedRect(
-        -gap / 2,
+        -gap / 2 + 4,
         -gap / 8 / scale + 2 / scale,
-        gap - 4,
+        gap - 8,
         (2 * gap) / 8 / scale,
         cornerRadius
       );
-      fontSize = 6;
+      fontSize = 6 / scale;
     } else {
       rectangle.drawRoundedRect(
-        -gap / 2,
+        -gap / 2 + 4,
         -gap / 4 / scale,
-        gap - 4,
+        gap - 8,
         (2 * gap) / 4 / scale,
         cornerRadius
       );
       shadow.drawRoundedRect(
-        -gap / 2,
+        -gap / 2 + 4,
         -gap / 4 / scale + 4 / scale,
-        gap - 4,
+        gap - 8,
         (2 * gap) / 4 / scale,
         cornerRadius
       );
@@ -213,7 +211,7 @@ export function Plinko(element) {
     const style = new PIXI.TextStyle({
       fontFamily: "Arial",
       fontWeight: 600,
-      fontSize: fontSize / scale,
+      fontSize: fontSize,
       fill: "#000000",
       align: "center",
     });
@@ -298,24 +296,19 @@ export function Plinko(element) {
     const rectangle = new PIXI.Graphics();
     const border = new PIXI.Graphics();
     rectangle.beginFill(color);
-    border.beginFill(0x000000);
+    border.beginFill(0x557086);
     rectangle.drawRect(
       -gap / 2 / scale,
       -gap / 2 / scale,
       gap / scale,
-      gap / scale - 2 / scale
+      gap / scale - 1
     );
-    border.drawRect(
-      -gap / 2 / scale,
-      -gap / 2 / scale - 2 / scale,
-      gap / scale,
-      1
-    );
+    border.drawRect(-gap / 2 / scale, -gap / 2 / scale - 1, gap / scale, 1);
     border.endFill();
     rectangle.endFill();
 
-    let fontSize = 12;
-    if(window.innerWidth < 1050) {
+    let fontSize = 16;
+    if (window.innerWidth < 950) {
       fontSize = 8;
     }
 
@@ -474,7 +467,7 @@ export function Plinko(element) {
 
       let rectWidth = 60;
       let rectHeight = 40 / scale;
-      if (window.innerWidth < 1050) {
+      if (window.innerWidth < 950) {
         rectHeight = 20 / scale;
       }
       const rectX = body.position.x - rectWidth / 2;
@@ -629,7 +622,7 @@ export function Plinko(element) {
     if (objects.length > 1) {
       lastPos = objects[objects.length - 1].body.position.y - 50 / scale;
     }
-    if (window.innerWidth < 1050) {
+    if (window.innerWidth < 950) {
       lastPos = canvasHeight / 6 / scale - 25 / scale / 2;
       if (objects.length > 1) {
         lastPos = objects[objects.length - 1].body.position.y - 25 / scale;
@@ -664,7 +657,7 @@ export function Plinko(element) {
       distance =
         objects[objects.length - 1].body.position.y - canvasHeight / 3 / scale;
     }
-    if (window.innerWidth < 1050) {
+    if (window.innerWidth < 950) {
       distance = -25 / scale;
       if (objects.length > 1) {
         distance =
@@ -686,7 +679,7 @@ export function Plinko(element) {
 
   function removeScoreboard() {
     for (let i = 0; i < objects.length; i++) {
-      if (window.innerWidth < 1050) {
+      if (window.innerWidth < 950) {
         if (
           objects[i].body.position.y >
           canvasHeight / 8 / scale + 150 / scale
@@ -733,13 +726,20 @@ export function Plinko(element) {
         RemoveParticle(bodyB);
         BasketSplash(bodyA);
         UpdateScore(bodyA);
+        sendDataToVue(2);
       }
       if (bodyB.label === "basket" && bodyA.label === "particle") {
         RemoveParticle(bodyA);
         BasketSplash(bodyB);
         UpdateScore(bodyB);
+        sendDataToVue(1);
       }
     }
+  }
+
+  function sendDataToVue(data) {
+    const event = new CustomEvent('data-updated', { detail: data });
+    window.dispatchEvent(event);
   }
 
   function Road(body, point) {
@@ -788,34 +788,30 @@ export function Plinko(element) {
 
   function map() {
     let newWindowWidth = window.innerWidth;
-    let newCanvasHeight = element.offsetHeight;
-    let newWidth = window.innerWidth;
-    let heightScale = canvasWidth / 2 / canvasHeight;
-    if (newCanvasHeight > 310) {
-      heightScale = newWindowWidth / initialWidth;
+
+    if (newWindowWidth > initialWidth) {
+      heightScale = 1;
+    } else if (newWindowWidth <= initialWidth && newWindowWidth > secondWidth) {
+      heightScale = newWindowWidth / (initialWidth + 100);
+    } else {
+      heightScale = element.offsetHeight / canvasHeight;
     }
 
-    let rows = globalFunc.baskets[levelState]["_" + rowNumState];
     app.stage.position._x = 0;
-    let col = 3;
+    const rows = globalFunc.baskets[levelState]["_" + rowNumState];
     const increment = 1;
     const gap = GapWidth * 2 * MapGap;
+    let col = 3;
+    let id = 0;
 
     clear();
-    scale = (9 * heightScale) / rows.length;
+    scale = (10 * heightScale) / rows.length;
     originalY = rows.length * gap - 15 * scale;
-    let id = 0;
     for (let i = 1; i <= rows.length; i++) {
       const space = (canvasWidth - gap * col) / 2;
       for (let j = 1; j <= col; j++) {
         if (i < rows.length) {
           id++;
-          // const index = getIndexFromCoordinate(i, j);
-          // if (routes.indexOf(index) >= 0) {
-          //   new Point(space + j * gap - GapWidth * MapGap, i * gap, 0xff0000);
-          // } else {
-          //   new Point(space + j * gap - GapWidth * MapGap, i * gap);
-          // }
           new Point(space + j * gap - GapWidth * MapGap, i * gap, i, id);
         } else {
           if (j > 1) {
@@ -831,7 +827,7 @@ export function Plinko(element) {
       col += increment;
     }
     app.stage.scale.set(scale);
-    if (newWidth > 1050) {
+    if (newWindowWidth > 950) {
       app.stage.position.x = ((1 - scale) * canvasWidth) / 2;
     } else {
       app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 150;
@@ -840,15 +836,21 @@ export function Plinko(element) {
 
     mask.clear();
     mask.beginFill(0xffffff);
-    if (newWidth > 1050) {
-      console.log(scale);
-      if (scale === 1) {
-        maskX = 600;
-        maskY = canvasHeight / 3 / scale - 25 / scale;
-        maskHeight = 198 / scale;
-        maskWidth = 50 / scale;
+    if (newWindowWidth > 950) {
+      if (newWindowWidth > initialWidth) {
+        if (scale === 1) {
+          maskX = 650;
+          maskY = canvasHeight / 3 / scale - 25 / scale;
+          maskHeight = 198 / scale;
+          maskWidth = 50 / scale;
+        } else {
+          maskX = app.stage.position.x / (1 - scale) + 300 / scale;
+          maskY = canvasHeight / 3 / scale - 25 / scale;
+          maskHeight = 198 / scale;
+          maskWidth = 50 / scale;
+        }
       } else {
-        maskX = app.stage.position.x / (1 - scale) + 200 / scale + 50 / scale;
+        maskX = app.stage.position.x / (1 - scale) + 250 / scale;
         maskY = canvasHeight / 3 / scale - 25 / scale;
         maskHeight = 198 / scale;
         maskWidth = 50 / scale;
@@ -860,7 +862,13 @@ export function Plinko(element) {
       maskHeight = 98 / scale;
       maskWidth = 25 / scale;
     }
-    mask.drawRoundedRect(maskX, maskY, maskWidth, maskHeight, 5 / scale);
+    mask.drawRoundedRect(
+      maskX,
+      maskY,
+      maskWidth,
+      maskHeight,
+      newWindowWidth > 950 ? 10 / scale : 4 / scale
+    );
     mask.endFill();
     app.stage.addChild(mask);
 

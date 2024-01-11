@@ -1,35 +1,45 @@
 <template>
   <div :class="'container'">
-    <div :class="['betTypeContainer', isAutoBetting ? 'disabled' : '']">
+    <div :class="['betTypeContainer']">
       <button
-        :class="['typeButton', { betTypeActive: isManualButton }]"
+        :class="[
+          'typeButton',
+          isAutoBetting && betting > 0 ? 'disabled' : '',
+          { betTypeActive: isManualButton },
+        ]"
         id="manualButton"
         @click="activeButton('manualButton')"
-        :disabled="isAutoBetting"
+        :disabled="isAutoBetting && betting > 0"
       >
         {{ $t("manual") }}
       </button>
       <button
-        :class="['typeButton', { betTypeActive: isAutoButton }]"
+        :class="[
+          'typeButton',
+          isAutoBetting && betting > 0 ? 'disabled' : '',
+          { betTypeActive: isAutoButton },
+        ]"
         id="autoButton"
         @click="activeButton('autoButton')"
-        :disabled="isAutoBetting"
+        :disabled="isAutoBetting && betting > 0"
       >
         {{ $t("auto") }}
       </button>
     </div>
-    <div
-      id="amountorder"
-      :class="['amountorder', isAutoBetting ? 'disabled' : '']"
-    >
+    <div id="amountorder" :class="['amountorder']">
       <div :class="'betamountcontainer'">
         <div :class="'spanstyle'">{{ $t("amount") }}</div>
         <div :class="'spanstyle'" :style="{ fontSize: '12px' }">US$0.00</div>
       </div>
       <div :class="'betAmountContainer'">
-        <div :class="'tooltip'">
+        <div :class="['tooltip']">
           <input
-            :class="['betAmountInput', { warning: isEmpty }]"
+            :class="[
+              'betAmountInput',
+              isAutoBetting ? 'disabled' : '',
+              { warning: isEmpty },
+            ]"
+            :ref="'betAmountInput'"
             v-model="amount"
             placeholder="0.000000000"
             type="number"
@@ -49,7 +59,7 @@
           />
           <span class="tooltiptext">{{ $t("betamountalert") }}</span>
         </div>
-        <div :class="'buttons-container'">
+        <div :class="['buttons-container', betting > 0 ? 'disabled' : '']">
           <button
             :class="'betAmountTimesBtn'"
             @click="betAmountTimes(0.5)"
@@ -75,7 +85,7 @@
         </div>
       </div>
     </div>
-    <div :class="['levelorder', isAutoBetting ? 'disabled' : '']">
+    <div :class="['levelorder']">
       <div :class="'spanstyle'">{{ $t("risk") }}</div>
       <img
         :src="'/image/arrow-down.svg'"
@@ -85,17 +95,17 @@
         :class="'arrow-down'"
       />
       <select
-        :class="'baseStyle'"
+        :class="['baseStyle', betting > 0 ? 'disabled' : '']"
         v-model="level"
         @change="changeState"
-        :disabled="isAutoBetting"
+        :disabled="betting > 0"
       >
         <option value="Low">{{ $t("level1") }}</option>
         <option value="Medium">{{ $t("level2") }}</option>
         <option value="High">{{ $t("level3") }}</option>
       </select>
     </div>
-    <div :class="['roworder', isAutoBetting ? 'disabled' : '']">
+    <div :class="['roworder']">
       <div :class="'spanstyle'">{{ $t("rows") }}</div>
       <img
         :src="'/image/arrow-down.svg'"
@@ -105,23 +115,20 @@
         :class="'arrow-down'"
       />
       <select
-        class="baseStyle"
+        :class="['baseStyle', betting > 0 ? 'disabled' : '']"
         v-model="rows"
         @change="changeState"
-        :disabled="isAutoBetting"
+        :disabled="betting > 0"
       >
         <option v-for="value in rowValues" :key="value" :value="value">
           {{ value }}
         </option>
       </select>
     </div>
-    <div
-      :class="['betNumberContainer', isAutoBetting ? 'disabled' : '']"
-      v-if="isAutoButton"
-    >
+    <div :class="['betNumberContainer']" v-if="isAutoButton">
       <div :class="'spanstyle'">{{ $t("betNumbers") }}</div>
       <input
-        :class="'baseStyle'"
+        :class="['baseStyle', isAutoBetting ? 'disabled' : '']"
         v-model="numberofbet"
         placeholder="0"
         type="number"
@@ -163,6 +170,7 @@
       :key="i"
       :id="`alert${i}`"
       :class="'autobet-alert'"
+      :ref="`alert${i}`"
       style="display: none"
     >
       <div :class="'auto-image'">
@@ -221,9 +229,8 @@ export default {
     const numberofbet = ref(0);
     const rowValues = ["8", "9", "10", "11", "12", "13", "14", "15", "16"];
     let intervalId;
-
-    const initialWidth = window.innerWidth;
-    const initialHeight = window.innerHeight;
+    const betting = ref(0);
+    const betAmountInput = ref(null);
 
     const plinko = Plinko(document.body.querySelector("#canvas"));
     plinko.map();
@@ -240,7 +247,7 @@ export default {
       plinko.map();
     };
     const selectInput = () => {
-      const inputField = document.querySelector(".betAmountInput");
+      const inputField = betAmountInput.value;
       if (inputField) {
         inputField.select();
       }
@@ -273,12 +280,16 @@ export default {
               showAlert(2);
             }
           } else {
+            isAutoBetting.value = true;
             for (let i = 0; i < numberofbet.value; i++) {
               setTimeout(() => {
                 dropParticle();
                 numberofbet.value = parseInt(numberofbet.value) - 1;
               }, 500 * i);
             }
+            setTimeout(() => {
+              isAutoBetting.value = false;
+            }, 500 * numberofbet.value);
           }
         }
       }
@@ -329,6 +340,7 @@ export default {
         }
       }
       plinko.add(target);
+      betting.value = betting.value + 1;
     };
 
     const activeButton = (buttonId) => {
@@ -338,7 +350,7 @@ export default {
     };
 
     const changeOrder = () => {
-      if (window.innerWidth > 1050) {
+      if (window.innerWidth > 950) {
         document.getElementById("betbuttonorder").style.order = 6;
         document.getElementById("amountorder").style.order = 1;
       } else {
@@ -359,27 +371,69 @@ export default {
 
     const handleResize = () => {
       let newWidth = window.innerWidth;
-      changeOrder();
-      if (newWidth > 1050) {
-        document.getElementById("app").style.height =
-          (630 * newWidth) / initialWidth + "px";
-        document.getElementById("canvas-container").style.height =
-          (630 * newWidth) / initialWidth + "px";
-        document.getElementById("canvas").style.height =
-          (630 * newWidth) / initialWidth + "px";
+      if (newWidth < 1100) {
+        changeOrder();
+        if (newWidth > 950) {
+          responsive(
+            250 + (newWidth * 50) / 1200 + "px",
+            (630 * newWidth) / 1200 + "px",
+            "700px",
+            (630 * newWidth) / 1200 + "px",
+            "700px",
+            (630 * newWidth) / 1200 + "px",
+            950 + (newWidth * 50) / 1200 + "px",
+            950 + (newWidth * 50) / 1200 + "px"
+          );
+        } else {
+          responsive(
+            "400px",
+            "500px",
+            "400px",
+            "310px",
+            "400px",
+            "310px",
+            "80vw",
+            "400px"
+          );
+        }
       } else {
-        document.getElementById("app").style.height = "500px";
-        document.getElementById("canvas-container").style.height = "310px";
-        document.getElementById("canvas").style.height = "310px";
+        responsive(
+          "300px",
+          "630px",
+          "800px",
+          "630px",
+          "700px",
+          "630px",
+          "1100px",
+          "1100px"
+        );
       }
       plinko.map();
     };
 
+    const responsive = (a_w, a_h, co_w, co_h, c_w, c_h, st_w, s_w) => {
+      document.getElementById("app").style.height = a_h;
+      document.getElementById("app").style.width = a_w;
+      document.getElementById("canvas-container").style.height = co_h;
+      document.getElementById("canvas-container").style.width = co_w;
+      document.getElementById("canvas").style.height = c_h;
+      document.getElementById("canvas").style.width = c_w;
+      document.getElementById("statistics").style.width = st_w;
+      document.getElementById("setting").style.width = s_w;
+    };
+
+    const handleDataUpdate = (event) => {
+      if (event.detail === 1 || event.detail === 2) {
+        betting.value = betting.value - 1;
+      }
+    };
     onUnmounted(() => {
       window.removeEventListener("resize", handleResize);
+      window.addEventListener("data-updated", handleDataUpdate);
     });
 
     onMounted(() => {
+      window.addEventListener("data-updated", handleDataUpdate);
       window.addEventListener("resize", handleResize);
       plinko.GetSettings(
         amount.value,
@@ -400,6 +454,8 @@ export default {
       rows,
       numberofbet,
       rowValues,
+      betting,
+      betAmountInput,
       activeButton,
       selectInput,
       betAmountTimes,

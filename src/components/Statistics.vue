@@ -1,5 +1,5 @@
 <template>
-  <div :class="'statistics-container'">
+  <div id="statistics" :class="'statistics-container'">
     <button :class="'statistics-button'" @click="expandReward">
       <div :class="'span-group'">
         <span :class="'span-white'">Plinko</span>

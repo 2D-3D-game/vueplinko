@@ -1,5 +1,5 @@
 <template>
-  <div id="hotkeys-modal" :class="'modal'">
+  <div :ref="'hotkeymodal'" :class="'modal'">
     <div :class="'modal__content'">
       <div :class="'modal-title'">
         <img
@@ -263,12 +263,18 @@
 </style>
 
 <script>
+import { ref } from "vue";
 export default {
-  methods: {
-    hideModal() {
-      const modal = document.getElementById("hotkeys-modal");
+  setup() {
+    const hotkeymodal = ref(null);
+    const hideModal = () => {
+      const modal = hotkeymodal.value;
       modal.classList.toggle("active");
-    },
+    };
+    return {
+      hotkeymodal,
+      hideModal,
+    };
   },
 };
 </script>

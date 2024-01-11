@@ -1,5 +1,5 @@
 <template>
-  <div :class="'footer-container'">
+  <div id="setting" :class="'footer-container'">
     <div :class="'button-group-container'">
       <div :class="'dropdown'">
         <button :class="['button-group', 'dropbtn']" @click="showSetting">
@@ -95,9 +95,9 @@
     <div>
       <span :class="'footer-span'">{{ $t("fairness") }}</span>
     </div>
-    <MaxValue :isMaximum="isMaximum" @update:isMaximum="isMaximum = $event" />
-    <GameInfo />
-    <Hotkeys />
+    <MaxValue :ref="'maxValueComponent'" :isMaximum="isMaximum" @update:isMaximum="isMaximum = $event" />
+    <GameInfo :ref="'gameInfoComponent'" />
+    <Hotkeys :ref="'hotkeyComponent'" />
     <RealTimeStatistics />
   </div>
 </template>
@@ -127,6 +127,9 @@ export default {
     const isAnimation = ref(false);
     const isMaximum = ref(false);
     const volumn = ref(50);
+    const gameInfoComponent = ref(null);
+    const hotkeyComponent = ref(null);
+    const maxValueComponent = ref(null);
 
     const changeImage = () => {
       isFavorite.value = !isFavorite.value;
@@ -150,19 +153,19 @@ export default {
     };
 
     const showMaxSetting = () => {
-      const modal = document.getElementById("demo-modal");
+      const modal = maxValueComponent.value.$refs.demomodal;
       modal.classList.toggle("active");
       isShowSetting.value = false;
     };
 
     const showGameInfo = () => {
-      const modal = document.getElementById("gameinfo-modal");
+      const modal = gameInfoComponent.value.$refs.gameinfomodal;
       modal.classList.toggle("active");
       isShowSetting.value = false;
     };
 
     const showHotkeySetting = () => {
-      const modal = document.getElementById("hotkeys-modal");
+      const modal = hotkeyComponent.value.$refs.hotkeymodal;
       modal.classList.toggle("active");
       isShowSetting.value = false;
     };
@@ -188,6 +191,9 @@ export default {
       isAnimation,
       isMaximum,
       volumn,
+      gameInfoComponent,
+      hotkeyComponent,
+      maxValueComponent,
       changeImage,
       showSetting,
       liveSetting,

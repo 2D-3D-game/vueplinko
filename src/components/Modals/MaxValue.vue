@@ -1,5 +1,5 @@
 <template>
-  <div id="demo-modal" :class="'modal'">
+  <div :ref="'demomodal'" :class="'modal'">
     <div :class="'modal__content'">
       <div :class="'modal-title'">
         <img
@@ -110,6 +110,7 @@
 </style>
 
 <script>
+import { ref } from "vue";
 export default {
   props: {
     isMaximum: {
@@ -118,11 +119,20 @@ export default {
     },
   },
 
-  methods: {
-    hideModal() {
-      const modal = document.getElementById("demo-modal");
+  setup() {
+    const demomodal = ref(null);
+
+    const hideModal = () => {
+      const modal = demomodal.value;
       modal.classList.toggle("active");
-    },
+    };
+    return {
+      demomodal,
+      hideModal,
+    };
+  },
+
+  methods: {
     setMaximum() {
       this.$emit("update:isMaximum", !this.isMaximum);
       this.hideModal();
