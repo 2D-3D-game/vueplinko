@@ -109,9 +109,9 @@
 @media screen and (max-width: 950px) {
   .statistics-container {
     width: 80vw;
-    /* position: absolute;
+    position: absolute;
     left: 50%;
-    transform: translateX(-50%); */
+    transform: translateX(-50%);
     align-self: center;
     margin-top: 10px;
     background-color: #0f212e;

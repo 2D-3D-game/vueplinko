@@ -47,7 +47,7 @@ export default {
     const canvas = ref(null);
 
     const setStyle = () => {
-      console.log(container.value);
+      // console.log(container.value);
       // if(app.value)
       // app.value.style.height = store.a_h;
       // app.value.style.width = store.a_w;

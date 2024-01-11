@@ -207,12 +207,8 @@
       <div :class="'alert-timeline'"></div>
     </div>
   </div>
-  <div :ref="'settingComponent'">
-    <Setting />
-  </div>
-  <div :ref="'statisticsComponent'">
-    <Statistics />
-  </div>
+  <Setting />
+  <Statistics />
 </template>
 
 <style scoped>
@@ -422,15 +418,14 @@ export default {
     };
 
     const responsive = (a_w, a_h, co_w, co_h, c_w, c_h, st_w, s_w) => {
-      mutations.responsive(a_w, a_h, co_w, co_h, c_w, c_h);
       document.getElementById("app").style.height = a_h;
       document.getElementById("app").style.width = a_w;
       document.getElementById("canvas-container").style.height = co_h;
       document.getElementById("canvas-container").style.width = co_w;
       document.getElementById("canvas").style.height = c_h;
       document.getElementById("canvas").style.width = c_w;
-      statisticsComponent.value.style.width = st_w;
-      settingComponent.value.style.width = s_w;
+      document.getElementById("statisticscontainer").style.width = st_w;
+      document.getElementById("setting").style.width = s_w;
     };
 
     const handleDataUpdate = (event) => {

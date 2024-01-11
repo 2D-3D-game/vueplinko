@@ -1,5 +1,5 @@
 <template>
-  <div :class="'footer-container'">
+  <div id="setting" :class="'footer-container'">
     <div :class="'button-group-container'">
       <div :class="'dropdown'">
         <button :class="['button-group', 'dropbtn']" @click="showSetting">
