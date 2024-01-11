@@ -11,13 +11,11 @@
         <span>{{ $t("maxvalue") }}</span>
       </div>
       <div :class="'modal-body'">
-        <span>{{
-          this.isMaximum ? $t("maxquestion2") : $t("maxquestion1")
-        }}</span>
+        <span>{{ showMax ? $t("maxquestion2") : $t("maxquestion1") }}</span>
       </div>
       <div :class="'modal__footer'">
         <button :class="'activeButton'" @click="setMaximum">
-          {{ this.isMaximum ? $t("turnOff") : $t("turnOn") }}
+          {{ showMax ? $t("turnOff") : $t("turnOn") }}
         </button>
       </div>
       <a href="#" class="modal__close" @click="hideModal">&times;</a>
@@ -111,11 +109,12 @@
 
 <script>
 import { ref } from "vue";
+import { store, mutations } from "../../core/Store";
+
 export default {
-  props: {
-    isMaximum: {
-      type: Boolean,
-      required: true,
+  computed: {
+    showMax() {
+      return store.isMaximum;
     },
   },
 
@@ -126,22 +125,16 @@ export default {
       const modal = demomodal.value;
       modal.classList.toggle("active");
     };
+
+    const setMaximum = () => {
+      hideModal();
+      mutations.showMaximum(!store.isMaximum);
+    };
     return {
       demomodal,
       hideModal,
+      setMaximum,
     };
-  },
-
-  methods: {
-    setMaximum() {
-      this.$emit("update:isMaximum", !this.isMaximum);
-      this.hideModal();
-      if (!this.isMaximum) {
-        document.getElementById("timesmax").style.display = "block";
-      } else {
-        document.getElementById("timesmax").style.display = "none";
-      }
-    },
   },
 };
 </script>

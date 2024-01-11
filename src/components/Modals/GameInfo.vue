@@ -1,5 +1,5 @@
 <template>
-  <div id="gameinfo-modal" :class="'modal'" :ref="'gameinfomodal'">
+  <div :class="'modal'" :ref="'gameinfomodal'">
     <div :class="'modal__content'">
       <div :class="'modal-title'">
         <img :src="'/image/info.svg'" alt="Image" width="16" height="16" />

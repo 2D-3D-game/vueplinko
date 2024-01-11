@@ -1,5 +1,5 @@
 <template>
-  <div id="setting" :class="'footer-container'">
+  <div :class="'footer-container'">
     <div :class="'button-group-container'">
       <div :class="'dropdown'">
         <button :class="['button-group', 'dropbtn']" @click="showSetting">
@@ -20,7 +20,7 @@
                 v-model="volumn"
                 max="100"
                 min="0"
-                id="volumn"
+                :ref="'inputRange'"
                 @input="changeRange(volumn)"
               />
             </div>
@@ -52,15 +52,13 @@
           <div :class="'contents'" @click="showMaxSetting">
             <img
               :src="
-                isMaximum ? '/image/maxvalue-active.svg' : '/image/maxvalue.svg'
+                showMax ? '/image/maxvalue-active.svg' : '/image/maxvalue.svg'
               "
               width="14"
               height="14"
               alt="Image"
             />
-            <span :class="isMaximum ? 'active' : null">{{
-              $t("maxvalue")
-            }}</span>
+            <span :class="showMax ? 'active' : null">{{ $t("maxvalue") }}</span>
           </div>
           <div :class="'contents'" @click="showGameInfo">
             <img :src="'/image/info.svg'" width="14" height="14" alt="Image" />
@@ -79,7 +77,7 @@
       <button :class="'button-group'" @click="showStatistics">
         <img :src="'/image/total.svg'" width="14" height="14" alt="Image" />
       </button>
-      <button id="favorite" :class="'button-group'" @click="changeImage">
+      <button :class="'button-group'" @click="changeImage">
         <img
           :src="isFavorite ? '/image/favorite.svg' : '/image/unfavorite.svg'"
           width="14"
@@ -95,10 +93,10 @@
     <div>
       <span :class="'footer-span'">{{ $t("fairness") }}</span>
     </div>
-    <MaxValue :ref="'maxValueComponent'" :isMaximum="isMaximum" @update:isMaximum="isMaximum = $event" />
+    <MaxValue :ref="'maxValueComponent'" />
     <GameInfo :ref="'gameInfoComponent'" />
     <Hotkeys :ref="'hotkeyComponent'" />
-    <RealTimeStatistics />
+    <RealTimeStatistics :ref="'stComponent'" />
   </div>
 </template>
 
@@ -108,6 +106,7 @@
 
 <script>
 import { ref } from "vue";
+import { store } from "../core/Store";
 import MaxValue from "./Modals/MaxValue.vue";
 import GameInfo from "./Modals/GameInfo.vue";
 import Hotkeys from "./Modals/Hotkeys.vue";
@@ -120,16 +119,22 @@ export default {
     Hotkeys,
     RealTimeStatistics,
   },
+  computed: {
+    showMax() {
+      return store.isMaximum;
+    },
+  },
   setup() {
     const isFavorite = ref(false);
     const isShowSetting = ref(false);
     const isLive = ref(false);
     const isAnimation = ref(false);
-    const isMaximum = ref(false);
     const volumn = ref(50);
     const gameInfoComponent = ref(null);
     const hotkeyComponent = ref(null);
     const maxValueComponent = ref(null);
+    const stComponent = ref(null);
+    const inputRange = ref(null);
 
     const changeImage = () => {
       isFavorite.value = !isFavorite.value;
@@ -171,13 +176,13 @@ export default {
     };
 
     const showStatistics = () => {
-      const modal = document.getElementById("realtime-modal");
+      const modal = stComponent.value.$refs.stmodal;
       modal.classList.toggle("active");
       isShowSetting.value = false;
     };
 
     const changeRange = (req) => {
-      const volumeElement = document.getElementById("volumn");
+      const volumeElement = inputRange.value;
       if (volumeElement) {
         volumn.value = req;
         volumeElement.style.setProperty("--width", req * 0.86 + "%");
@@ -189,11 +194,12 @@ export default {
       isShowSetting,
       isLive,
       isAnimation,
-      isMaximum,
       volumn,
+      inputRange,
       gameInfoComponent,
       hotkeyComponent,
       maxValueComponent,
+      stComponent,
       changeImage,
       showSetting,
       liveSetting,

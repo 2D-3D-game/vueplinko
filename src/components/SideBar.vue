@@ -7,7 +7,6 @@
           isAutoBetting && betting > 0 ? 'disabled' : '',
           { betTypeActive: isManualButton },
         ]"
-        id="manualButton"
         @click="activeButton('manualButton')"
         :disabled="isAutoBetting && betting > 0"
       >
@@ -19,14 +18,13 @@
           isAutoBetting && betting > 0 ? 'disabled' : '',
           { betTypeActive: isAutoButton },
         ]"
-        id="autoButton"
         @click="activeButton('autoButton')"
         :disabled="isAutoBetting && betting > 0"
       >
         {{ $t("auto") }}
       </button>
     </div>
-    <div id="amountorder" :class="['amountorder']">
+    <div :ref="'amountorder'" :class="['amountorder']">
       <div :class="'betamountcontainer'">
         <div :class="'spanstyle'">{{ $t("amount") }}</div>
         <div :class="'spanstyle'" :style="{ fontSize: '12px' }">US$0.00</div>
@@ -50,7 +48,6 @@
             :disabled="isAutoBetting"
           />
           <img
-            id="bitImage"
             :src="'/image/bit.svg'"
             width="16"
             height="16"
@@ -75,7 +72,7 @@
             2x
           </button>
           <button
-            id="timesmax"
+            v-if="showMax"
             :class="'betAmountTimesBtn'"
             @click="betAmountTimes(999)"
             :disabled="isAutoBetting"
@@ -144,7 +141,7 @@
         :class="'infinitiveImage'"
       />
     </div>
-    <div id="betbuttonorder" :class="'betbuttonorder'">
+    <div :ref="'betbuttonorder'" :class="'betbuttonorder'">
       <button :class="['baseStyle', 'betButton']" @click="bet">
         {{
           isManualButton
@@ -164,15 +161,8 @@
       </button>
     </div>
   </div>
-  <div id="alert-container" :class="'alert-container'">
-    <div
-      v-for="i in 2"
-      :key="i"
-      :id="`alert${i}`"
-      :class="'autobet-alert'"
-      :ref="`alert${i}`"
-      style="display: none"
-    >
+  <div :class="'alert-container'">
+    <div v-if="autoStart" :class="'autobet-alert'">
       <div :class="'auto-image'">
         <img
           :src="'/image/auto.svg'"
@@ -182,7 +172,7 @@
           :class="'infinitiveImage'"
         />
       </div>
-      <span>{{ $t(`autobetalert${i}`) }}</span>
+      <span>{{ $t("autobetalert1") }}</span>
       <div :class="'close'">
         <img
           :src="'/image/times.svg'"
@@ -192,12 +182,37 @@
           :class="'infinitiveImage'"
         />
       </div>
-      <div :id="`timeline${i}`"></div>
+      <div :class="'alert-timeline'"></div>
+    </div>
+    <div v-if="autoEnd" :class="'autobet-alert'">
+      <div :class="'auto-image'">
+        <img
+          :src="'/image/auto.svg'"
+          width="20"
+          height="20"
+          alt="Image"
+          :class="'infinitiveImage'"
+        />
+      </div>
+      <span>{{ $t("autobetalert2") }}</span>
+      <div :class="'close'">
+        <img
+          :src="'/image/times.svg'"
+          width="14"
+          height="14"
+          alt="Image"
+          :class="'infinitiveImage'"
+        />
+      </div>
+      <div :class="'alert-timeline'"></div>
     </div>
   </div>
-  <Setting />
-  <Statistics />
-  <Language />
+  <div :ref="'settingComponent'">
+    <Setting />
+  </div>
+  <div :ref="'statisticsComponent'">
+    <Statistics />
+  </div>
 </template>
 
 <style scoped>
@@ -206,17 +221,28 @@
 
 <script>
 import { ref, onMounted, onUnmounted } from "vue";
+import { store, mutations } from "../core/Store";
 import { Plinko } from "../core/Plinko";
 import { GlobalFunc } from "../core/GlobalFunc";
 import Setting from "./Setting.vue";
 import Statistics from "./Statistics.vue";
-import Language from "./Language.vue";
 
 export default {
   components: {
     Setting,
     Statistics,
-    Language,
+  },
+
+  computed: {
+    showMax() {
+      return store.isMaximum;
+    },
+    autoStart() {
+      return store.autoStart;
+    },
+    autoEnd() {
+      return store.autoEnd;
+    },
   },
   setup() {
     const isManualButton = ref(true);
@@ -227,10 +253,15 @@ export default {
     const level = ref("Medium");
     const rows = ref("16");
     const numberofbet = ref(0);
+    const isMaximum = ref(false);
     const rowValues = ["8", "9", "10", "11", "12", "13", "14", "15", "16"];
     let intervalId;
     const betting = ref(0);
     const betAmountInput = ref(null);
+    const settingComponent = ref(null);
+    const statisticsComponent = ref(null);
+    const amountorder = ref(null);
+    const betbuttonorder = ref(null);
 
     const plinko = Plinko(document.body.querySelector("#canvas"));
     plinko.map();
@@ -273,11 +304,11 @@ export default {
             if (!isAutoBetting.value) {
               isAutoBetting.value = true;
               startInterval();
-              showAlert(1);
+              showAlert("start");
             } else {
               isAutoBetting.value = false;
               stopInterval();
-              showAlert(2);
+              showAlert("end");
             }
           } else {
             isAutoBetting.value = true;
@@ -295,26 +326,8 @@ export default {
       }
     };
 
-    const showAlert = (index) => {
-      const alertId = `alert${index}`;
-      const timelineId = `timeline${index}`;
-
-      const alertElement = document.getElementById(alertId);
-      const timelineElement = document.getElementById(timelineId);
-
-      if (alertElement.style.display === "flex") {
-        return;
-      } else {
-        alertElement.style.display = "flex";
-        alertElement.style.order = 1;
-        alertElement.style.order = index === 1 ? 2 : 1;
-        timelineElement.classList.add("alert-timeline");
-
-        setTimeout(() => {
-          alertElement.style.display = "none";
-          timelineElement.classList.remove("alert-timeline");
-        }, 2000);
-      }
+    const showAlert = (req) => {
+      mutations.updateAuto(req);
     };
 
     const startInterval = () => {
@@ -351,14 +364,11 @@ export default {
 
     const changeOrder = () => {
       if (window.innerWidth > 950) {
-        document.getElementById("betbuttonorder").style.order = 6;
-        document.getElementById("amountorder").style.order = 1;
+        betbuttonorder.value.style.order = 6;
+        amountorder.value.style.order = 1;
       } else {
-        document.getElementById("betbuttonorder").style.order =
-          isAutoButton.value ? 1 : 2;
-        document.getElementById("amountorder").style.order = isAutoButton.value
-          ? 2
-          : 1;
+        betbuttonorder.value.style.order = isAutoButton.value ? 1 : 2;
+        amountorder.value.style.order = isAutoButton.value ? 2 : 1;
       }
     };
 
@@ -412,14 +422,15 @@ export default {
     };
 
     const responsive = (a_w, a_h, co_w, co_h, c_w, c_h, st_w, s_w) => {
+      mutations.responsive(a_w, a_h, co_w, co_h, c_w, c_h);
       document.getElementById("app").style.height = a_h;
       document.getElementById("app").style.width = a_w;
       document.getElementById("canvas-container").style.height = co_h;
       document.getElementById("canvas-container").style.width = co_w;
       document.getElementById("canvas").style.height = c_h;
       document.getElementById("canvas").style.width = c_w;
-      document.getElementById("statistics").style.width = st_w;
-      document.getElementById("setting").style.width = s_w;
+      statisticsComponent.value.style.width = st_w;
+      settingComponent.value.style.width = s_w;
     };
 
     const handleDataUpdate = (event) => {
@@ -456,6 +467,11 @@ export default {
       rowValues,
       betting,
       betAmountInput,
+      settingComponent,
+      statisticsComponent,
+      isMaximum,
+      amountorder,
+      betbuttonorder,
       activeButton,
       selectInput,
       betAmountTimes,

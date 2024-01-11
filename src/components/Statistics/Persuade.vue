@@ -5,7 +5,6 @@
       alt="Image"
       width="150"
       height="200"
-      id="arrow"
     />
     <div :class="'span-container'">
       <div :class="'span'" :style="{ width: '85px' }">

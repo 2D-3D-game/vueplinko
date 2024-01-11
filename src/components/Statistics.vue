@@ -1,5 +1,5 @@
 <template>
-  <div id="statistics" :class="'statistics-container'">
+  <div :class="'statistics-container'">
     <button :class="'statistics-button'" @click="expandReward">
       <div :class="'span-group'">
         <span :class="'span-white'">Plinko</span>
@@ -17,35 +17,30 @@
         alt="Image"
         width="16"
         height="16"
-        id="arrow"
         :class="{ rotate: expand }"
       />
     </button>
     <div :class="'RewardTypeContainer'" v-if="expand">
       <button
         :class="['RewardTypeButton', { RewardTypeActive: active1 }]"
-        id="active1"
         @click="activeButton('active1')"
       >
         {{ $t("bigwins") }}
       </button>
       <button
         :class="['RewardTypeButton', { RewardTypeActive: active2 }]"
-        id="active2"
         @click="activeButton('active2')"
       >
         {{ $t("luckwins") }}
       </button>
       <button
         :class="['RewardTypeButton', { RewardTypeActive: active3 }]"
-        id="active3"
         @click="activeButton('active3')"
       >
         {{ $t("challenges") }}
       </button>
       <button
         :class="['RewardTypeButton', { RewardTypeActive: active4 }]"
-        id="active4"
         @click="activeButton('active4')"
       >
         {{ $t("description") }}

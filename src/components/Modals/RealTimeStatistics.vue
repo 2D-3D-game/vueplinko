@@ -1,5 +1,5 @@
 <template>
-  <div id="realtime-modal" :class="'modal'">
+  <div :ref="'stmodal'" :class="'modal'">
     <div :class="'modal__content'">
       <div :class="'modal-title'">
         <img :src="'/image/total.svg'" alt="Image" width="16" height="16" />
@@ -253,12 +253,18 @@ select {
 </style>
 
 <script>
+import { ref } from "vue";
 export default {
-  methods: {
-    hideModal() {
-      const modal = document.getElementById("realtime-modal");
+  setup() {
+    const stmodal = ref(null);
+    const hideModal = () => {
+      const modal = stmodal.value;
       modal.classList.toggle("active");
-    },
+    };
+    return {
+      stmodal,
+      hideModal,
+    };
   },
 };
 </script>
