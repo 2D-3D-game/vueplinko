@@ -4,22 +4,22 @@
       <button
         :class="[
           'typeButton',
-          isAutoBetting && betting > 0 ? 'disabled' : '',
+          isAutoBetting ? 'disabled' : '',
           { betTypeActive: isManualButton },
         ]"
         @click="activeButton('manualButton')"
-        :disabled="isAutoBetting && betting > 0"
+        :disabled="isAutoBetting"
       >
         {{ $t("manual") }}
       </button>
       <button
         :class="[
           'typeButton',
-          isAutoBetting && betting > 0 ? 'disabled' : '',
+          isAutoBetting ? 'disabled' : '',
           { betTypeActive: isAutoButton },
         ]"
         @click="activeButton('autoButton')"
-        :disabled="isAutoBetting && betting > 0"
+        :disabled="isAutoBetting"
       >
         {{ $t("auto") }}
       </button>
@@ -92,10 +92,10 @@
         :class="'arrow-down'"
       />
       <select
-        :class="['baseStyle', betting > 0 ? 'disabled' : '']"
+        :class="['baseStyle', betting > 0 || isAutoBetting ? 'disabled' : '']"
         v-model="level"
         @change="changeState"
-        :disabled="betting > 0"
+        :disabled="betting > 0 || isAutoBetting"
       >
         <option value="Low">{{ $t("level1") }}</option>
         <option value="Medium">{{ $t("level2") }}</option>
@@ -112,10 +112,10 @@
         :class="'arrow-down'"
       />
       <select
-        :class="['baseStyle', betting > 0 ? 'disabled' : '']"
+        :class="['baseStyle', betting > 0 || isAutoBetting ? 'disabled' : '']"
         v-model="rows"
         @change="changeState"
-        :disabled="betting > 0"
+        :disabled="betting > 0 || isAutoBetting"
       >
         <option v-for="value in rowValues" :key="value" :value="value">
           {{ value }}
@@ -359,7 +359,7 @@ export default {
     };
 
     const changeOrder = () => {
-      if (window.innerWidth > 950) {
+      if (window.innerWidth > 1100) {
         betbuttonorder.value.style.order = 6;
         amountorder.value.style.order = 1;
       } else {
@@ -377,18 +377,18 @@ export default {
 
     const handleResize = () => {
       let newWidth = window.innerWidth;
-      if (newWidth < 1100) {
+      if (newWidth < 1200) {
         changeOrder();
-        if (newWidth > 950) {
+        if (newWidth > 1100) {
           responsive(
-            250 + (newWidth * 50) / 1200 + "px",
+            "300px",
             (630 * newWidth) / 1200 + "px",
-            "700px",
+            900 - 1200 + newWidth + "px",
             (630 * newWidth) / 1200 + "px",
-            "700px",
+            "800px",
             (630 * newWidth) / 1200 + "px",
-            950 + (newWidth * 50) / 1200 + "px",
-            950 + (newWidth * 50) / 1200 + "px"
+            newWidth + "px",
+            newWidth + "px"
           );
         } else {
           responsive(
@@ -406,12 +406,12 @@ export default {
         responsive(
           "300px",
           "630px",
+          "900px",
+          "630px",
           "800px",
           "630px",
-          "700px",
-          "630px",
-          "1100px",
-          "1100px"
+          "1200px",
+          "1200px"
         );
       }
       plinko.map();

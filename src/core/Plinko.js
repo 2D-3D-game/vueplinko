@@ -12,12 +12,12 @@ export function Plinko(element) {
   const Body = Matter.Body;
   const Composite = Matter.Composite;
   const Events = Matter.Events;
-  const canvasWidth = 700;
+  const canvasWidth = 800;
   const canvasHeight = 630;
   const engine = Engine.create();
 
-  const initialWidth = 1100;
-  const secondWidth = 950;
+  const initialWidth = 1200;
+  const secondWidth = 1100;
   // engine.timing.timeScale = 1.1;
   engine.timing.timeScale = 2;
 
@@ -173,7 +173,7 @@ export function Plinko(element) {
     shadow.beginFill(shadowColor);
 
     const cornerRadius = (gap * 10) / 120;
-    if (window.innerWidth < 950) {
+    if (window.innerWidth < 1100) {
       rectangle.drawRoundedRect(
         -gap / 2 + 4,
         -gap / 8 / scale,
@@ -308,7 +308,7 @@ export function Plinko(element) {
     rectangle.endFill();
 
     let fontSize = 16;
-    if (window.innerWidth < 950) {
+    if (window.innerWidth < 1100) {
       fontSize = 8;
     }
 
@@ -467,7 +467,7 @@ export function Plinko(element) {
 
       let rectWidth = 60;
       let rectHeight = 40 / scale;
-      if (window.innerWidth < 950) {
+      if (window.innerWidth < 1100) {
         rectHeight = 20 / scale;
       }
       const rectX = body.position.x - rectWidth / 2;
@@ -622,7 +622,7 @@ export function Plinko(element) {
     if (objects.length > 1) {
       lastPos = objects[objects.length - 1].body.position.y - 50 / scale;
     }
-    if (window.innerWidth < 950) {
+    if (window.innerWidth < 1100) {
       lastPos = canvasHeight / 6 / scale - 25 / scale / 2;
       if (objects.length > 1) {
         lastPos = objects[objects.length - 1].body.position.y - 25 / scale;
@@ -657,7 +657,7 @@ export function Plinko(element) {
       distance =
         objects[objects.length - 1].body.position.y - canvasHeight / 3 / scale;
     }
-    if (window.innerWidth < 950) {
+    if (window.innerWidth < 1100) {
       distance = -25 / scale;
       if (objects.length > 1) {
         distance =
@@ -679,7 +679,7 @@ export function Plinko(element) {
 
   function removeScoreboard() {
     for (let i = 0; i < objects.length; i++) {
-      if (window.innerWidth < 950) {
+      if (window.innerWidth < 1100) {
         if (
           objects[i].body.position.y >
           canvasHeight / 8 / scale + 150 / scale
@@ -738,7 +738,7 @@ export function Plinko(element) {
   }
 
   function sendDataToVue(data) {
-    const event = new CustomEvent('data-updated', { detail: data });
+    const event = new CustomEvent("data-updated", { detail: data });
     window.dispatchEvent(event);
   }
 
@@ -792,7 +792,7 @@ export function Plinko(element) {
     if (newWindowWidth > initialWidth) {
       heightScale = 1;
     } else if (newWindowWidth <= initialWidth && newWindowWidth > secondWidth) {
-      heightScale = newWindowWidth / (initialWidth + 100);
+      heightScale = newWindowWidth / initialWidth;
     } else {
       heightScale = element.offsetHeight / canvasHeight;
     }
@@ -827,47 +827,47 @@ export function Plinko(element) {
       col += increment;
     }
     app.stage.scale.set(scale);
-    if (newWindowWidth > 950) {
+    if (newWindowWidth > 1100) {
       app.stage.position.x = ((1 - scale) * canvasWidth) / 2;
     } else {
-      app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 150;
+      app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 200;
     }
     stageLength = app.stage.children.length;
 
     mask.clear();
     mask.beginFill(0xffffff);
-    if (newWindowWidth > 950) {
-      if (newWindowWidth > initialWidth) {
-        if (scale === 1) {
-          maskX = 650;
-          maskY = canvasHeight / 3 / scale - 25 / scale;
-          maskHeight = 198 / scale;
-          maskWidth = 50 / scale;
-        } else {
-          maskX = app.stage.position.x / (1 - scale) + 300 / scale;
-          maskY = canvasHeight / 3 / scale - 25 / scale;
-          maskHeight = 198 / scale;
-          maskWidth = 50 / scale;
-        }
+    if (newWindowWidth > initialWidth) {
+      if (scale === 1) {
+        maskX = 750;
+        maskY = canvasHeight / 3 / scale - 25 / scale;
+        maskHeight = 198 / scale;
+        maskWidth = 50 / scale;
       } else {
-        maskX = app.stage.position.x / (1 - scale) + 250 / scale;
+        maskX = app.stage.position.x / (1 - scale) + 350 / scale;
         maskY = canvasHeight / 3 / scale - 25 / scale;
         maskHeight = 198 / scale;
         maskWidth = 50 / scale;
       }
     } else {
-      maskX =
-        canvasWidth / scale / 2 + 5 / scale - app.stage.position.x / scale;
-      maskY = canvasHeight / 6 / scale;
-      maskHeight = 98 / scale;
-      maskWidth = 25 / scale;
+      if (newWindowWidth <= initialWidth && newWindowWidth > secondWidth) {
+        maskX = app.stage.position.x / (1 - scale) + (350 + (newWindowWidth - initialWidth) / 2) / scale;
+        maskY = canvasHeight / 3 / scale - 25 / scale;
+        maskHeight = 198 / scale;
+        maskWidth = 50 / scale;
+      } else {
+        maskX =
+          (canvasWidth - 100) / scale / 2 + 5 / scale - app.stage.position.x / scale;
+        maskY = canvasHeight / 6 / scale;
+        maskHeight = 98 / scale;
+        maskWidth = 25 / scale;
+      }
     }
     mask.drawRoundedRect(
       maskX,
       maskY,
       maskWidth,
       maskHeight,
-      newWindowWidth > 950 ? 10 / scale : 4 / scale
+      newWindowWidth > 1100 ? 10 / scale : 4 / scale
     );
     mask.endFill();
     app.stage.addChild(mask);
