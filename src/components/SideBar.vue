@@ -27,7 +27,9 @@
     <div :ref="'amountorder'" :class="['amountorder']">
       <div :class="'betamountcontainer'">
         <div :class="'spanstyle'">{{ $t("amount") }}</div>
-        <div :class="'spanstyle'" :style="{ fontSize: '12px' }">US$0.00</div>
+        <div :class="'spanstyle'" :style="{ fontSize: '12px' }">
+          US$<span :style="{ fontFamily: 'PingFang SC' }">0.00</span>
+        </div>
       </div>
       <div :class="'betAmountContainer'">
         <div :class="['tooltip']">
@@ -37,6 +39,7 @@
               isAutoBetting ? 'disabled' : '',
               { warning: isEmpty },
             ]"
+            :style="{ fontFamily: 'Inter' }"
             :ref="'betAmountInput'"
             v-model="amount"
             placeholder="0.000000000"
@@ -96,6 +99,7 @@
         v-model="level"
         @change="changeState"
         :disabled="betting > 0 || isAutoBetting"
+        :style="{ fontFamily: 'PingFang SC' }"
       >
         <option value="Low">{{ $t("level1") }}</option>
         <option value="Medium">{{ $t("level2") }}</option>
@@ -116,6 +120,7 @@
         v-model="rows"
         @change="changeState"
         :disabled="betting > 0 || isAutoBetting"
+        :style="{ fontFamily: 'Inter' }"
       >
         <option v-for="value in rowValues" :key="value" :value="value">
           {{ value }}
@@ -132,6 +137,7 @@
         min="0"
         @change="changeState"
         :disabled="isAutoBetting"
+        :style="{ fontFamily: 'Inter' }"
       />
       <img
         :src="'/image/infinitive.svg'"

@@ -4,6 +4,7 @@ export const store = reactive({
   isMaximum: false,
   autoStart: false,
   autoEnd: false,
+  hotkey: false,
   a_w: "",
   a_h: "",
   co_w: "",
@@ -25,6 +26,9 @@ export const mutations = {
         ? (store.autoStart = !store.autoStart)
         : (store.autoEnd = !store.autoEnd);
     }, 2000);
+  },
+  updateHotkey() {
+    store.hotkey = !store.hotkey;
   },
   responsive(a_w, a_h, co_w, co_h, c_w, c_h) {
     store.a_w = a_w;

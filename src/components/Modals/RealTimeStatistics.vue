@@ -15,7 +15,7 @@
               alt="Image"
               :class="'arrow-down'"
             />
-            <select :class="'baseStyle'">
+            <select :class="'baseStyle'" :style="{ fontFamily: 'PingFang SC' }">
               <option value="all">{{ $t("type1") }}</option>
               <option value="bet" selected>{{ $t("type2") }}</option>
               <option value="competition">{{ $t("type3") }}</option>
@@ -32,7 +32,7 @@
             alt="Image"
             :class="'arrow-down'"
           />
-          <select :class="'baseStyle'">
+          <select :class="'baseStyle'" :style="{ fontFamily: 'PingFang SC' }">
             <option value="all">{{ $t("type1") }}</option>
             <option value="plinko">Plinko</option>
           </select>
