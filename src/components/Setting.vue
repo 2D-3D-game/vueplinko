@@ -9,8 +9,8 @@
           <div :class="'contents'">
             <img
               :src="volumn > 0 ? '/image/voice-active.svg' : '/image/voice.svg'"
-              width="14"
-              height="14"
+              width="16"
+              height="16"
               alt="Image"
               @click="volumn === 0 ? changeRange(50) : changeRange(0)"
             />

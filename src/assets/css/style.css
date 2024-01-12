@@ -1,3 +1,8 @@
+@font-face {
+  font-family: PingFang SC;
+  src: url(../font/PingFang.ttc);
+}
+
 body {
   margin: 0;
   display: flex;

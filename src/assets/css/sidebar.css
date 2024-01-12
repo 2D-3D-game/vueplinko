@@ -119,7 +119,7 @@ select {
 
 .arrow-down {
   position: absolute;
-  top: 30px;
+  bottom: 13px;
   right: 10px;
   z-index: 999;
 }

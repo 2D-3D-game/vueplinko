@@ -209,6 +209,7 @@
   </div>
   <Setting />
   <Statistics />
+  <Language />
 </template>
 
 <style scoped>
@@ -222,11 +223,13 @@ import { Plinko } from "../core/Plinko";
 import { GlobalFunc } from "../core/GlobalFunc";
 import Setting from "./Setting.vue";
 import Statistics from "./Statistics.vue";
+import Language from "./Language.vue";
 
 export default {
   components: {
     Setting,
     Statistics,
+    Language,
   },
 
   computed: {
