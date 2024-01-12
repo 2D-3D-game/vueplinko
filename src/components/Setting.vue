@@ -6,7 +6,7 @@
           <img :src="'/image/setting.svg'" width="14" height="14" alt="Image" />
         </button>
         <div v-if="isShowSetting" class="dropdown-content">
-          <div :class="'contents'">
+          <div :class="'contents'" :style="{alignItems:'end'}">
             <img
               :src="volumn > 0 ? '/image/voice-active.svg' : '/image/voice.svg'"
               width="16"
