@@ -39,7 +39,7 @@
               isAutoBetting ? 'disabled' : '',
               { warning: isEmpty },
             ]"
-            :style="{ fontFamily: 'Inter' }"
+            :style="{ fontFamily: 'Inter', fontWeight:600 }"
             :ref="'betAmountInput'"
             v-model="amount"
             placeholder="0.000000000"
@@ -99,7 +99,7 @@
         v-model="level"
         @change="changeState"
         :disabled="betting > 0 || isAutoBetting"
-        :style="{ fontFamily: 'PingFang SC' }"
+        :style="{ fontFamily: 'PingFang SC', fontWeight:600 }"
       >
         <option value="Low">{{ $t("level1") }}</option>
         <option value="Medium">{{ $t("level2") }}</option>
@@ -120,7 +120,7 @@
         v-model="rows"
         @change="changeState"
         :disabled="betting > 0 || isAutoBetting"
-        :style="{ fontFamily: 'Inter' }"
+        :style="{ fontFamily: 'Inter', fontWeight:600 }"
       >
         <option v-for="value in rowValues" :key="value" :value="value">
           {{ value }}
@@ -137,7 +137,7 @@
         min="0"
         @change="changeState"
         :disabled="isAutoBetting"
-        :style="{ fontFamily: 'Inter' }"
+        :style="{ fontFamily: 'Inter', fontWeight:600 }"
       />
       <img
         :src="'/image/infinitive.svg'"
