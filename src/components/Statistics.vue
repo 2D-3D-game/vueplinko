@@ -3,7 +3,6 @@
     <button :class="'statistics-button'" @click="expandReward">
       <div :class="'span-group'">
         <span :class="'span-white'">Plinko</span>
-        <span :class="'span-gray'">Stake</span>
         <span :class="'span-gray'">{{ $t("original") }}</span>
       </div>
       <div :class="'reward'">
@@ -20,31 +19,33 @@
         :class="{ rotate: expand }"
       />
     </button>
-    <div :class="'RewardTypeContainer'" v-if="expand">
-      <button
-        :class="['RewardTypeButton', { RewardTypeActive: active1 }]"
-        @click="activeButton('active1')"
-      >
-        {{ $t("bigwins") }}
-      </button>
-      <button
-        :class="['RewardTypeButton', { RewardTypeActive: active2 }]"
-        @click="activeButton('active2')"
-      >
-        {{ $t("luckwins") }}
-      </button>
-      <button
-        :class="['RewardTypeButton', { RewardTypeActive: active3 }]"
-        @click="activeButton('active3')"
-      >
-        {{ $t("challenges") }}
-      </button>
-      <button
-        :class="['RewardTypeButton', { RewardTypeActive: active4 }]"
-        @click="activeButton('active4')"
-      >
-        {{ $t("description") }}
-      </button>
+    <div :style="{ overflowX: 'auto' }">
+      <div :class="'RewardTypeContainer'" v-if="expand">
+        <button
+          :class="['RewardTypeButton', { RewardTypeActive: active1 }]"
+          @click="activeButton('active1')"
+        >
+          <span>{{ $t("bigwins") }}</span>
+        </button>
+        <button
+          :class="['RewardTypeButton', { RewardTypeActive: active2 }]"
+          @click="activeButton('active2')"
+        >
+          <span>{{ $t("luckwins") }}</span>
+        </button>
+        <button
+          :class="['RewardTypeButton', { RewardTypeActive: active3 }]"
+          @click="activeButton('active3')"
+        >
+          <span>{{ $t("challenges") }}</span>
+        </button>
+        <button
+          :class="['RewardTypeButton', { RewardTypeActive: active4 }]"
+          @click="activeButton('active4')"
+        >
+          <span>{{ $t("description") }}</span>
+        </button>
+      </div>
     </div>
     <div v-if="active1 && expand">
       <BigReward />

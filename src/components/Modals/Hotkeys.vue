@@ -42,11 +42,13 @@
       <div :class="'modal__footer'">
         <label class="check-container"
           >{{ $t("hotkeyUse") }}
-          <input type="checkbox" />
+          <input type="checkbox" @input="hotkeyState" :checked="state" />
           <span class="checkmark"></span>
         </label>
       </div>
-      <a href="#" class="modal__close" @click="hideModal">&times;</a>
+      <button class="modal__close" @click="hideModal">
+        <span><img :src="'/image/times.svg'" alt="Image" width="10" height="10" /></span>
+      </button>
     </div>
   </div>
 </template>
@@ -64,6 +66,7 @@
   justify-content: center;
   background: rgba(0, 0, 0, 0.32);
   transition: all 0.4s;
+  z-index: 9;
 }
 .modal.active {
   visibility: visible;
@@ -259,21 +262,35 @@
   right: 10px;
   color: #585858;
   text-decoration: none;
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
 }
 </style>
 
 <script>
 import { ref } from "vue";
+import { store, mutations } from "../../core/Store";
 export default {
+  computed: {
+    state() {
+      return store.hotkey;
+    },
+  },
+
   setup() {
     const hotkeymodal = ref(null);
     const hideModal = () => {
       const modal = hotkeymodal.value;
       modal.classList.toggle("active");
     };
+    const hotkeyState = () => {
+      mutations.updateHotkey();
+    }
     return {
       hotkeymodal,
       hideModal,
+      hotkeyState,
     };
   },
 };

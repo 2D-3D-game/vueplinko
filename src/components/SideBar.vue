@@ -10,7 +10,7 @@
         @click="activeButton('manualButton')"
         :disabled="isAutoBetting"
       >
-        {{ $t("manual") }}
+        <span>{{ $t("manual") }}</span>
       </button>
       <button
         :class="[
@@ -21,7 +21,7 @@
         @click="activeButton('autoButton')"
         :disabled="isAutoBetting"
       >
-        {{ $t("auto") }}
+        <span>{{ $t("auto") }}</span>
       </button>
     </div>
     <div :ref="'amountorder'" :class="['amountorder']">
@@ -39,7 +39,6 @@
               isAutoBetting ? 'disabled' : '',
               { warning: isEmpty },
             ]"
-            :style="{ fontFamily: 'Inter', fontWeight:600 }"
             :ref="'betAmountInput'"
             v-model="amount"
             placeholder="0.000000000"
@@ -65,14 +64,14 @@
             @click="betAmountTimes(0.5)"
             :disabled="isAutoBetting"
           >
-            ½
+            <span>½</span>
           </button>
           <button
             :class="'betAmountTimesBtn'"
             @click="betAmountTimes(2)"
             :disabled="isAutoBetting"
           >
-            2x
+            <span>2x</span>
           </button>
           <button
             v-if="showMax"
@@ -80,7 +79,7 @@
             @click="betAmountTimes(999)"
             :disabled="isAutoBetting"
           >
-            {{ $t("max") }}
+            <span>{{ $t("max") }}</span>
           </button>
         </div>
       </div>
@@ -99,7 +98,7 @@
         v-model="level"
         @change="changeState"
         :disabled="betting > 0 || isAutoBetting"
-        :style="{ fontFamily: 'PingFang SC', fontWeight:600 }"
+        :style="{ fontFamily: 'PingFang SC', fontWeight: 600 }"
       >
         <option value="Low">{{ $t("level1") }}</option>
         <option value="Medium">{{ $t("level2") }}</option>
@@ -120,7 +119,7 @@
         v-model="rows"
         @change="changeState"
         :disabled="betting > 0 || isAutoBetting"
-        :style="{ fontFamily: 'Inter', fontWeight:600 }"
+        :style="{ fontFamily: 'Inter', fontWeight: 600 }"
       >
         <option v-for="value in rowValues" :key="value" :value="value">
           {{ value }}
@@ -137,7 +136,7 @@
         min="0"
         @change="changeState"
         :disabled="isAutoBetting"
-        :style="{ fontFamily: 'Inter', fontWeight:600 }"
+        :style="{ fontFamily: 'Inter', fontWeight: 600 }"
       />
       <img
         :src="'/image/infinitive.svg'"
@@ -149,13 +148,13 @@
     </div>
     <div :ref="'betbuttonorder'" :class="'betbuttonorder'">
       <button :class="['baseStyle', 'betButton']" @click="bet">
-        {{
+        <span>{{
           isManualButton
             ? $t("bet")
             : isAutoBetting
             ? $t("autobetstop")
             : $t("autobetstart")
-        }}
+        }}</span>
         <img
           v-if="isAutoBetting"
           :src="'/image/betting.svg'"
@@ -396,7 +395,7 @@ export default {
             (630 * newWidth) / 1200 + "px",
             "800px",
             (630 * newWidth) / 1200 + "px",
-            newWidth + "px",
+            newWidth - 60 + "px",
             newWidth + "px"
           );
         } else {
@@ -407,7 +406,7 @@ export default {
             "310px",
             "400px",
             "310px",
-            "80vw",
+            newWidth * 0.8 - 60 + "px",
             "400px"
           );
         }
@@ -419,7 +418,7 @@ export default {
           "630px",
           "800px",
           "630px",
-          "1200px",
+          "1140px",
           "1200px"
         );
       }

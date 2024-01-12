@@ -15,10 +15,12 @@
       </div>
       <div :class="'modal__footer'">
         <button :class="'activeButton'" @click="setMaximum">
-          {{ showMax ? $t("turnOff") : $t("turnOn") }}
+          <span>{{ showMax ? $t("turnOff") : $t("turnOn") }}</span>
         </button>
       </div>
-      <a href="#" class="modal__close" @click="hideModal">&times;</a>
+      <button class="modal__close" @click="hideModal">
+        <span><img :src="'/image/times.svg'" alt="Image" width="10" height="10" /></span>
+      </button>
     </div>
   </div>
 </template>
@@ -36,6 +38,7 @@
   justify-content: center;
   background: rgba(0, 0, 0, 0.32);
   transition: all 0.4s;
+  z-index: 9;
 }
 .modal.active {
   visibility: visible;
@@ -59,6 +62,9 @@
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+}
+.activeButton:hover {
+  background-color: #1fff20;
 }
 .modal__content {
   border-radius: 4px;
@@ -104,6 +110,9 @@
   right: 10px;
   color: #585858;
   text-decoration: none;
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
 }
 </style>
 

@@ -2,18 +2,33 @@
   <div id="setting" :class="'footer-container'">
     <div :class="'button-group-container'">
       <div :class="'dropdown'">
-        <button :class="['button-group', 'dropbtn']" @click="showSetting">
-          <img :src="'/image/setting.svg'" width="14" height="14" alt="Image" />
+        <button :class="['button-group', 'dropbtn', 'stooltip']" @click="showSetting">
+          <span
+            ><img
+              :src="settingSrc"
+              width="14"
+              height="14"
+              alt="Image"
+              @mouseover="handleMouseOver('setting')"
+              @mouseout="handleMouseOut('setting')"
+          /></span>
+          <span class="tooltiptext">{{ $t("tooltip1") }}</span>
         </button>
         <div v-if="isShowSetting" class="dropdown-content">
-          <div :class="'contents'" :style="{alignItems:'end'}">
-            <img
-              :src="volumn > 0 ? '/image/voice-active.svg' : '/image/voice.svg'"
-              width="16"
-              height="16"
-              alt="Image"
-              @click="volumn === 0 ? changeRange(50) : changeRange(0)"
-            />
+          <div :class="['contents']" :style="{ alignItems: 'end' }">
+            <button>
+              <span>
+                <img
+                  :src="
+                    volumn > 0 ? '/image/voice-active.svg' : '/image/voice.svg'
+                  "
+                  width="16"
+                  height="16"
+                  alt="Image"
+                  @click="volumn === 0 ? changeRange(50) : changeRange(0)"
+                />
+              </span>
+            </button>
             <div :style="{ position: 'relative' }">
               <input
                 type="range"
@@ -25,65 +40,131 @@
               />
             </div>
           </div>
-          <div :class="'contents'" @click="liveSetting">
-            <img
-              :src="isLive ? '/image/live-active.svg' : '/image/live.svg'"
-              width="14"
-              height="14"
-              alt="Image"
-            />
-            <span :class="isLive ? 'active' : null">{{ $t("live") }}</span>
-          </div>
-          <div :class="'contents'" @click="animationSetting">
-            <img
-              :src="
-                isAnimation
-                  ? '/image/animation-active.svg'
-                  : '/image/animation.svg'
-              "
-              width="14"
-              height="14"
-              alt="Image"
-            />
-            <span :class="isAnimation ? 'active' : null">{{
-              $t("animation")
-            }}</span>
-          </div>
-          <div :class="'contents'" @click="showMaxSetting">
-            <img
-              :src="
-                showMax ? '/image/maxvalue-active.svg' : '/image/maxvalue.svg'
-              "
-              width="14"
-              height="14"
-              alt="Image"
-            />
-            <span :class="showMax ? 'active' : null">{{ $t("maxvalue") }}</span>
-          </div>
-          <div :class="'contents'" @click="showGameInfo">
-            <img :src="'/image/info.svg'" width="14" height="14" alt="Image" />
-            <span>{{ $t("info") }}</span>
-          </div>
-          <div :class="'contents'" @click="showHotkeySetting">
-            <img :src="'/image/key.svg'" width="14" height="14" alt="Image" />
-            <span>{{ $t("keyboard") }}</span>
-          </div>
+          <button
+            :class="['contents', isLive ? 'unactivecontent' : 'activecontent']"
+            @click="liveSetting"
+          >
+            <span
+              ><img
+                :src="isLive ? '/image/live-active.svg' : '/image/live.svg'"
+                width="14"
+                height="14"
+                alt="Image"
+              />
+              <span :class="isLive ? 'active' : null">{{
+                $t("live")
+              }}</span></span
+            >
+          </button>
+          <button
+            :class="[
+              'contents',
+              isAnimation ? 'unactivecontent' : 'activecontent',
+            ]"
+            @click="animationSetting"
+          >
+            <span
+              ><img
+                :src="
+                  isAnimation
+                    ? '/image/animation-active.svg'
+                    : '/image/animation.svg'
+                "
+                width="14"
+                height="14"
+                alt="Image"
+              />
+              <span :class="isAnimation ? 'active' : null">{{
+                $t("animation")
+              }}</span></span
+            >
+          </button>
+          <button
+            :class="['contents', showMax ? 'unactivecontent' : 'activecontent']"
+            @click="showMaxSetting"
+          >
+            <span
+              ><img
+                :src="
+                  showMax ? '/image/maxvalue-active.svg' : '/image/maxvalue.svg'
+                "
+                width="14"
+                height="14"
+                alt="Image"
+              />
+              <span :class="showMax ? 'active' : ''">{{
+                $t("maxvalue")
+              }}</span></span
+            >
+          </button>
+          <button :class="['contents', 'activecontent']" @click="showGameInfo">
+            <span
+              ><img
+                :src="'/image/info.svg'"
+                width="14"
+                height="14"
+                alt="Image"
+              />
+              <span>{{ $t("info") }}</span></span
+            >
+          </button>
+          <button
+            :class="[
+              'contents',
+              hotkeyState ? 'unactivecontent' : 'activecontent',
+            ]"
+            @click="showHotkeySetting"
+          >
+            <span
+              ><img
+                :src="hotkeyState ? '/image/key-active.svg' : '/image/key.svg'"
+                width="14"
+                height="14"
+                alt="Image"
+              />
+              <span :class="hotkeyState ? 'active' : ''">{{
+                $t("keyboard")
+              }}</span></span
+            >
+          </button>
           <div :class="'triangle'"></div>
         </div>
       </div>
-      <button :class="'button-group'">
-        <img :src="'/image/rect.svg'" width="14" height="14" alt="Image" />
+      <button :class="['button-group', 'stooltip']">
+        <span
+          ><img
+            :src="rectSrc"
+            width="14"
+            height="14"
+            alt="Image"
+            @mouseover="handleMouseOver('rect')"
+            @mouseout="handleMouseOut('rect')"
+        /></span>
+        <span class="tooltiptext2">{{ $t("tooltip2") }}</span>
       </button>
-      <button :class="'button-group'" @click="showStatistics">
-        <img :src="'/image/total.svg'" width="14" height="14" alt="Image" />
+      <button :class="['button-group', 'stooltip']" @click="showStatistics">
+        <span
+          ><img
+            :src="totalSrc"
+            width="14"
+            height="14"
+            alt="Image"
+            @mouseover="handleMouseOver('total')"
+            @mouseout="handleMouseOut('total')"
+        /></span>
+        <span class="tooltiptext">{{ $t("tooltip3") }}</span>
       </button>
-      <button :class="'button-group'" @click="changeImage">
-        <img
-          :src="isFavorite ? '/image/favorite.svg' : '/image/unfavorite.svg'"
-          width="14"
-          height="14"
-          alt="Image"
-        />
+      <button :class="['button-group', 'stooltip']" @click="changeImage">
+        <span
+          ><img
+            :src="isFavorite ? '/image/favorite.svg' : unSrc"
+            width="14"
+            height="14"
+            alt="Image"
+            @mouseover="handleMouseOver('un')"
+            @mouseout="handleMouseOut('un')"
+        /></span>
+        <span class="tooltiptext">{{ $t("tooltip4") }}</span>
       </button>
       <div :class="'divider'"></div>
     </div>
@@ -106,7 +187,7 @@
 
 <script>
 import { ref } from "vue";
-import { store } from "../core/Store";
+import { mutations, store } from "../core/Store";
 import MaxValue from "./Modals/MaxValue.vue";
 import GameInfo from "./Modals/GameInfo.vue";
 import Hotkeys from "./Modals/Hotkeys.vue";
@@ -119,9 +200,45 @@ export default {
     Hotkeys,
     RealTimeStatistics,
   },
+  data() {
+    return {
+      settingSrc: "/image/setting.svg",
+      rectSrc: "/image/rect.svg",
+      totalSrc: "/image/total.svg",
+      unSrc: "/image/unfavorite.svg",
+    };
+  },
+  methods: {
+    handleMouseOut(button) {
+      this.settingSrc = "/image/setting.svg";
+      this.rectSrc = "/image/rect.svg";
+      this.totalSrc = "/image/total.svg";
+      this.unSrc = "/image/unfavorite.svg";
+    },
+    handleMouseOver(button) {
+      switch (button) {
+        case "setting":
+          this.settingSrc = "/image/settinghover.svg";
+          break;
+        case "total":
+          this.totalSrc = "/image/totalhover.svg";
+          break;
+        case "rect":
+          this.rectSrc = "/image/recthover.svg";
+          break;
+        case "un":
+          this.unSrc = "/image/unfavoritehover.svg";
+          break;
+      }
+    },
+  },
+
   computed: {
     showMax() {
       return store.isMaximum;
+    },
+    hotkeyState() {
+      return store.hotkey;
     },
   },
   setup() {
@@ -158,9 +275,13 @@ export default {
     };
 
     const showMaxSetting = () => {
-      const modal = maxValueComponent.value.$refs.demomodal;
-      modal.classList.toggle("active");
-      isShowSetting.value = false;
+      if (!store.isMaximum) {
+        const modal = maxValueComponent.value.$refs.demomodal;
+        modal.classList.toggle("active");
+        isShowSetting.value = false;
+      } else {
+        mutations.showMaximum(!store.isMaximum);
+      }
     };
 
     const showGameInfo = () => {

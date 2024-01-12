@@ -9,7 +9,7 @@
     "autobetstart": "Start Bet",
     "autobetstop": "Stop Bet",
     "fairness": "Fairness",
-    "original": "Original",
+    "original": "Meibo Original",
     "bigwins": "Big wins",
     "luckwins": "Luck wins",
     "challenges": "Challenges",
@@ -53,5 +53,9 @@
     "max": "Max",
     "autobetalert1": "Auto Bet Start!",
     "autobetalert2": "Auto Bet End!",
-    "betamountalert": "Your bet cannot be greater than your balance!"
+    "betamountalert": "Your bet cannot be greater than your balance!",
+    "tooltip1": "Game Settings",
+    "tooltip2": "Enable Theatre Mode",
+    "tooltip3": "Open Live Stats",
+    "tooltip4": "Favorite Game"
 }

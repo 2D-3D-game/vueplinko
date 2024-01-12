@@ -63,9 +63,9 @@
           </div>
         </div>
       </div>
-      <a href="#" class="modal__close" @click="hideModal">
-        <img :src="'/image/times.svg'" alt="Image" width="14" height="14" />
-      </a>
+      <button class="modal__close" @click="hideModal">
+        <span><img :src="'/image/times.svg'" alt="Image" width="10" height="10" /></span>
+      </button>
     </div>
   </div>
 </template>
@@ -80,7 +80,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.4s;
-  z-index: 999;
+  z-index: 9;
 }
 .modal.active {
   visibility: visible;
@@ -130,9 +130,11 @@
 }
 .modal__close {
   position: absolute;
-  top: 15px;
-  right: 10px;
+  top: 18px;
+  right: 12px;
   text-decoration: none;
+  background-color: transparent;
+  border: none;
 }
 
 .score {

@@ -7,14 +7,16 @@
       </div>
       <div :class="'modal__footer'">
         <button :class="'activeButton'" @click="setMaximum">
-          {{ $t("rules") }}
+          <span>{{ $t("rules") }}</span>
         </button>
       </div>
       <div :class="'modal-body'">
         <span>{{ $t("info1") }}</span>
         <span>{{ $t("info2") }}</span>
       </div>
-      <a href="#" class="modal__close" @click="hideModal">&times;</a>
+      <button class="modal__close" @click="hideModal">
+        <span><img :src="'/image/times.svg'" alt="Image" width="10" height="10" /></span>
+      </button>
     </div>
   </div>
 </template>
@@ -32,6 +34,7 @@
   justify-content: center;
   background: rgba(0, 0, 0, 0.32);
   transition: all 0.4s;
+  z-index: 9;
 }
 .modal.active {
   visibility: visible;
@@ -103,6 +106,9 @@
   right: 10px;
   color: #585858;
   text-decoration: none;
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
 }
 </style>
 
