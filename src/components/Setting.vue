@@ -140,7 +140,7 @@
             @mouseover="handleMouseOver('rect')"
             @mouseout="handleMouseOut('rect')"
         /></span>
-        <span class="tooltiptext2">{{ $t("tooltip2") }}</span>
+        <span class="tooltiptext tooltiptext2">{{ $t("tooltip2") }}</span>
       </button>
       <button :class="['button-group', 'stooltip']" @click="showStatistics">
         <span
@@ -152,7 +152,7 @@
             @mouseover="handleMouseOver('total')"
             @mouseout="handleMouseOut('total')"
         /></span>
-        <span class="tooltiptext">{{ $t("tooltip3") }}</span>
+        <span class="tooltiptext tooltiptext3">{{ $t("tooltip3") }}</span>
       </button>
       <button :class="['button-group', 'stooltip']" @click="changeImage">
         <span
@@ -164,7 +164,7 @@
             @mouseover="handleMouseOver('un')"
             @mouseout="handleMouseOut('un')"
         /></span>
-        <span class="tooltiptext">{{ $t("tooltip4") }}</span>
+        <span class="tooltiptext tooltiptext4">{{ $t("tooltip4") }}</span>
       </button>
       <div :class="'divider'"></div>
     </div>

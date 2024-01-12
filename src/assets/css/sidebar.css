@@ -71,6 +71,7 @@
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   margin-right: 25px;
+  height: 20px;
 }
 
 .betamountcontainer {

@@ -71,7 +71,7 @@
             @click="betAmountTimes(2)"
             :disabled="isAutoBetting"
           >
-            <span>2x</span>
+            <span>2×</span>
           </button>
           <button
             v-if="showMax"
