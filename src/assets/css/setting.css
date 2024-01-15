@@ -11,22 +11,24 @@
 }
 
 .button-group-container {
-  width: 30%;
   display: flex;
   align-items: center;
+  gap: 32px;
+  margin-left: 24px;
 }
 .button-group {
   background-color: transparent;
   border: none;
-  margin-left: 20px;
+  /* margin-left: 20px; */
   cursor: pointer;
+  padding: 0;
 }
 
 .divider {
   width: 2px;
   height: 40px;
   background-color: #2f4552;
-  margin-left: 20px;
+  margin-left: -8px;
 }
 
 .footer-image {
@@ -170,20 +172,6 @@ input[type="range"]::after {
     border-radius: 0px 0px 8px 8px;
     margin-top: 0;
     min-width: 0;
-  }
-
-  .button-group-container {
-    width: 50%;
-  }
-  .button-group {
-    margin-left: 10px;
-  }
-
-  .divider {
-    width: 1px;
-    height: 40px;
-    background-color: #2f4552;
-    margin-left: 20px;
   }
 
   .footer-image {

@@ -350,6 +350,46 @@ export function Plinko(element) {
       gap: gap,
     };
 
+    container.on("mouseover", function (e) {
+      let newColor = globalFunc.selectFromText(
+        rowNumState,
+        levelState,
+        text,
+        "shadow"
+      );
+
+      rectangle.clear();
+      rectangle.beginFill(newColor);
+      rectangle.drawRect(
+        -gap / 2 / scale,
+        -gap / 2 / scale,
+        gap / scale,
+        gap / scale - 1
+      );
+      rectangle.endFill();
+      app.renderer.render(app.stage);
+    });
+
+    container.on("mouseout", function (e) {
+      let newColor = globalFunc.selectFromText(
+        rowNumState,
+        levelState,
+        text,
+        "color"
+      );
+
+      rectangle.clear();
+      rectangle.beginFill(newColor);
+      rectangle.drawRect(
+        -gap / 2 / scale,
+        -gap / 2 / scale,
+        gap / scale,
+        gap / scale - 1
+      );
+      rectangle.endFill();
+      app.renderer.render(app.stage);
+    });
+
     if (parseFloat(text) > 1) {
       const graphics = new PIXI.Graphics();
 
@@ -850,13 +890,17 @@ export function Plinko(element) {
       }
     } else {
       if (newWindowWidth <= initialWidth && newWindowWidth > secondWidth) {
-        maskX = app.stage.position.x / (1 - scale) + (350 + (newWindowWidth - initialWidth) / 2) / scale;
+        maskX =
+          app.stage.position.x / (1 - scale) +
+          (350 + (newWindowWidth - initialWidth) / 2) / scale;
         maskY = canvasHeight / 3 / scale - 25 / scale;
         maskHeight = 198 / scale;
         maskWidth = 50 / scale;
       } else {
         maskX =
-          (canvasWidth - 100) / scale / 2 + 5 / scale - app.stage.position.x / scale;
+          (canvasWidth - 100) / scale / 2 +
+          5 / scale -
+          app.stage.position.x / scale;
         maskY = canvasHeight / 6 / scale;
         maskHeight = 98 / scale;
         maskWidth = 25 / scale;

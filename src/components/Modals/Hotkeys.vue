@@ -117,8 +117,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 10px;
-  margin-top: 30px;
+  gap: 26px;
+  margin-top: 38px;
   color: #b1bad3;
   font-family: PingFang SC;
   font-size: 16px;
@@ -156,15 +156,19 @@
   border: 2px dashed #b1bad3;
   background: #0f212e;
   display: flex;
-  padding: 15px;
-  margin-top: 20px;
+  padding: 18px;
+  margin-top: -4px;
+}
+
+.hotkey-info img {
+  margin-top: 4px;
 }
 
 .hotkey-info span {
-  margin-left: 16px;
+  margin-left: 12px;
 }
 .modal__footer {
-  margin-top: 20px;
+  margin-top: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -217,13 +221,13 @@
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
 }
 
-.check-container:hover input ~ .checkmark {
+/* .check-container:hover input ~ .checkmark {
   background-color: #fff;
 }
 
 .check-container input:checked ~ .checkmark {
   background-color: #2196f3;
-}
+} */
 
 .checkmark:after {
   content: "";

@@ -150,7 +150,8 @@ button:active > img {
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.20), 0px 1px 2px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+    0px 1px 2px 0px rgba(0, 0, 0, 0.12);
 }
 
 .tooltip .tooltiptext::after {
@@ -167,6 +168,7 @@ button:active > img {
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
 .stooltip {
   position: relative;
   display: inline-block;
@@ -182,21 +184,23 @@ button:active > img {
   white-space: nowrap;
   position: absolute;
   z-index: 1;
-  bottom: 150%;
-  right: -150%;
   font-family: PingFang SC;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.20), 0px 1px 2px 0px rgba(0, 0, 0, 0.12);
+  bottom: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+    0px 1px 2px 0px rgba(0, 0, 0, 0.12);
 }
-
 .stooltip .tooltiptext::after {
   content: "";
   position: absolute;
   top: 100%;
   left: 50%;
+  transform: translateX(-50%);
   border-width: 5px;
   border-style: solid;
   border-color: #fff transparent transparent transparent;
@@ -204,18 +208,6 @@ button:active > img {
 
 .stooltip:hover .tooltiptext {
   visibility: visible;
-}
-
-.stooltip .tooltiptext2 {
-  right: -230%;
-}
-
-.stooltip .tooltiptext3 {
-  right: -160%;
-}
-
-.stooltip .tooltiptext4 {
-  right: -140%;
 }
 
 @media screen and (max-width: 1100px) {

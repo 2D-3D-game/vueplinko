@@ -212,7 +212,7 @@
       <div :class="'alert-timeline'"></div>
     </div>
   </div>
-  <Setting />
+  <Setting :ref="'settingComponent'" />
   <Statistics />
   <Language />
 </template>
@@ -388,6 +388,7 @@ export default {
       if (newWidth < 1200) {
         changeOrder();
         if (newWidth > 1100) {
+          mutations.rectShow(true);
           responsive(
             "300px",
             (630 * newWidth) / 1200 + "px",
@@ -399,6 +400,7 @@ export default {
             newWidth + "px"
           );
         } else {
+          mutations.rectShow(false);
           responsive(
             "400px",
             "500px",

@@ -5,6 +5,7 @@ export const store = reactive({
   autoStart: false,
   autoEnd: false,
   hotkey: false,
+  rectShow: window.innerWidth > 1100 ? true : false,
   a_w: "",
   a_h: "",
   co_w: "",
@@ -29,6 +30,9 @@ export const mutations = {
   },
   updateHotkey() {
     store.hotkey = !store.hotkey;
+  },
+  rectShow(req) {
+    store.rectShow = req;
   },
   responsive(a_w, a_h, co_w, co_h, c_w, c_h) {
     store.a_w = a_w;

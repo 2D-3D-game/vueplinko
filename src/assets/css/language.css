@@ -1,6 +1,7 @@
 a {
   text-decoration: none;
   color: #000000;
+  border: none;
 }
 
 a:hover {
@@ -73,9 +74,18 @@ a:hover {
 .dd-menu li:hover {
   background-color: #f6f6f6;
 }
-
-.dd-menu li a {
+.dd-menu li button:hover {
+  background: #f6f6f6;
+}
+.dd-menu li button {
   display: block;
   margin: -10px -20px;
   padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  font-family: PingFang SC;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }

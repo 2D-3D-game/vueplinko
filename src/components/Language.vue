@@ -3,8 +3,8 @@
     <div class="dd-button">Language</div>
     <input type="checkbox" class="dd-input" />
     <ul class="dd-menu">
-      <li><a href="#" @click="changeLocale('en')">EN</a></li>
-      <li><a href="#" @click="changeLocale('ch')">CH</a></li>
+      <li><button @click="changeLocale('en')">EN</button></li>
+      <li><button @click="changeLocale('ch')">CH</button></li>
     </ul>
   </label>
 </template>

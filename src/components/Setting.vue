@@ -2,18 +2,20 @@
   <div id="setting" :class="'footer-container'">
     <div :class="'button-group-container'">
       <div :class="'dropdown'">
-        <button :class="['button-group', 'dropbtn', 'stooltip']" @click="showSetting">
-          <span
-            ><img
-              :src="settingSrc"
-              width="14"
-              height="14"
-              alt="Image"
-              @mouseover="handleMouseOver('setting')"
-              @mouseout="handleMouseOut('setting')"
-          /></span>
-          <span class="tooltiptext">{{ $t("tooltip1") }}</span>
-        </button>
+        <div :class="'stooltip'">
+          <button :class="['button-group', 'dropbtn']" @click="showSetting">
+            <span
+              ><img
+                :src="settingSrc"
+                width="14"
+                height="14"
+                alt="Image"
+                @mouseover="handleMouseOver('setting')"
+                @mouseout="handleMouseOut('setting')"
+            /></span>
+            <span class="tooltiptext">{{ $t("tooltip1") }}</span>
+          </button>
+        </div>
         <div v-if="isShowSetting" class="dropdown-content">
           <div :class="['contents']" :style="{ alignItems: 'end' }">
             <button>
@@ -130,42 +132,51 @@
           <div :class="'triangle'"></div>
         </div>
       </div>
-      <button :class="['button-group', 'stooltip']">
-        <span
-          ><img
-            :src="rectSrc"
-            width="14"
-            height="14"
-            alt="Image"
-            @mouseover="handleMouseOver('rect')"
-            @mouseout="handleMouseOut('rect')"
-        /></span>
-        <span class="tooltiptext tooltiptext2">{{ $t("tooltip2") }}</span>
-      </button>
-      <button :class="['button-group', 'stooltip']" @click="showStatistics">
-        <span
-          ><img
-            :src="totalSrc"
-            width="14"
-            height="14"
-            alt="Image"
-            @mouseover="handleMouseOver('total')"
-            @mouseout="handleMouseOut('total')"
-        /></span>
-        <span class="tooltiptext tooltiptext3">{{ $t("tooltip3") }}</span>
-      </button>
-      <button :class="['button-group', 'stooltip']" @click="changeImage">
-        <span
-          ><img
-            :src="isFavorite ? '/image/favorite.svg' : unSrc"
-            width="14"
-            height="14"
-            alt="Image"
-            @mouseover="handleMouseOver('un')"
-            @mouseout="handleMouseOut('un')"
-        /></span>
-        <span class="tooltiptext tooltiptext4">{{ $t("tooltip4") }}</span>
-      </button>
+      <div :class="'stooltip'" v-if="showRect">
+        <button :class="'button-group'">
+          <span>
+            <img
+              :src="rectSrc"
+              width="14"
+              height="14"
+              alt="Image"
+              @mouseover="handleMouseOver('rect')"
+              @mouseout="handleMouseOut('rect')"
+            />
+          </span>
+          <span class="tooltiptext">{{ $t("tooltip2") }}</span>
+        </button>
+      </div>
+      <div :class="'stooltip'">
+        <button :class="'button-group'" @click="showStatistics">
+          <span>
+            <img
+              :src="totalSrc"
+              width="14"
+              height="14"
+              alt="Image"
+              @mouseover="handleMouseOver('total')"
+              @mouseout="handleMouseOut('total')"
+            />
+          </span>
+          <span class="tooltiptext">{{ $t("tooltip3") }}</span>
+        </button>
+      </div>
+      <div :class="'stooltip'">
+        <button :class="'button-group'" @click="changeImage">
+          <span>
+            <img
+              :src="isFavorite ? '/image/favorite.svg' : unSrc"
+              width="14"
+              height="14"
+              alt="Image"
+              @mouseover="handleMouseOver('un')"
+              @mouseout="handleMouseOut('un')"
+            />
+          </span>
+          <span class="tooltiptext">{{ $t("tooltip4") }}</span>
+        </button>
+      </div>
       <div :class="'divider'"></div>
     </div>
     <div :class="'footer-image'">
@@ -240,6 +251,9 @@ export default {
     hotkeyState() {
       return store.hotkey;
     },
+    showRect() {
+      return store.rectShow;
+    },
   },
   setup() {
     const isFavorite = ref(false);
@@ -250,6 +264,7 @@ export default {
     const gameInfoComponent = ref(null);
     const hotkeyComponent = ref(null);
     const maxValueComponent = ref(null);
+    const rectComponent = ref(null);
     const stComponent = ref(null);
     const inputRange = ref(null);
 
@@ -320,6 +335,7 @@ export default {
       gameInfoComponent,
       hotkeyComponent,
       maxValueComponent,
+      rectComponent,
       stComponent,
       changeImage,
       showSetting,
