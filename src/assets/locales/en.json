@@ -88,12 +88,14 @@
         "text6": "Next Server Seed (Hashed)",
         "text7": "You need to finish the following game(s) before you can rotate your seed pair：",
         "button": "Change",
-        "verifyText1": "More inputs are requried to verify results"
+        "verifyText1": "More inputs are requried to verify results",
+        "calcButton": "View Calculation Breakdown"
     },
     "verifyTexts": {
         "game": "Game",
         "clientSeed": "Client Seed",
         "serverSeed": "Server Seed",
         "nonce": "Nonce"
-    }
+    },
+    "copyText": "Copied！"
 }

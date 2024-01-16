@@ -88,12 +88,14 @@
         "text6": "下一个服务器种子（散列化）",
         "text7": "您必须完成以下游戏才能轮换种子配对：",
         "button": "更换",
-        "verifyText1": "需要更多输入才能验证结果"
+        "verifyText1": "需要更多输入才能验证结果",
+        "calcButton": "查看计算细目"
     },
     "verifyTexts": {
         "game": "游戏",
         "clientSeed": "客户端种子",
         "serverSeed": "服务端种子",
         "nonce": "现实标志"
-    }
+    },
+    "copyText": "成功复制！"
 }

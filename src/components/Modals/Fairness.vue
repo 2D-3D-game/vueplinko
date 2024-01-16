@@ -3,7 +3,7 @@
     <div
       :class="'modal__content'"
       :style="{
-        height: buttonType === 'seed' ? '610px' : '664px',
+        height: buttonType === 'seed' ? '606px' : '722px',
         overflowY: buttonType === 'seed' ? 'hidden' : 'auto',
         overflowX: 'hidden',
       }"
@@ -29,44 +29,58 @@
         </div>
         <div :class="'input-container'" v-if="buttonType === 'seed'">
           <div :class="'gray-span'">{{ $t("fairnesses.text1") }}</div>
-          <div :class="'inputBox'">
+          <div :class="['inputBox', 'buttonbox']">
             <input
               :class="'inputStyle'"
               type="text"
-              :value="'edr74dsfsg3df5644'"
+              v-model="copy1"
               readonly
+              :style="{ width: '400px' }"
             />
-            <button>
-              <span>
-                <img
-                  :src="'/image/copy.svg'"
-                  alt="Image"
-                  width="14"
-                  height="14"
-                />
-              </span>
-            </button>
+            <div :class="'stooltip'" :style="{ width: '46px' }">
+              <button :class="'copy'" @click="copyText('copy1')">
+                <span>
+                  <img
+                    :src="'/image/copy-hover.svg'"
+                    alt="Image"
+                    width="14"
+                    height="14"
+                  />
+                </span>
+              </button>
+              <span
+                :class="['tooltiptext1', copied1 ? 'tooltiptext1-active' : '']"
+                >{{ $t("copyText") }}</span
+              >
+            </div>
           </div>
         </div>
         <div :class="'input-container'" v-if="buttonType === 'seed'">
           <div :class="'gray-span'">{{ $t("fairnesses.text2") }}</div>
-          <div :class="'inputBox'">
+          <div :class="['inputBox', 'buttonbox']">
             <input
               :class="'inputStyle'"
               type="text"
-              :value="'edr74dsfsg3df5644gguyg34534536uigiugigig346346346uig346'"
+              v-model="copy2"
               readonly
+              :style="{ width: '400px' }"
             />
-            <button>
-              <span>
-                <img
-                  :src="'/image/copy.svg'"
-                  alt="Image"
-                  width="14"
-                  height="14"
-                />
-              </span>
-            </button>
+            <div :class="'stooltip'" :style="{ width: '46px' }">
+              <button :class="'copy'" @click="copyText('copy2')">
+                <span>
+                  <img
+                    :src="'/image/copy-hover.svg'"
+                    alt="Image"
+                    width="14"
+                    height="14"
+                  />
+                </span>
+              </button>
+              <span
+                :class="['tooltiptext1', copied2 ? 'tooltiptext1-active' : '']"
+                >{{ $t("copyText") }}</span
+              >
+            </div>
           </div>
         </div>
         <div :class="'input-container'" v-if="buttonType === 'seed'">
@@ -102,7 +116,7 @@
             {{ $t("fairnesses.text5") }}
             <span :class="'gray-span'" :style="{ color: '#E54161' }">*</span>
           </div>
-          <div :class="'inputBox'">
+          <div :class="['inputBox', 'buttonbox']">
             <input
               :class="'inputStyle'"
               type="text"
@@ -112,18 +126,10 @@
                 background: 'transparent',
                 border: '2px solid #203441',
                 color: '#879097',
+                cursor: 'not-allowed',
               }"
             />
-            <button
-              :style="{
-                background: '#16852D',
-                width: '103px',
-                height: '44px',
-                top: 0,
-                right: 0,
-                borderRadius: '0px 4px 4px 0px',
-              }"
-            >
+            <button :class="'changeButton'">
               <span :class="'white-span'" :style="{ color: '#000' }">
                 {{ $t("fairnesses.button") }}
               </span>
@@ -132,23 +138,30 @@
         </div>
         <div :class="'input-container'">
           <div :class="'gray-span'">{{ $t("fairnesses.text6") }}</div>
-          <div :class="'inputBox'">
+          <div :class="['inputBox', 'buttonbox']">
             <input
               :class="'inputStyle'"
               type="text"
-              :value="'sgfsg345345h34jh634534jh534j5h3j45h3j45jh345j345hjj35'"
+              v-model="copy3"
               readonly
+              :style="{ width: '400px' }"
             />
-            <button>
-              <span>
-                <img
-                  :src="'/image/copy.svg'"
-                  alt="Image"
-                  width="14"
-                  height="14"
-                />
-              </span>
-            </button>
+            <div :class="'stooltip'" :style="{ width: '46px' }">
+              <button :class="'copy'" @click="copyText('copy3')">
+                <span>
+                  <img
+                    :src="'/image/copy-hover.svg'"
+                    alt="Image"
+                    width="14"
+                    height="14"
+                  />
+                </span>
+              </button>
+              <span
+                :class="['tooltiptext1', copied3 ? 'tooltiptext1-active' : '']"
+                >{{ $t("copyText") }}</span
+              >
+            </div>
           </div>
         </div>
         <span :class="'gray-span'" :style="{ alignSelf: 'flex-start' }">
@@ -178,7 +191,6 @@
               alt="Image"
               :style="{ position: 'absolute', right: '12px', top: '15px' }"
             />
-            <!-- <input :class="'inputStyle'" type="text" /> -->
           </div>
         </div>
         <div :class="'input-container'">
@@ -195,11 +207,17 @@
         </div>
         <div :class="'input-container'">
           <div :class="'gray-span'">{{ $t("verifyTexts.nonce") }}</div>
-          <div :class="'inputBox'">
-            <input :class="'inputStyle'" type="text" />
+          <div :class="['inputBox', 'buttonbox']">
+            <input
+              :class="['inputStyle', 'numberType']"
+              v-model="nonce"
+              type="number"
+              :style="{ width: '338px' }"
+            />
             <button
               :class="'noncebutton'"
               :style="{ background: '#304554', top: 0, right: '54px' }"
+              @click="changeNonce('minus')"
             >
               <span>
                 <img
@@ -218,6 +236,7 @@
                 right: 0,
                 borderRadius: '0px 4px 4px 0px',
               }"
+              @click="changeNonce('plus')"
             >
               <span>
                 <img
@@ -275,6 +294,9 @@
             />
           </div>
         </div>
+        <button :class="'bottomButton'">
+          <span :class="'gray-span'">{{ $t("fairnesses.calcButton") }}</span>
+        </button>
       </div>
       <button class="modal__close" @click="hideModal">
         <span
@@ -309,12 +331,20 @@
   height: 44px;
   display: "flex";
 }
-
+.buttonbox {
+  display: flex;
+}
 .noncebutton {
+  position: absolute;
   width: 54px;
   height: 44px;
   flex-shrink: 0;
   background: #304554;
+  border: none;
+}
+
+.noncebutton:hover {
+  background: #567086 !important;
 }
 
 .beforebutton::before {
@@ -325,6 +355,19 @@
   top: 11px;
   left: -1px;
   width: 2px;
+}
+.changeButton {
+  background: #16852d;
+  width: 103px;
+  height: 44px;
+  top: 0;
+  right: 0;
+  border-radius: 0px 4px 4px 0px;
+  position: absolute;
+  border: none;
+  cursor: not-allowed;
+}
+.changeButton:hover {
 }
 
 img.betting-image {
@@ -353,6 +396,9 @@ img.betting-image {
   border: 2px solid #304554;
   background: #0f212e;
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.3);
+}
+.verify .input-container .inputBox .inputStyle:hover {
+  border: 2px solid #567086;
 }
 .modal.active {
   visibility: visible;
@@ -429,13 +475,22 @@ img.betting-image {
   border: 2px solid #557086;
   outline: 0;
 }
-.inputBox button {
+.inputBox .copy {
   position: absolute;
-  top: 13px;
-  right: 15px;
-  background: transparent;
+  top: 0;
+  right: 0;
+  background: #304554;
   border: none;
   padding: 0;
+  width: 46px;
+  height: 44px;
+  border-radius: 0 4px 4px 0;
+}
+.inputBox .copy:hover {
+  background: #567086;
+}
+.buttonbox .inputStyle {
+  border-radius: 4px 0 0 4px;
 }
 .white-span {
   color: #fff;
@@ -455,7 +510,14 @@ img.betting-image {
   font-weight: 600;
   line-height: normal;
 }
-
+.bottomButton {
+  margin-top: -5px;
+  background: transparent;
+  border: none;
+}
+.bottomButton:hover span {
+  color: #fff;
+}
 .modal__content {
   position: relative;
   width: 500px;
@@ -470,7 +532,7 @@ img.betting-image {
   width: 468px;
   border-radius: 0px 0px 8px 8px;
   background: #0f212e;
-  padding: 21px 16px;
+  padding: 21px 16px 11px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -514,6 +576,15 @@ img.betting-image {
   background: #0f212e;
   gap: 10px;
 }
+.numberType {
+  border-radius: 4px 0 0 4px !important;
+}
+.numberType::-webkit-outer-spin-button,
+.numberType::-webkit-inner-spin-button {
+  margin-right: 9px;
+  height: 22px;
+  width: 16px;
+}
 .modal__close {
   position: absolute;
   top: 10px;
@@ -538,16 +609,71 @@ export default {
   },
   setup() {
     const buttonType = ref("seed");
+    const nonce = ref(0);
+    const copied1 = ref(false);
+    const copied2 = ref(false);
+    const copied3 = ref(false);
+    const copy1 = ref("edr74dsfsg3df5644");
+    const copy2 = ref(
+      "edr74dsfsg3df5644gguyg34534536uigiugigig346346346uig346"
+    );
+    const copy3 = ref("sgfsg345345h34jh634534jh534j5h3j45h3j45jh345j345hjj35");
     const hideModal = () => {
       mutations.showFairness();
     };
     const changeType = (req) => {
       buttonType.value = req;
     };
+    const changeNonce = (req) => {
+      if (req === "plus") {
+        nonce.value = nonce.value + 1;
+      } else {
+        nonce.value = nonce.value - 1;
+        if (nonce.value < 0) {
+          nonce.value = 0;
+        }
+      }
+    };
+    const copyText = (req) => {
+      let text = "";
+      switch (req) {
+        case "copy1":
+          text = copy1.value;
+          copied1.value = true;
+          setTimeout(() => {
+            copied1.value = false;
+          }, 1000);
+          break;
+        case "copy2":
+          text = copy2.value;
+          copied2.value = true;
+          setTimeout(() => {
+            copied2.value = false;
+          }, 1000);
+          break;
+        case "copy3":
+          text = copy3.value;
+          copied3.value = true;
+          setTimeout(() => {
+            copied3.value = false;
+          }, 1000);
+          break;
+      }
+      navigator.clipboard.writeText(text);
+    };
     return {
       buttonType,
+      nonce,
       hideModal,
       changeType,
+      changeNonce,
+      copy1,
+      copy2,
+      copy3,
+      copied1,
+      copied2,
+      copied3,
+      copyText,
     };
   },
 };

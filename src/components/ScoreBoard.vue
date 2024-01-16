@@ -11,17 +11,49 @@
       <div :class="'modal-body'">
         <span :class="'white-span'">Plinko</span>
         <div :class="'id-container'">
-          <span :class="'white-span'">ID 201,452,143,653</span>
-          <button>
+          <span :class="'white-span'"
+            >ID <span>{{ copy1 }}</span></span
+          >
+          <div :class="'stooltip'">
+            <button
+              @mouseover="changeHover('isHover1', 'on')"
+              @mouseout="changeHover('isHover1', 'off')"
+              @click="copyText('copy1')"
+            >
+              <span>
+                <img
+                  :src="isHover1 ? '/image/copy-hover.svg' : '/image/copy.svg'"
+                  alt="Image"
+                  width="14"
+                  height="14"
+                />
+              </span>
+            </button>
             <span
-              ><img :src="'/image/copy.svg'" alt="Image" width="14" height="14"
-            /></span>
-          </button>
-          <button>
+              :class="['tooltiptext1', copied1 ? 'tooltiptext1-active' : '']"
+              >{{ $t("copyText") }}</span
+            >
+          </div>
+          <div :class="'stooltip'">
+            <button
+              @mouseover="changeHover('isHover2', 'on')"
+              @mouseout="changeHover('isHover2', 'off')"
+              @click="copyText('copy5')"
+            >
+              <span>
+                <img
+                  :src="isHover2 ? '/image/link-hover.svg' : '/image/link.svg'"
+                  alt="Image"
+                  width="14"
+                  height="14"
+                />
+              </span>
+            </button>
             <span
-              ><img :src="'/image/link.svg'" alt="Image" width="14" height="14"
-            /></span>
-          </button>
+              :class="['tooltiptext1', copied5 ? 'tooltiptext1-active' : '']"
+              >{{ $t("copyText") }}</span
+            >
+          </div>
         </div>
         <span :class="'gray-span'" :style="{ marginTop: '16px' }">
           {{ $t("scoreboard.time") }}dwwyy332
@@ -93,10 +125,16 @@
             :class="'white-span'"
             @click="showFairness"
             :style="{ cursor: 'pointer' }"
+            @mouseover="changeHover('isHover3', 'on')"
+            @mouseout="changeHover('isHover3', 'off')"
           >
             {{ $t("scoreboard.provable") }}
             <img
-              :src="'/image/arrow-left.svg'"
+              :src="
+                isHover3
+                  ? '/image/arrow-left-hover.svg'
+                  : '/image/arrow-left.svg'
+              "
               alt="Image"
               width="14"
               height="14"
@@ -117,66 +155,109 @@
             </div>
             <div :class="'input-container'">
               <div :class="'gray-span'">{{ $t("prove.text2") }}</div>
-              <div :class="'inputBox'">
+              <div :class="['inputBox', 'buttonBox']">
                 <input
                   :class="'inputStyle'"
                   type="text"
-                  :value="'edr74dsfsg3df5644dfgd2525245hjjh2hjjhhj23423jh234j23jhj234'"
+                  v-model="copy2"
                   readonly
+                  :style="{ width: '400px' }"
                 />
-                <button>
-                  <span>
-                    <img
-                      :src="'/image/copy.svg'"
-                      alt="Image"
-                      width="14"
-                      height="14"
-                    />
-                  </span>
-                </button>
+                <div :class="'stooltip'" :style="{ width: '46px' }">
+                  <button :class="'copy'" @click="copyText('copy2')">
+                    <span>
+                      <img
+                        :src="'/image/copy-hover.svg'"
+                        alt="Image"
+                        width="14"
+                        height="14"
+                      />
+                    </span>
+                  </button>
+                  <span
+                    :class="[
+                      'tooltiptext1',
+                      copied2 ? 'tooltiptext1-active' : '',
+                    ]"
+                    >{{ $t("copyText") }}</span
+                  >
+                </div>
               </div>
             </div>
             <div :class="'seed'">
               <div :class="'input-container'">
                 <div :class="'gray-span'">{{ $t("prove.text3") }}</div>
-                <div :class="'inputBox'" :style="{ width: '290px' }">
+                <div
+                  :class="['inputBox', 'buttonBox']"
+                  :style="{ width: '312px' }"
+                >
                   <input
                     :class="'inputStyle'"
                     type="text"
-                    :value="'edr74dsfsg3df5644'"
+                    v-model="copy3"
                     readonly
+                    :style="{ width: '244px' }"
                   />
-                  <button :style="{ right: '-5px' }">
-                    <span>
-                      <img
-                        :src="'/image/copy.svg'"
-                        alt="Image"
-                        width="14"
-                        height="14"
-                      />
-                    </span>
-                  </button>
+                  <div :class="'stooltip'" :style="{ width: '46px' }">
+                    <button :class="'copy'" @click="copyText('copy3')">
+                      <span>
+                        <img
+                          :src="'/image/copy-hover.svg'"
+                          alt="Image"
+                          width="14"
+                          height="14"
+                        />
+                      </span>
+                    </button>
+                    <span
+                      :class="[
+                        'tooltiptext1',
+                        copied3 ? 'tooltiptext1-active' : '',
+                      ]"
+                      >{{ $t("copyText") }}</span
+                    >
+                  </div>
                 </div>
               </div>
               <div :class="'input-container'">
                 <div :class="'gray-span'">{{ $t("prove.text4") }}</div>
-                <div :class="'inputBox'" :style="{ width: '112px' }">
+                <div
+                  :class="['inputBox', 'buttonBox']"
+                  :style="{ width: '134px' }"
+                >
                   <input
                     :class="'inputStyle'"
                     type="text"
-                    :value="'4345'"
+                    v-model="copy4"
                     readonly
+                    :style="{ width: '66px' }"
                   />
-                  <button :style="{ right: '-5px' }">
-                    <span>
-                      <img
-                        :src="'/image/copy.svg'"
-                        alt="Image"
-                        width="14"
-                        height="14"
-                      />
-                    </span>
-                  </button>
+                  <div :class="'stooltip'" :style="{ width: '46px' }">
+                    <button :class="'copy'" @click="copyText('copy4')">
+                      <span>
+                        <img
+                          :src="'/image/copy-hover.svg'"
+                          alt="Image"
+                          width="14"
+                          height="14"
+                        />
+                      </span>
+                    </button>
+                    <!-- <span
+                      :class="[
+                        'tooltiptext1',
+                        'tooltiptext1-active'
+                      ]"
+                      >{{ $t("copyText") }}</span
+                    > -->
+                    <span
+                      :class="[
+                        'tooltiptext1',
+                        copied4 ? 'tooltiptext1-active' : '',
+                      ]"
+                      >{{ $t("copyText") }}</span
+                    >
+                  </div>
                 </div>
               </div>
             </div>
@@ -230,7 +311,9 @@
   visibility: visible;
   opacity: 1;
 }
-
+.buttonBox {
+  display: flex;
+}
 .modal__content {
   position: relative;
   width: 500px;
@@ -279,7 +362,7 @@
 }
 
 .seed .input-container:first-child {
-  width: 296px;
+  width: 222px;
 }
 .seed .input-container:not(:first-child) {
   width: 116px;
@@ -339,7 +422,6 @@
   background: #0f212e;
 }
 .fairness span {
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -424,7 +506,23 @@
   gap: 10px;
   margin-top: 4px;
 }
-
+.inputBox .copy {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #304554;
+  border: none;
+  padding: 0;
+  width: 46px;
+  height: 44px;
+  border-radius: 0 4px 4px 0;
+}
+.inputBox .copy:hover {
+  background: #567086;
+}
+.buttonBox .inputStyle {
+  border-radius: 4px 0 0 4px;
+}
 .id-container button {
   border: none;
   background: transparent;
@@ -492,7 +590,10 @@
 .failed {
   color: #ed4163;
 }
-
+.copy span {
+  display: flex;
+  justify-content: center;
+}
 .modal__close {
   position: absolute;
   top: 10px;
@@ -502,6 +603,9 @@
   background-color: transparent;
   border: none;
   font-size: 14px;
+}
+.fobutton:hover span {
+  color: #fff;
 }
 </style>
 
@@ -538,16 +642,106 @@ export default {
   },
   setup() {
     const showFairFlag = ref(false);
+    const isHover1 = ref(false);
+    const isHover2 = ref(false);
+    const isHover3 = ref(false);
+    const copy1 = ref("201,213,564,969");
+    const copy2 = ref(
+      "edr74dsfsg3df5644dfgd2525245hjjh2hjjhhj23423jh234j23jhj234"
+    );
+    const copy3 = ref("edr74dsfsg3df5644");
+    const copy4 = ref("4345");
+    const copied1 = ref(false);
+    const copied2 = ref(false);
+    const copied3 = ref(false);
+    const copied4 = ref(false);
+    const copied5 = ref(false);
     const hideModal = () => {
       mutations.currentScore(0, "", "");
     };
     const showFairness = () => {
       showFairFlag.value = !showFairFlag.value;
     };
+    const changeHover = (hover, req) => {
+      if (hover === "isHover1") {
+        if (req === "on") {
+          isHover1.value = true;
+        } else {
+          isHover1.value = false;
+        }
+      } else if (hover === "isHover2") {
+        if (req === "on") {
+          isHover2.value = true;
+        } else {
+          isHover2.value = false;
+        }
+      } else if (hover === "isHover3") {
+        if (req === "on") {
+          isHover3.value = true;
+        } else {
+          isHover3.value = false;
+        }
+      }
+    };
+    const copyText = (req) => {
+      let text = "";
+      switch (req) {
+        case "copy1":
+          text = copy1.value;
+          copied1.value = true;
+          setTimeout(() => {
+            copied1.value = false;
+          }, 1000);
+          break;
+        case "copy2":
+          text = copy2.value;
+          copied2.value = true;
+          setTimeout(() => {
+            copied2.value = false;
+          }, 1000);
+          break;
+        case "copy3":
+          text = copy3.value;
+          copied3.value = true;
+          setTimeout(() => {
+            copied3.value = false;
+          }, 1000);
+          break;
+        case "copy4":
+          text = copy4.value;
+          copied4.value = true;
+          setTimeout(() => {
+            copied4.value = false;
+          }, 1000);
+          break;
+        case "copy5":
+          text = copy1.value;
+          copied5.value = true;
+          setTimeout(() => {
+            copied5.value = false;
+          }, 1000);
+          break;
+      }
+      navigator.clipboard.writeText(text);
+    };
     return {
       showFairFlag,
+      isHover1,
+      isHover2,
+      isHover3,
       hideModal,
+      copy1,
+      copy2,
+      copy3,
+      copy4,
+      copied1,
+      copied2,
+      copied3,
+      copied4,
+      copied5,
       showFairness,
+      changeHover,
+      copyText,
     };
   },
 };

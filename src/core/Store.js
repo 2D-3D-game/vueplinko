@@ -103,7 +103,6 @@ export const mutations = {
     store.currentScore = score;
     store.currentColor = color;
     store.currentShadow = shadow;
-    console.log(color);
   },
   showGameInfoModal() {
     store.showGameInfoModal = !store.showGameInfoModal;
