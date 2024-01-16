@@ -31,7 +31,7 @@
             </button>
             <span
               :class="['tooltiptext1', copied1 ? 'tooltiptext1-active' : '']"
-              >{{ $t("copyText") }}</span
+              >{{ $t("copyId") }}</span
             >
           </div>
           <div :class="'stooltip'">
@@ -51,7 +51,7 @@
             </button>
             <span
               :class="['tooltiptext1', copied5 ? 'tooltiptext1-active' : '']"
-              >{{ $t("copyText") }}</span
+              >{{ $t("copyId") }}</span
             >
           </div>
         </div>

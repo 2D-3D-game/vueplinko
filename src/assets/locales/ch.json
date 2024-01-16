@@ -97,5 +97,6 @@
         "serverSeed": "服务端种子",
         "nonce": "现实标志"
     },
-    "copyText": "成功复制！"
+    "copyText": "成功复制！",
+    "copyId": "成功复制！"
 }

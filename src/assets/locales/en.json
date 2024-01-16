@@ -97,5 +97,6 @@
         "serverSeed": "Server Seed",
         "nonce": "Nonce"
     },
-    "copyText": "Copied！"
+    "copyText": "Copied！",
+    "copyId": "Copied, share in chat!"
 }
