@@ -110,17 +110,18 @@ button:active > img {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f212e;
+  background: #1a2c38;
+  background: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2f4552;
-  border-radius: 10px;
+  background: #304554;
+  border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {

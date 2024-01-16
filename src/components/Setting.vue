@@ -1,5 +1,9 @@
 <template>
-  <div id="setting" :class="'footer-container'">
+  <div
+    id="setting"
+    :style="{ width: settingWidth }"
+    :class="'footer-container'"
+  >
     <div :class="'button-group-container'">
       <div :class="'dropdown'">
         <div :class="'stooltip'">
@@ -182,13 +186,14 @@
     <div :class="'footer-image'">
       <img :src="'/image/Vector.svg'" alt="Image" width="68" height="25" />
     </div>
-    <div>
+    <button :style="{ background: 'transparent', border: 'none' }" @click="showFairness">
       <span :class="'footer-span'">{{ $t("fairness") }}</span>
-    </div>
-    <MaxValue :ref="'maxValueComponent'" />
-    <GameInfo :ref="'gameInfoComponent'" />
-    <Hotkeys :ref="'hotkeyComponent'" />
-    <RealTimeStatistics :ref="'stComponent'" />
+    </button>
+    <MaxValue />
+    <GameInfo />
+    <Hotkeys />
+    <RealTimeStatistics />
+    <Fairness />
   </div>
 </template>
 
@@ -203,6 +208,7 @@ import MaxValue from "./Modals/MaxValue.vue";
 import GameInfo from "./Modals/GameInfo.vue";
 import Hotkeys from "./Modals/Hotkeys.vue";
 import RealTimeStatistics from "./Modals/RealTimeStatistics.vue";
+import Fairness from "./Modals/Fairness.vue";
 
 export default {
   components: {
@@ -210,6 +216,7 @@ export default {
     GameInfo,
     Hotkeys,
     RealTimeStatistics,
+    Fairness,
   },
   data() {
     return {
@@ -254,6 +261,9 @@ export default {
     showRect() {
       return store.rectShow;
     },
+    settingWidth() {
+      return store.s_w;
+    },
   },
   setup() {
     const isFavorite = ref(false);
@@ -261,11 +271,7 @@ export default {
     const isLive = ref(false);
     const isAnimation = ref(false);
     const volumn = ref(50);
-    const gameInfoComponent = ref(null);
-    const hotkeyComponent = ref(null);
-    const maxValueComponent = ref(null);
     const rectComponent = ref(null);
-    const stComponent = ref(null);
     const inputRange = ref(null);
 
     const changeImage = () => {
@@ -291,8 +297,7 @@ export default {
 
     const showMaxSetting = () => {
       if (!store.isMaximum) {
-        const modal = maxValueComponent.value.$refs.demomodal;
-        modal.classList.toggle("active");
+        mutations.showMaxValueModal();
         isShowSetting.value = false;
       } else {
         mutations.showMaximum(!store.isMaximum);
@@ -300,22 +305,23 @@ export default {
     };
 
     const showGameInfo = () => {
-      const modal = gameInfoComponent.value.$refs.gameinfomodal;
-      modal.classList.toggle("active");
+      mutations.showGameInfoModal();
       isShowSetting.value = false;
     };
 
     const showHotkeySetting = () => {
-      const modal = hotkeyComponent.value.$refs.hotkeymodal;
-      modal.classList.toggle("active");
+      mutations.showHotkeyModal();
       isShowSetting.value = false;
     };
 
     const showStatistics = () => {
-      const modal = stComponent.value.$refs.stmodal;
-      modal.classList.toggle("active");
+      mutations.showStatistics();
       isShowSetting.value = false;
     };
+
+    const showFairness = () => {
+      mutations.showFairness();
+    }
 
     const changeRange = (req) => {
       const volumeElement = inputRange.value;
@@ -332,11 +338,7 @@ export default {
       isAnimation,
       volumn,
       inputRange,
-      gameInfoComponent,
-      hotkeyComponent,
-      maxValueComponent,
       rectComponent,
-      stComponent,
       changeImage,
       showSetting,
       liveSetting,
@@ -345,6 +347,7 @@ export default {
       showGameInfo,
       showHotkeySetting,
       showStatistics,
+      showFairness,
       changeRange,
     };
   },

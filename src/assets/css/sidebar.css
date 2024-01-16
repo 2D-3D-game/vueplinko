@@ -92,7 +92,15 @@ select {
   -webkit-appearance: none;
   padding-left: 8px;
 }
-
+input:hover,
+select:hover {
+  border: 2px solid #557086;
+}
+input:focus,
+select:focus {
+  border: 2px solid #557086;
+  outline: 0;
+}
 .arrow-down {
   position: absolute;
   bottom: 13px;

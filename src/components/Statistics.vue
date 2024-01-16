@@ -1,5 +1,9 @@
 <template>
-  <div id="statisticscontainer" :class="'statistics-container'">
+  <div
+    id="statisticscontainer"
+    :style="{ width: stWidth }"
+    :class="'statistics-container'"
+  >
     <button :class="'statistics-button'" @click="expandReward">
       <div :class="'span-group'">
         <span :class="'span-white'">Plinko</span>
@@ -66,26 +70,52 @@
 @import "../assets/css/statistics.css";
 </style>
 
-<script setup>
+<script>
 import { ref } from "vue";
 import BigReward from "./Statistics/BigReward.vue";
 import Challenge from "./Statistics/Challenge.vue";
 import Persuade from "./Statistics/Persuade.vue";
+import { store } from "../core/Store";
 
-const expand = ref(false);
-const active1 = ref(true);
-const active2 = ref(false);
-const active3 = ref(false);
-const active4 = ref(false);
+export default {
+  components: {
+    BigReward,
+    Challenge,
+    Persuade,
+  },
 
-const activeButton = (buttonId) => {
-  active1.value = buttonId === "active1";
-  active2.value = buttonId === "active2";
-  active3.value = buttonId === "active3";
-  active4.value = buttonId === "active4";
-};
+  computed: {
+    stWidth() {
+      return store.st_w;
+    },
+  },
+  setup() {
+    const expand = ref(false);
+    const active1 = ref(true);
+    const active2 = ref(false);
+    const active3 = ref(false);
+    const active4 = ref(false);
 
-const expandReward = () => {
-  expand.value = !expand.value;
+    const activeButton = (buttonId) => {
+      active1.value = buttonId === "active1";
+      active2.value = buttonId === "active2";
+      active3.value = buttonId === "active3";
+      active4.value = buttonId === "active4";
+    };
+
+    const expandReward = () => {
+      expand.value = !expand.value;
+    };
+
+    return {
+      expand,
+      active1,
+      active2,
+      active3,
+      active4,
+      activeButton,
+      expandReward,
+    };
+  },
 };
 </script>

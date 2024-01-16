@@ -1,5 +1,5 @@
 <template>
-  <div :ref="'hotkeymodal'" :class="'modal'">
+  <div :class="['modal', showHotkeyModal ? 'active' : '']">
     <div :class="'modal__content'">
       <div :class="'modal-title'">
         <img
@@ -47,7 +47,9 @@
         </label>
       </div>
       <button class="modal__close" @click="hideModal">
-        <span><img :src="'/image/times.svg'" alt="Image" width="10" height="10" /></span>
+        <span
+          ><img :src="'/image/times.svg'" alt="Image" width="10" height="10"
+        /></span>
       </button>
     </div>
   </div>
@@ -95,7 +97,7 @@
   position: relative;
   width: 500px;
   max-width: 90%;
-  padding: 1em 2em;
+  padding: 16px;
   border-radius: 8px;
   background: #1a2c37;
   box-shadow: 0px 1px 0px 0px #253541 inset,
@@ -173,13 +175,13 @@
   align-items: center;
   justify-content: center;
   background-color: #0f212e;
-  margin-left: -2em;
-  margin-right: -2em;
-  margin-bottom: -1em;
+  margin-left: -16px;
+  margin-right: -16px;
+  margin-bottom: -16px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   padding-top: 16px;
-  padding-bottom: 30px;
+  padding-bottom: 18px;
 }
 
 .check-container {
@@ -221,13 +223,15 @@
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
 }
 
-/* .check-container:hover input ~ .checkmark {
-  background-color: #fff;
+.check-container:hover input ~ .checkmark {
+  border: 2px solid #557086;
 }
 
 .check-container input:checked ~ .checkmark {
-  background-color: #2196f3;
-} */
+  border: 2px solid #557086;
+  background: #2f4552;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
+}
 
 .checkmark:after {
   content: "";
@@ -273,26 +277,25 @@
 </style>
 
 <script>
-import { ref } from "vue";
 import { store, mutations } from "../../core/Store";
 export default {
   computed: {
     state() {
       return store.hotkey;
     },
+    showHotkeyModal() {
+      return store.showHotkeyModal;
+    },
   },
 
   setup() {
-    const hotkeymodal = ref(null);
     const hideModal = () => {
-      const modal = hotkeymodal.value;
-      modal.classList.toggle("active");
+      mutations.showHotkeyModal();
     };
     const hotkeyState = () => {
       mutations.updateHotkey();
-    }
+    };
     return {
-      hotkeymodal,
       hideModal,
       hotkeyState,
     };

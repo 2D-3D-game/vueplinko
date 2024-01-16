@@ -68,8 +68,8 @@
   height: 240px;
   z-index: 1;
   top: -10px;
-  left: -25px;
-  transform: translateY(-100%);
+  left: 50%;
+  transform: translate(-50%, -100%);
 }
 .dropdown-content .triangle {
   position: absolute;
@@ -176,8 +176,5 @@ input[type="range"]::after {
 
   .footer-image {
     display: none;
-  }
-  .dropdown-content {
-    left: -35px;
   }
 }

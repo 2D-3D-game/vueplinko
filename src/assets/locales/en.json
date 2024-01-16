@@ -58,5 +58,42 @@
     "tooltip2": "Enable Theatre Mode",
     "tooltip3": "Open Live Stats",
     "tooltip4": "Favorite Game",
-    "racespan": "Wager to enter the race!"
+    "racespan": "Wager to enter the race!",
+    "scoreboard": {
+        "time": "Placed by : ",
+        "on": "on",
+        "at": "at",
+        "multi": "Multiplier",
+        "payout": "Payout",
+        "play": "Play",
+        "provable": "Provable Fairness"
+    },
+    "prove": {
+        "text1": "Server Seed",
+        "value1": "Server hasn't been revealed yet",
+        "text2": "Server Seed (Hashed)",
+        "text3": "Client Seed",
+        "text4": "Nonce",
+        "button1": "Rotate your seed pair in order to verify this bet",
+        "button2": "What is provable fairness ?"
+    },
+    "fairnesses": {
+        "seed": "Seeds",
+        "verify": "Verify",
+        "text1": "Active Client Seed",
+        "text2": "Active Server Seed (Hashed)",
+        "text3": "Total bets made with pair",
+        "text4": "Rotate Seed Pair",
+        "text5": "New Client Seed ",
+        "text6": "Next Server Seed (Hashed)",
+        "text7": "You need to finish the following game(s) before you can rotate your seed pair：",
+        "button": "Change",
+        "verifyText1": "More inputs are requried to verify results"
+    },
+    "verifyTexts": {
+        "game": "Game",
+        "clientSeed": "Client Seed",
+        "serverSeed": "Server Seed",
+        "nonce": "Nonce"
+    }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div :ref="'stmodal'" :class="'modal'">
+  <div :class="['modal', showStatistics ? 'active' : '']">
     <div :class="'modal__content'">
       <div
         :class="'modal-title'"
@@ -20,7 +20,7 @@
               @mouseout="handleMouseOut()"
             >
               <span>
-                {{ $t("type1") }}
+                {{ $t(modalType) }}
                 <img
                   :src="typeSrc"
                   width="14"
@@ -90,7 +90,7 @@
             @mouseover="handleMouseOver('gameType')"
             @mouseout="handleMouseOut()"
           >
-            <span>{{ $t("type1") }}</span>
+            <span>{{ gameType === 'type1' ? $t("type1") : "Plinko" }}</span>
             <img
               :src="gameTypeSrc"
               width="14"
@@ -492,6 +492,7 @@ select {
 
 <script>
 import { ref } from "vue";
+import { store, mutations } from "../../core/Store";
 export default {
   data() {
     return {
@@ -504,6 +505,11 @@ export default {
       offsetX: 0,
       offsetY: 0,
     };
+  },
+  computed: {
+    showStatistics() {
+      return store.showStatistics;
+    },
   },
 
   methods: {
@@ -555,8 +561,10 @@ export default {
     const gameType = ref("type1");
 
     const hideModal = () => {
-      const modal = stmodal.value;
-      modal.classList.toggle("active");
+      mutations.showStatistics();
+      typeFlag.value = false;
+      gameTypeFlag.value = false;
+      showRaceFlag.value = false;
     };
 
     const showType = () => {
@@ -579,10 +587,12 @@ export default {
 
     const changeModalType = (req) => {
       modalType.value = req;
+      typeFlag.value = false;
     };
 
     const changeGameType = (req) => {
       gameType.value = req;
+      gameTypeFlag.value = false;
     };
     return {
       stmodal,

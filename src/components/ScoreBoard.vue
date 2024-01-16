@@ -1,0 +1,554 @@
+<template>
+  <div :class="['modal', 'active']" :ref="'scoreModal'">
+    <div
+      :class="'modal__content'"
+      :style="{ height: showFairFlag ? '800px' : '647px' }"
+    >
+      <div :class="'modal-title'">
+        <img :src="'/image/score.svg'" alt="Image" width="16" height="16" />
+        <span>{{ $t("bet") }}</span>
+      </div>
+      <div :class="'modal-body'">
+        <span :class="'white-span'">Plinko</span>
+        <div :class="'id-container'">
+          <span :class="'white-span'">ID 201,452,143,653</span>
+          <button>
+            <span
+              ><img :src="'/image/copy.svg'" alt="Image" width="14" height="14"
+            /></span>
+          </button>
+          <button>
+            <span
+              ><img :src="'/image/link.svg'" alt="Image" width="14" height="14"
+            /></span>
+          </button>
+        </div>
+        <span :class="'gray-span'" :style="{ marginTop: '16px' }">
+          {{ $t("scoreboard.time") }}dwwyy332
+        </span>
+        <span :class="'gray-span'" :style="{ marginTop: '5px' }">
+          {{ $t("scoreboard.on") }} 1/13/2024 {{ $t("scoreboard.at") }} 4:51 PM
+        </span>
+        <div :class="'forLogo'">
+          <img :src="'/image/Vector1.svg'" alt="Image" width="91" height="34" />
+        </div>
+        <div :class="'state-container'">
+          <div :class="'state'">
+            <span :class="'gray-span'">{{ $t("bet") }}</span>
+            <span :class="'number-span'">
+              {{ plinkoAmount }}
+              <img :src="'/image/bit.svg'" alt="Image" width="14" height="14" />
+            </span>
+          </div>
+          <div :class="'state'">
+            <span :class="'gray-span'">{{ $t("scoreboard.multi") }}</span>
+            <span :class="'number-span'"> {{ cText }}x </span>
+          </div>
+          <div :class="'state'">
+            <span :class="'gray-span'">{{ $t("scoreboard.payout") }}</span>
+            <span :class="['number-span', 'success']">
+              {{ (plinkoAmount * (cText - 1)).toFixed(9) }}
+              <img :src="'/image/bit.svg'" alt="Image" width="14" height="14" />
+            </span>
+          </div>
+        </div>
+        <div :class="'score'">
+          <div
+            :class="'rect'"
+            :style="{
+              background: cColor,
+              boxShadow: `0px 3px 0px 0px ${cShadow}`,
+            }"
+          >
+            <span :class="'gray-span'" :style="{ color: '#000' }"
+              >{{ cText }}x</span
+            >
+          </div>
+        </div>
+        <div :class="'rowrisk'">
+          <div :class="'input-container'">
+            <div :class="'gray-span'">{{ $t("risk") }}</div>
+            <input
+              :class="'inputStyle'"
+              type="text"
+              :value="$t(`${plinkoLevel}`)"
+              readonly
+            />
+          </div>
+          <div :class="'input-container'">
+            <div :class="'gray-span'">{{ $t("rows") }}</div>
+            <input
+              :class="'inputStyle'"
+              type="text"
+              :value="plinkoRow"
+              readonly
+            />
+          </div>
+        </div>
+        <button :class="'playbutton'" @click="hideModal">
+          <span :class="'gray-span'">{{ $t("scoreboard.play") }} Plinko</span>
+        </button>
+        <div :class="'fairness'">
+          <span
+            :class="'white-span'"
+            @click="showFairness"
+            :style="{ cursor: 'pointer' }"
+          >
+            {{ $t("scoreboard.provable") }}
+            <img
+              :src="'/image/arrow-left.svg'"
+              alt="Image"
+              width="14"
+              height="14"
+              :style="{ transform: showFairFlag ? 'rotate(-90deg)' : 'none' }"
+            />
+          </span>
+          <div :class="'fairness-container'" v-if="showFairFlag">
+            <div :class="'input-container'">
+              <div :class="'gray-span'">{{ $t("prove.text1") }}</div>
+              <div :class="'inputBox'">
+                <input
+                  :class="'inputStyle'"
+                  type="text"
+                  :value="$t('prove.value1')"
+                  readonly
+                />
+              </div>
+            </div>
+            <div :class="'input-container'">
+              <div :class="'gray-span'">{{ $t("prove.text2") }}</div>
+              <div :class="'inputBox'">
+                <input
+                  :class="'inputStyle'"
+                  type="text"
+                  :value="'edr74dsfsg3df5644dfgd2525245hjjh2hjjhhj23423jh234j23jhj234'"
+                  readonly
+                />
+                <button>
+                  <span>
+                    <img
+                      :src="'/image/copy.svg'"
+                      alt="Image"
+                      width="14"
+                      height="14"
+                    />
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div :class="'seed'">
+              <div :class="'input-container'">
+                <div :class="'gray-span'">{{ $t("prove.text3") }}</div>
+                <div :class="'inputBox'" :style="{ width: '290px' }">
+                  <input
+                    :class="'inputStyle'"
+                    type="text"
+                    :value="'edr74dsfsg3df5644'"
+                    readonly
+                  />
+                  <button :style="{ right: '-5px' }">
+                    <span>
+                      <img
+                        :src="'/image/copy.svg'"
+                        alt="Image"
+                        width="14"
+                        height="14"
+                      />
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div :class="'input-container'">
+                <div :class="'gray-span'">{{ $t("prove.text4") }}</div>
+                <div :class="'inputBox'" :style="{ width: '112px' }">
+                  <input
+                    :class="'inputStyle'"
+                    type="text"
+                    :value="'4345'"
+                    readonly
+                  />
+                  <button :style="{ right: '-5px' }">
+                    <span>
+                      <img
+                        :src="'/image/copy.svg'"
+                        alt="Image"
+                        width="14"
+                        height="14"
+                      />
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              :style="{
+                marginTop: '-4px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '9px',
+              }"
+            >
+              <button :class="'fobutton'">
+                <span :class="'gray-span'">{{ $t("prove.button1") }}</span>
+              </button>
+              <button :class="'fobutton'">
+                <span :class="'gray-span'">{{ $t("prove.button2") }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="modal__close" @click="hideModal">
+        <span
+          ><img :src="'/image/times.svg'" alt="Image" width="10" height="10"
+        /></span>
+      </button>
+    </div>
+  </div>
+</template>
+<style scoped>
+.modal {
+  visibility: hidden;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.32);
+  transition: all 0.4s;
+  z-index: 9;
+}
+.modal.active {
+  visibility: visible;
+  opacity: 1;
+}
+.modal:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal__content {
+  position: relative;
+  width: 500px;
+  max-width: 90%;
+  padding-top: 16px;
+  border-radius: 8px;
+  background: #1a2c37;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 647px;
+}
+.rowrisk {
+  width: 468px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 0 16px;
+}
+
+.fairness-container {
+  width: 468px;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.seed {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 18px;
+}
+.inputBox {
+  width: 100%;
+  position: relative;
+}
+
+.inputBox button {
+  position: absolute;
+  top: 13px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.seed .input-container:first-child {
+  width: 296px;
+}
+.seed .input-container:not(:first-child) {
+  width: 116px;
+}
+.seed .input-container .inputStyle {
+  width: 100%;
+  position: relative;
+}
+.inputStyle {
+  width: 446px;
+  background: #304554;
+  border: 2px solid #304554;
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  color: #fff;
+  font-family: PingFang SC;
+  font-weight: 600;
+  height: 40px;
+  padding: 0 9px;
+  appearance: none;
+}
+.inputStyle:hover {
+  border: 2px solid #557086;
+}
+.inputStyle:focus {
+  border: 2px solid #557086;
+  outline: 0;
+}
+.fobutton {
+  background: transparent;
+  border: none;
+  margin: auto;
+}
+.expand-button {
+  width: 468px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 0 16px;
+}
+.playbutton {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 4px;
+  background: #0f212e;
+  margin-top: 16px;
+}
+.fairness {
+  margin-top: 16px;
+  width: 100%;
+  padding: 13px 16px;
+  border: none;
+  box-sizing: border-box;
+  border-radius: 0px 0px 8px 8px;
+  background: #0f212e;
+}
+.fairness span {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.forLogo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 468px;
+  padding: 0 16px;
+  margin-top: 30px;
+}
+.forLogo::before {
+  content: "";
+  background: #2f4553;
+  height: 2px;
+  flex-grow: 1;
+}
+
+.forLogo::after {
+  content: "";
+  background: #2f4553;
+  height: 2px;
+  flex-grow: 1;
+}
+.white-span {
+  color: #fff;
+  font-family: PingFang SC;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.gray-span {
+  color: #b1bad3;
+  font-family: PingFang SC;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.number-span {
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.84px;
+  color: #fff;
+}
+
+.modal-title {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: #fff;
+  font-family: PingFang SC;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding: 0 16px;
+}
+.modal-body {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  color: #b1bad3;
+  font-family: PingFang SC;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.id-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.id-container button {
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+.state-container {
+  border-radius: 4px;
+  background: #0f212e;
+  display: grid;
+  width: 468px;
+  justify-content: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 20px 0;
+  margin-top: 16px;
+}
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  position: relative;
+}
+
+.state span:not(:first-child) {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.state:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  background: #213743;
+  height: 45px;
+  top: 50%;
+  right: 100%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+}
+.score {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-top: 21px;
+}
+.rect {
+  border-radius: 4px;
+  width: 48px;
+  height: 40px;
+  background: #fa223e;
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.success {
+  color: #17e700;
+}
+.failed {
+  color: #ed4163;
+}
+
+.modal__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #585858;
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
+}
+</style>
+
+<script>
+import { ref } from "vue";
+import { store, mutations } from "../core/Store";
+
+export default {
+  computed: {
+    cColor() {
+      return store.currentColor;
+    },
+    cShadow() {
+      return store.currentShadow;
+    },
+    cText() {
+      return store.currentScore;
+    },
+    plinkoAmount() {
+      return store.plinkoAmount;
+    },
+    plinkoLevel() {
+      if (store.plinkoLevel === "Low") {
+        return "level1";
+      } else if (store.plinkoLevel === "Medium") {
+        return "level2";
+      } else if (store.plinkoLevel === "High") {
+        return "level3";
+      }
+    },
+    plinkoRow() {
+      return store.plinkoRow;
+    },
+  },
+  setup() {
+    const showFairFlag = ref(false);
+    const hideModal = () => {
+      mutations.currentScore(0, "", "");
+    };
+    const showFairness = () => {
+      showFairFlag.value = !showFairFlag.value;
+    };
+    return {
+      showFairFlag,
+      hideModal,
+      showFairness,
+    };
+  },
+};
+</script>

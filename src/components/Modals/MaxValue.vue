@@ -1,5 +1,5 @@
 <template>
-  <div :ref="'demomodal'" :class="'modal'">
+  <div :class="['modal', showMaxValueModal ? 'active' : '']">
     <div :class="'modal__content'">
       <div :class="'modal-title'">
         <img
@@ -19,7 +19,9 @@
         </button>
       </div>
       <button class="modal__close" @click="hideModal">
-        <span><img :src="'/image/times.svg'" alt="Image" width="10" height="10" /></span>
+        <span
+          ><img :src="'/image/times.svg'" alt="Image" width="10" height="10"
+        /></span>
       </button>
     </div>
   </div>
@@ -72,7 +74,7 @@
   width: 500px;
   max-width: 90%;
   background: #1a2c37;
-  padding: 1em 2em;
+  padding: 16px;
 }
 
 .modal-title {
@@ -117,7 +119,6 @@
 </style>
 
 <script>
-import { ref } from "vue";
 import { store, mutations } from "../../core/Store";
 
 export default {
@@ -125,14 +126,14 @@ export default {
     showMax() {
       return store.isMaximum;
     },
+    showMaxValueModal() {
+      return store.showMaxValueModal;
+    },
   },
 
   setup() {
-    const demomodal = ref(null);
-
     const hideModal = () => {
-      const modal = demomodal.value;
-      modal.classList.toggle("active");
+      mutations.showMaxValueModal();
     };
 
     const setMaximum = () => {
@@ -140,7 +141,6 @@ export default {
       mutations.showMaximum(!store.isMaximum);
     };
     return {
-      demomodal,
       hideModal,
       setMaximum,
     };

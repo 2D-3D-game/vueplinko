@@ -212,7 +212,7 @@
       <div :class="'alert-timeline'"></div>
     </div>
   </div>
-  <Setting :ref="'settingComponent'" />
+  <Setting />
   <Statistics />
   <Language />
 </template>
@@ -262,7 +262,6 @@ export default {
     let intervalId;
     const betting = ref(0);
     const betAmountInput = ref(null);
-    const settingComponent = ref(null);
     const statisticsComponent = ref(null);
     const amountorder = ref(null);
     const betbuttonorder = ref(null);
@@ -271,6 +270,7 @@ export default {
     plinko.map();
 
     const changeState = () => {
+      mutations.updatePlinko(amount.value, rows.value, level.value)
       plinko.GetSettings(
         amount.value,
         level.value,
@@ -428,14 +428,7 @@ export default {
     };
 
     const responsive = (a_w, a_h, co_w, co_h, c_w, c_h, st_w, s_w) => {
-      document.getElementById("app").style.height = a_h;
-      document.getElementById("app").style.width = a_w;
-      document.getElementById("canvas-container").style.height = co_h;
-      document.getElementById("canvas-container").style.width = co_w;
-      document.getElementById("canvas").style.height = c_h;
-      document.getElementById("canvas").style.width = c_w;
-      document.getElementById("statisticscontainer").style.width = st_w;
-      document.getElementById("setting").style.width = s_w;
+      mutations.responsive(a_w, a_h, co_w, co_h, c_w, c_h, st_w, s_w);
     };
 
     const handleDataUpdate = (event) => {
@@ -472,7 +465,6 @@ export default {
       rowValues,
       betting,
       betAmountInput,
-      settingComponent,
       statisticsComponent,
       isMaximum,
       amountorder,

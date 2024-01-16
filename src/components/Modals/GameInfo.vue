@@ -1,12 +1,12 @@
 <template>
-  <div :class="'modal'" :ref="'gameinfomodal'">
+  <div :class="['modal', showGameInfo ? 'active' : '']">
     <div :class="'modal__content'">
       <div :class="'modal-title'">
         <img :src="'/image/info.svg'" alt="Image" width="16" height="16" />
         <span>{{ $t("info") }}</span>
       </div>
       <div :class="'modal__footer'">
-        <button :class="'activeButton'" @click="setMaximum">
+        <button :class="'activeButton'">
           <span>{{ $t("rules") }}</span>
         </button>
       </div>
@@ -63,7 +63,7 @@
   position: relative;
   width: 500px;
   max-width: 90%;
-  padding: 1em 2em;
+  padding: 16px;
   border-radius: 8px;
   background: #1a2c37;
   box-shadow: 0px 1px 0px 0px #253541 inset,
@@ -113,18 +113,19 @@
 </style>
 
 <script>
-import { ref } from "vue";
+import { store, mutations } from "../../core/Store";
 
 export default {
+  computed: {
+    showGameInfo() {
+      return store.showGameInfoModal;
+    },
+  },
   setup() {
-    const gameinfomodal = ref(null);
-
     const hideModal = () => {
-      const modal = gameinfomodal.value;
-      modal.classList.toggle("active");
+      mutations.showGameInfoModal();
     };
     return {
-      gameinfomodal,
       hideModal,
     };
   },

@@ -1,8 +1,20 @@
 <template>
-  <div class="mycontainer">
-    <div id="app" class="app-container" :ref="app"></div>
-    <div id="canvas-container" class="canvas-container" :ref="container">
-      <div id="canvas" :ref="canvas" class="canvas"></div>
+  <div :class="['mycontainer', appOpacity ? 'modalShow' : '']">
+    <div
+      id="app"
+      class="app-container"
+      :style="{ width: appWidth, height: appHeight }"
+    ></div>
+    <div
+      id="canvas-container"
+      :style="{ width: containerWidth, height: containerHeight }"
+      class="canvas-container"
+    >
+      <div
+        id="canvas"
+        :style="{ width: canvasWidth, height: canvasHeight }"
+        class="canvas"
+      ></div>
     </div>
     <div id="overlay" class="overlay-container">
       <div class="profit-container">
@@ -29,6 +41,9 @@
         />
       </div>
     </div>
+    <div v-if="score !== 0">
+      <ScoreBoard />
+    </div>
   </div>
 </template>
 
@@ -37,39 +52,40 @@
 </style>
 
 <script>
-import { ref, onMounted, onUnmounted } from "vue";
 import { store } from "./core/Store";
+import ScoreBoard from "./components/ScoreBoard.vue";
 
 export default {
-  setup() {
-    const app = ref(null);
-    const container = ref(null);
-    const canvas = ref(null);
-
-    const setStyle = () => {
-      // console.log(container.value);
-      // if(app.value)
-      // app.value.style.height = store.a_h;
-      // app.value.style.width = store.a_w;
-      // container.value.style.height = store.co_h;
-      // container.value.style.width = store.co_w;
-      // canvas.value.style.height = store.c_h;
-      // canvas.value.style.width = store.c_w;
-    };
-
-    onMounted(() => {
-      window.addEventListener("resize", setStyle);
-    });
-
-    onUnmounted(() => {
-      window.removeEventListener("resize", setStyle);
-    });
-
-    return {
-      app,
-      container,
-      canvas,
-    };
+  components: {
+    ScoreBoard,
   },
+
+  computed: {
+    appWidth() {
+      return store.a_w;
+    },
+    appHeight() {
+      return store.a_h;
+    },
+    containerWidth() {
+      return store.co_w;
+    },
+    containerHeight() {
+      return store.co_h;
+    },
+    canvasWidth() {
+      return store.c_w;
+    },
+    canvasHeight() {
+      return store.c_h;
+    },
+    appOpacity() {
+      return store.appOpacity;
+    },
+    score() {
+      return store.currentScore;
+    }
+  },
+  setup() {},
 };
 </script>
