@@ -174,7 +174,7 @@
           <div :class="'inputBox'">
             <select
               :class="'inputStyle'"
-              :style="{ width: '468px', height: '44px' }"
+              :style="{ width: '468px', height: '40px' }"
             >
               <option value="Blackjack">Blackjack</option>
               <option value="Crash">Crash</option>
@@ -255,7 +255,7 @@
           <div :class="'inputBox'">
             <select
               :class="'inputStyle'"
-              :style="{ width: '468px', height: '44px' }"
+              :style="{ width: '468px', height: '40px' }"
             >
               <option value="Low">{{ $t("level1") }}</option>
               <option value="Medium">{{ $t("level2") }}</option>
@@ -275,7 +275,7 @@
           <div :class="'inputBox'">
             <select
               :class="'inputStyle'"
-              :style="{ width: '468px', height: '44px' }"
+              :style="{ width: '468px', height: '40px' }"
             >
               <option
                 v-for="value in [8, 9, 10, 11, 12, 13, 14, 15, 16]"
@@ -326,9 +326,9 @@
   position: "absolute";
   top: 0;
   right: 0;
-  borderradius: "0px 4px 4px 0px";
+  border-radius: "0px 4px 4px 0px";
   width: 108px;
-  height: 44px;
+  height: 40px;
   display: "flex";
 }
 .buttonbox {
@@ -337,7 +337,7 @@
 .noncebutton {
   position: absolute;
   width: 54px;
-  height: 44px;
+  height: 40px;
   flex-shrink: 0;
   background: #304554;
   border: none;
@@ -359,15 +359,13 @@
 .changeButton {
   background: #16852d;
   width: 103px;
-  height: 44px;
+  height: 40px;
   top: 0;
   right: 0;
   border-radius: 0px 4px 4px 0px;
   position: absolute;
   border: none;
   cursor: not-allowed;
-}
-.changeButton:hover {
 }
 
 img.betting-image {
@@ -464,7 +462,7 @@ img.betting-image {
   color: #fff;
   font-family: PingFang SC;
   font-weight: 600;
-  height: 40px;
+  height: 36px;
   padding: 0 9px;
   appearance: none;
 }
@@ -483,7 +481,7 @@ img.betting-image {
   border: none;
   padding: 0;
   width: 46px;
-  height: 44px;
+  height: 40px;
   border-radius: 0 4px 4px 0;
 }
 .inputBox .copy:hover {

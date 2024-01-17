@@ -380,7 +380,7 @@
   color: #fff;
   font-family: PingFang SC;
   font-weight: 600;
-  height: 40px;
+  height: 36px;
   padding: 0 9px;
   appearance: none;
 }
@@ -514,7 +514,7 @@
   border: none;
   padding: 0;
   width: 46px;
-  height: 44px;
+  height: 40px;
   border-radius: 0 4px 4px 0;
 }
 .inputBox .copy:hover {
@@ -567,7 +567,7 @@
 .score {
   position: relative;
   width: 100%;
-  height: 40px;
+  height: 36px;
   align-items: center;
   justify-content: center;
   display: flex;
