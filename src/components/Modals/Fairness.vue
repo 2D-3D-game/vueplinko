@@ -3,7 +3,7 @@
     <div
       :class="'modal__content'"
       :style="{
-        height: buttonType === 'seed' ? '606px' : '722px',
+        height: buttonType === 'seed' ? '585px' : '722px',
         overflowY: buttonType === 'seed' ? 'hidden' : 'auto',
         overflowX: 'hidden',
       }"
