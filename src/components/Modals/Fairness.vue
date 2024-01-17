@@ -3,7 +3,7 @@
     <div
       :class="'modal__content'"
       :style="{
-        height: buttonType === 'seed' ? '585px' : '722px',
+        height: buttonType === 'seed' ? '' : '664px',
         overflowY: buttonType === 'seed' ? 'hidden' : 'auto',
         overflowX: 'hidden',
       }"
@@ -95,7 +95,7 @@
           </div>
         </div>
         <div :class="'plinko-container'" v-if="buttonType === 'verify'">
-          <span :class="'gray-span'" :style="{ fontWeight: 400 }">{{
+          <span :class="'gray-span'" :style="{ fontWeight: 400, fontFamily: 'PingFang SC' }">{{
             $t("fairnesses.verifyText1")
           }}</span>
           <img
@@ -111,7 +111,7 @@
         <span :class="'white-span'" :style="{ fontSize: '16px' }">{{
           $t("fairnesses.text4")
         }}</span>
-        <div :class="'input-container'">
+        <div :class="'input-container'" :style="{marginTop: '20px'}">
           <div :class="'gray-span'">
             {{ $t("fairnesses.text5") }}
             <span :class="'gray-span'" :style="{ color: '#E54161' }">*</span>
@@ -136,7 +136,7 @@
             </button>
           </div>
         </div>
-        <div :class="'input-container'">
+        <div :class="'input-container'" :style="{marginTop: '17px'}">
           <div :class="'gray-span'">{{ $t("fairnesses.text6") }}</div>
           <div :class="['inputBox', 'buttonbox']">
             <input
@@ -164,7 +164,7 @@
             </div>
           </div>
         </div>
-        <span :class="'gray-span'" :style="{ alignSelf: 'flex-start' }">
+        <span :class="'gray-span'" :style="{ alignSelf: 'flex-start', marginTop: '21px', marginBottom: '7px' }">
           {{ $t("fairnesses.text7") }}Blackjack, Video Poker
         </span>
       </div>
@@ -389,6 +389,9 @@ img.betting-image {
     transform: translateY(0px);
   }
 }
+.verify {
+  gap: 18px;
+}
 .verify .input-container .inputBox .inputStyle {
   border-radius: 4px;
   border: 2px solid #304554;
@@ -502,7 +505,7 @@ img.betting-image {
 
 .gray-span {
   color: #b1bad3;
-  font-family: PingFang SC;
+  font-family: Inter;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -512,6 +515,7 @@ img.betting-image {
   margin-top: -5px;
   background: transparent;
   border: none;
+  padding: 0;
 }
 .bottomButton:hover span {
   color: #fff;
@@ -520,7 +524,6 @@ img.betting-image {
   position: relative;
   width: 500px;
   max-width: 90%;
-  padding-top: 16px;
   border-radius: 8px;
   background: #1a2c37;
   box-shadow: 0px 1px 0px 0px #253541 inset,
@@ -534,7 +537,6 @@ img.betting-image {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 17px;
   margin-top: 16px;
 }
 
@@ -549,6 +551,7 @@ img.betting-image {
   font-weight: 600;
   line-height: normal;
   padding: 0 16px;
+  margin-top: 16px;
 }
 .modal-body {
   display: flex;

@@ -2,7 +2,7 @@
   <div :class="['modal', 'active']" :ref="'scoreModal'">
     <div
       :class="'modal__content'"
-      :style="{ height: showFairFlag ? '800px' : '647px' }"
+      :style="{ height: showFairFlag ? '800px' : '653px' }"
     >
       <div :class="'modal-title'">
         <img :src="'/image/score.svg'" alt="Image" width="16" height="16" />
@@ -99,7 +99,7 @@
         </div>
         <div :class="'rowrisk'">
           <div :class="'input-container'">
-            <div :class="'gray-span'">{{ $t("risk") }}</div>
+            <div :class="'gray-span'" :style="{fontFamily: 'Inter'}">{{ $t("risk") }}</div>
             <input
               :class="'inputStyle'"
               type="text"
@@ -108,7 +108,7 @@
             />
           </div>
           <div :class="'input-container'">
-            <div :class="'gray-span'">{{ $t("rows") }}</div>
+            <div :class="'gray-span'" :style="{fontFamily: 'Inter'}">{{ $t("rows") }}</div>
             <input
               :class="'inputStyle'"
               type="text"
@@ -124,7 +124,7 @@
           <span
             :class="'white-span'"
             @click="showFairness"
-            :style="{ cursor: 'pointer' }"
+            :style="{ cursor: 'pointer', fontSize: '14px' }"
             @mouseover="changeHover('isHover3', 'on')"
             @mouseout="changeHover('isHover3', 'off')"
           >
@@ -243,13 +243,6 @@
                         />
                       </span>
                     </button>
-                    <!-- <span
-                      :class="[
-                        'tooltiptext1',
-                        'tooltiptext1-active'
-                      ]"
-                      >{{ $t("copyText") }}</span
-                    > -->
                     <span
                       :class="[
                         'tooltiptext1',
@@ -318,7 +311,6 @@
   position: relative;
   width: 500px;
   max-width: 90%;
-  padding-top: 16px;
   border-radius: 8px;
   background: #1a2c37;
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
@@ -486,6 +478,7 @@
   font-weight: 600;
   line-height: normal;
   padding: 0 16px;
+  margin-top: 16px;
 }
 .modal-body {
   position: absolute;
@@ -493,7 +486,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 18px;
   color: #b1bad3;
   font-family: PingFang SC;
   font-size: 16px;
@@ -535,7 +528,7 @@
   width: 468px;
   justify-content: center;
   grid-template-columns: 1fr 1fr 1fr;
-  padding: 20px 0;
+  padding: 19px 0;
   margin-top: 16px;
 }
 
