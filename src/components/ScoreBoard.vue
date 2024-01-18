@@ -157,6 +157,7 @@
                   type="text"
                   :value="$t('prove.value1')"
                   readonly
+                  :style="{ background: '#203441', color: '#868F96', borderColor: '#203441' }"
                 />
               </div>
             </div>
@@ -520,6 +521,13 @@
 .inputBox .copy:hover {
   background: #567086;
 }
+.inputBox:has(.copy:hover) > input {
+  border: 2px solid #557086;
+}
+
+/* .inputStyle:hover + .stooltip {
+  border: 2px solid #557086;
+} */
 .buttonBox .inputStyle {
   border-radius: 4px 0 0 4px;
 }

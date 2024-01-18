@@ -517,6 +517,10 @@ img.betting-image {
 .input-container .inputStyle {
   font-family: Inter;
 }
+
+.inputBox:has(.copy:hover) > input {
+  border: 2px solid #557086;
+}
 .changeButton span {
   font-family: Inter;
 }
