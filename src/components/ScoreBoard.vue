@@ -12,7 +12,7 @@
         <span :class="'white-span'">Plinko</span>
         <div :class="'id-container'">
           <span :class="'white-span'"
-            >ID <span>{{ copy1 }}</span></span
+            >ID <span :style="{ fontFamily: 'Inter' }">{{ copy1 }}</span></span
           >
           <div :class="'stooltip'">
             <button
@@ -59,7 +59,10 @@
           {{ $t("scoreboard.time") }}dwwyy332
         </span>
         <span :class="'gray-span'" :style="{ marginTop: '5px' }">
-          {{ $t("scoreboard.on") }} 1/13/2024 {{ $t("scoreboard.at") }} 4:51 PM
+          {{ $t("scoreboard.on") }}
+          <span :style="{ fontFamily: 'Inter' }">1/13/2024</span>
+          {{ $t("scoreboard.at") }}
+          <span :style="{ fontFamily: 'Inter' }">4:51</span> PM
         </span>
         <div :class="'forLogo'">
           <img :src="'/image/Vector1.svg'" alt="Image" width="91" height="34" />
@@ -99,7 +102,9 @@
         </div>
         <div :class="'rowrisk'">
           <div :class="'input-container'">
-            <div :class="'gray-span'" :style="{fontFamily: 'Inter'}">{{ $t("risk") }}</div>
+            <div :class="'gray-span'" :style="{ fontFamily: 'Inter' }">
+              {{ $t("risk") }}
+            </div>
             <input
               :class="'inputStyle'"
               type="text"
@@ -108,7 +113,9 @@
             />
           </div>
           <div :class="'input-container'">
-            <div :class="'gray-span'" :style="{fontFamily: 'Inter'}">{{ $t("rows") }}</div>
+            <div :class="'gray-span'" :style="{ fontFamily: 'Inter' }">
+              {{ $t("rows") }}
+            </div>
             <input
               :class="'inputStyle'"
               type="text"
