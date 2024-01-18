@@ -511,6 +511,15 @@ img.betting-image {
   font-weight: 600;
   line-height: normal;
 }
+.input-container .gray-span {
+  font-family: Inter;
+}
+.input-container .inputStyle {
+  font-family: Inter;
+}
+.changeButton span {
+  font-family: Inter;
+}
 .bottomButton {
   margin-top: -5px;
   background: transparent;

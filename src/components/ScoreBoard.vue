@@ -2,7 +2,7 @@
   <div :class="['modal', 'active']" :ref="'scoreModal'">
     <div
       :class="'modal__content'"
-      :style="{ height: showFairFlag ? '800px' : '653px' }"
+      :style="{ height: showFairFlag ? '843px' : '653px' }"
     >
       <div :class="'modal-title'">
         <img :src="'/image/score.svg'" alt="Image" width="16" height="16" />
@@ -579,6 +579,12 @@
 }
 .success {
   color: #17e700;
+}
+.input-container .gray-span {
+  font-family: Inter;
+}
+.input-container .inputStyle {
+  font-family: Inter;
 }
 .failed {
   color: #ed4163;
