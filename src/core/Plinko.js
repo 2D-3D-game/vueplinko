@@ -412,6 +412,27 @@ export function Plinko(element) {
       mutations.currentScore(text, cColor, sColor);
     });
 
+    container.on("pointerdown", function (e) {
+      let c = globalFunc.selectFromText(rowNumState, levelState, text, "color");
+      let s = globalFunc.selectFromText(
+        rowNumState,
+        levelState,
+        text,
+        "shadow"
+      );
+      const redc = (c >> 16) & 255;
+      const greenc = (c >> 8) & 255;
+      const bluec = c & 255;
+
+      const reds = (s >> 16) & 255;
+      const greens = (s >> 8) & 255;
+      const blues = s & 255;
+
+      const cColor = `rgb(${redc}, ${greenc}, ${bluec})`;
+      const sColor = `rgb(${reds}, ${greens}, ${blues})`;
+      mutations.currentScore(text, cColor, sColor);
+    });
+
     if (parseFloat(text) > 1) {
       const graphics = new PIXI.Graphics();
 

@@ -9,7 +9,7 @@ export function GlobalFunc() {
     let selectedType = [];
     if (array === "color") {
       selectedType = colors;
-    } else if(array === "shadow"){
+    } else if (array === "shadow") {
       selectedType = shadows;
     } else {
       selectedType = probabilities;
@@ -24,7 +24,7 @@ export function GlobalFunc() {
     let index = 0;
     const selectedBasket = baskets[level]["_" + rowNum];
     for (let i = 0; i < selectedBasket.length; i++) {
-      if (selectedBasket[i] == text) {
+      if (selectedBasket[i] === parseFloat(text)) {
         index = i;
         break;
       }

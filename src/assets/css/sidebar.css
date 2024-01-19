@@ -91,6 +91,7 @@ select {
   width: 100%;
   -webkit-appearance: none;
   padding-left: 8px;
+  font-size: 14px;
 }
 input:hover,
 select:hover {

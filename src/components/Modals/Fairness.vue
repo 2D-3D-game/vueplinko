@@ -35,7 +35,7 @@
               type="text"
               v-model="copy1"
               readonly
-              :style="{ width: '400px' }"
+              :style="{ width: 'calc(100% - 46px)' }"
             />
             <div :class="'stooltip'" :style="{ width: '46px' }">
               <button :class="'copy'" @click="copyText('copy1')">
@@ -61,9 +61,9 @@
             <input
               :class="'inputStyle'"
               type="text"
+              :style="{ width: 'calc(100% - 46px)' }"
               v-model="copy2"
               readonly
-              :style="{ width: '400px' }"
             />
             <div :class="'stooltip'" :style="{ width: '46px' }">
               <button :class="'copy'" @click="copyText('copy2')">
@@ -95,9 +95,11 @@
           </div>
         </div>
         <div :class="'plinko-container'" v-if="buttonType === 'verify'">
-          <span :class="'gray-span'" :style="{ fontWeight: 400, fontFamily: 'PingFang SC' }">{{
-            $t("fairnesses.verifyText1")
-          }}</span>
+          <span
+            :class="'gray-span'"
+            :style="{ fontWeight: 400, fontFamily: 'PingFang SC' }"
+            >{{ $t("fairnesses.verifyText1") }}</span
+          >
           <img
             :src="'/image/betting1.svg'"
             width="16"
@@ -111,7 +113,7 @@
         <span :class="'white-span'" :style="{ fontSize: '16px' }">{{
           $t("fairnesses.text4")
         }}</span>
-        <div :class="'input-container'" :style="{marginTop: '20px'}">
+        <div :class="'input-container'" :style="{ marginTop: '20px' }">
           <div :class="'gray-span'">
             {{ $t("fairnesses.text5") }}
             <span :class="'gray-span'" :style="{ color: '#E54161' }">*</span>
@@ -136,15 +138,15 @@
             </button>
           </div>
         </div>
-        <div :class="'input-container'" :style="{marginTop: '17px'}">
+        <div :class="'input-container'" :style="{ marginTop: '17px' }">
           <div :class="'gray-span'">{{ $t("fairnesses.text6") }}</div>
           <div :class="['inputBox', 'buttonbox']">
             <input
               :class="'inputStyle'"
               type="text"
+              :style="{ width: 'calc(100% - 46px)' }"
               v-model="copy3"
               readonly
-              :style="{ width: '400px' }"
             />
             <div :class="'stooltip'" :style="{ width: '46px' }">
               <button :class="'copy'" @click="copyText('copy3')">
@@ -164,7 +166,14 @@
             </div>
           </div>
         </div>
-        <span :class="'gray-span'" :style="{ alignSelf: 'flex-start', marginTop: '21px', marginBottom: '7px' }">
+        <span
+          :class="'gray-span'"
+          :style="{
+            alignSelf: 'flex-start',
+            marginTop: '21px',
+            marginBottom: '7px',
+          }"
+        >
           {{ $t("fairnesses.text7") }}Blackjack, Video Poker
         </span>
       </div>
@@ -172,10 +181,7 @@
         <div :class="'input-container'">
           <div :class="'gray-span'">{{ $t("verifyTexts.game") }}</div>
           <div :class="'inputBox'">
-            <select
-              :class="'inputStyle'"
-              :style="{ width: '468px', height: '40px' }"
-            >
+            <select :class="'inputStyle'">
               <option value="Blackjack">Blackjack</option>
               <option value="Crash">Crash</option>
               <option value="Dice">Dice</option>
@@ -212,7 +218,7 @@
               :class="['inputStyle', 'numberType']"
               v-model="nonce"
               type="number"
-              :style="{ width: '338px' }"
+              :style="{ width: 'calc(100% - 108px)' }"
             />
             <button
               :class="'noncebutton'"
@@ -253,10 +259,7 @@
         <div :class="'input-container'">
           <div :class="'gray-span'">{{ $t("risk") }}</div>
           <div :class="'inputBox'">
-            <select
-              :class="'inputStyle'"
-              :style="{ width: '468px', height: '40px' }"
-            >
+            <select :class="'inputStyle'">
               <option value="Low">{{ $t("level1") }}</option>
               <option value="Medium">{{ $t("level2") }}</option>
               <option value="High">{{ $t("level3") }}</option>
@@ -273,10 +276,7 @@
         <div :class="'input-container'">
           <div :class="'gray-span'">{{ $t("rows") }}</div>
           <div :class="'inputBox'">
-            <select
-              :class="'inputStyle'"
-              :style="{ width: '468px', height: '40px' }"
-            >
+            <select :class="'inputStyle'">
               <option
                 v-for="value in [8, 9, 10, 11, 12, 13, 14, 15, 16]"
                 :key="value"
@@ -457,7 +457,8 @@ img.betting-image {
   position: relative;
 }
 .inputStyle {
-  width: 446px;
+  width: 100%;
+  box-sizing: border-box;
   background: #304554;
   border: 2px solid #304554;
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.3);
@@ -465,9 +466,14 @@ img.betting-image {
   color: #fff;
   font-family: PingFang SC;
   font-weight: 600;
-  height: 36px;
+  font-size: 14px;
+  height: 40px;
   padding: 0 9px;
   appearance: none;
+}
+input,
+select {
+  font-size: 14px;
 }
 .inputStyle:hover {
   border: 2px solid #557086;
@@ -543,7 +549,6 @@ img.betting-image {
     0px 11px 0px 0px rgba(0, 0, 0, 0.14);
 }
 .modal-footer {
-  width: 468px;
   border-radius: 0px 0px 8px 8px;
   background: #0f212e;
   padding: 21px 16px 11px 16px;

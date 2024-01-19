@@ -157,7 +157,11 @@
                   type="text"
                   :value="$t('prove.value1')"
                   readonly
-                  :style="{ background: '#203441', color: '#868F96', borderColor: '#203441' }"
+                  :style="{
+                    background: '#203441',
+                    color: '#868F96',
+                    borderColor: '#203441',
+                  }"
                 />
               </div>
             </div>
@@ -169,7 +173,7 @@
                   type="text"
                   v-model="copy2"
                   readonly
-                  :style="{ width: '400px' }"
+                  :style="{ width: 'calc(100% - 46px)' }"
                 />
                 <div :class="'stooltip'" :style="{ width: '46px' }">
                   <button :class="'copy'" @click="copyText('copy2')">
@@ -195,16 +199,13 @@
             <div :class="'seed'">
               <div :class="'input-container'">
                 <div :class="'gray-span'">{{ $t("prove.text3") }}</div>
-                <div
-                  :class="['inputBox', 'buttonBox']"
-                  :style="{ width: '312px' }"
-                >
+                <div :class="['inputBox', 'buttonBox']">
                   <input
                     :class="'inputStyle'"
                     type="text"
                     v-model="copy3"
                     readonly
-                    :style="{ width: '244px' }"
+                    :style="{ width: 'calc(100% - 46px)' }"
                   />
                   <div :class="'stooltip'" :style="{ width: '46px' }">
                     <button :class="'copy'" @click="copyText('copy3')">
@@ -229,16 +230,13 @@
               </div>
               <div :class="'input-container'">
                 <div :class="'gray-span'">{{ $t("prove.text4") }}</div>
-                <div
-                  :class="['inputBox', 'buttonBox']"
-                  :style="{ width: '134px' }"
-                >
+                <div :class="['inputBox', 'buttonBox']">
                   <input
                     :class="'inputStyle'"
                     type="text"
                     v-model="copy4"
                     readonly
-                    :style="{ width: '66px' }"
+                    :style="{ width: 'calc(100% - 46px)' }"
                   />
                   <div :class="'stooltip'" :style="{ width: '46px' }">
                     <button :class="'copy'" @click="copyText('copy4')">
@@ -318,7 +316,6 @@
 .modal__content {
   position: relative;
   width: 500px;
-  max-width: 90%;
   border-radius: 8px;
   background: #1a2c37;
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
@@ -327,7 +324,7 @@
   height: 647px;
 }
 .rowrisk {
-  width: 468px;
+  width: calc(100% - 32px);
   margin-top: 15px;
   display: flex;
   flex-direction: column;
@@ -336,7 +333,7 @@
 }
 
 .fairness-container {
-  width: 468px;
+  width: 100%;
   margin-top: 12px;
   display: flex;
   flex-direction: column;
@@ -345,7 +342,7 @@
 .seed {
   display: flex;
   justify-content: space-between;
-  margin-right: 18px;
+  width: 100%;
 }
 .inputBox {
   width: 100%;
@@ -362,17 +359,18 @@
 }
 
 .seed .input-container:first-child {
-  width: 222px;
+  width: 65%;
 }
 .seed .input-container:not(:first-child) {
-  width: 116px;
+  width: 30%;
 }
 .seed .input-container .inputStyle {
   width: 100%;
   position: relative;
 }
 .inputStyle {
-  width: 446px;
+  width: 100%;
+  box-sizing: border-box;
   background: #304554;
   border: 2px solid #304554;
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.3);
@@ -380,9 +378,14 @@
   color: #fff;
   font-family: PingFang SC;
   font-weight: 600;
-  height: 36px;
+  height: 40px;
   padding: 0 9px;
   appearance: none;
+  font-size: 14px;
+}
+input,
+select {
+  font-size: 14px;
 }
 .inputStyle:hover {
   border: 2px solid #557086;
@@ -397,7 +400,7 @@
   margin: auto;
 }
 .expand-button {
-  width: 468px;
+  width: calc(100% - 32px);
   margin-top: 15px;
   display: flex;
   flex-direction: column;
@@ -431,7 +434,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  width: 468px;
+  width: calc(100% - 32px);
   padding: 0 16px;
   margin-top: 30px;
 }
@@ -489,6 +492,7 @@
   margin-top: 16px;
 }
 .modal-body {
+  width: 100%;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -525,9 +529,6 @@
   border: 2px solid #557086;
 }
 
-/* .inputStyle:hover + .stooltip {
-  border: 2px solid #557086;
-} */
 .buttonBox .inputStyle {
   border-radius: 4px 0 0 4px;
 }
@@ -540,7 +541,7 @@
   border-radius: 4px;
   background: #0f212e;
   display: grid;
-  width: 468px;
+  width: calc(100% - 32px);
   justify-content: center;
   grid-template-columns: 1fr 1fr 1fr;
   padding: 19px 0;

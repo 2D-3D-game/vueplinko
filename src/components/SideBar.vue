@@ -270,7 +270,7 @@ export default {
     plinko.map();
 
     const changeState = () => {
-      mutations.updatePlinko(amount.value, rows.value, level.value)
+      mutations.updatePlinko(amount.value, rows.value, level.value);
       plinko.GetSettings(
         amount.value,
         level.value,
