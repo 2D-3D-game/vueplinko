@@ -33,7 +33,7 @@ export function GlobalFunc() {
   };
 
   const baskets = {
-    Low: {
+    low: {
       _8: [13, 3, 1.3, 0.7, 0.4, 0.7, 1.3, 3, 13],
       _9: [18, 4, 1.7, 0.9, 0.5, 0.5, 0.9, 1.7, 4, 18],
       _10: [22, 5, 2, 1.4, 0.6, 0.4, 0.6, 1.4, 2, 5, 22],
@@ -46,7 +46,7 @@ export function GlobalFunc() {
         110, 41, 10, 5, 3, 1.5, 1, 0.5, 0.3, 0.5, 1, 1.5, 3, 5, 10, 41, 110,
       ],
     },
-    Medium: {
+    medium: {
       _8: [13, 3, 1.3, 0.7, 0.4, 0.7, 1.3, 3, 13],
       _9: [18, 4, 1.7, 0.9, 0.5, 0.5, 0.9, 1.7, 4, 18],
       _10: [22, 5, 2, 1.4, 0.6, 0.4, 0.6, 1.4, 2, 5, 22],
@@ -59,7 +59,7 @@ export function GlobalFunc() {
         110, 41, 10, 5, 3, 1.5, 1, 0.5, 0.3, 0.5, 1, 1.5, 3, 5, 10, 41, 110,
       ],
     },
-    High: {
+    high: {
       _8: [13, 3, 1.3, 0.7, 0.4, 0.7, 1.3, 3, 13],
       _9: [18, 4, 1.7, 0.9, 0.5, 0.5, 0.9, 1.7, 4, 18],
       _10: [22, 5, 2, 1.4, 0.6, 0.4, 0.6, 1.4, 2, 5, 22],
@@ -189,15 +189,12 @@ export function GlobalFunc() {
     MapGap: 3,
   };
 
-  const server = "https://www.tfdjqp.com/game/original/plinko";
-
   return {
     baskets,
     probabilities,
     colors,
     shadows,
     initialDrawValue,
-    server,
     selectFromText,
   };
 }

@@ -19,7 +19,6 @@ export function Plinko(element) {
 
   const initialWidth = 1200;
   const secondWidth = 1100;
-  // engine.timing.timeScale = 1.1;
   engine.timing.timeScale = 2;
 
   const sceneObjects = [];
@@ -60,15 +59,10 @@ export function Plinko(element) {
   /********** End Global Variables  **********/
 
   /********** Begin Local Variables  **********/
-  let scoreState = 10000;
-  let amountState = 0;
-  let levelState = "Medium";
+  let levelState = "medium";
   let rowNumState = 16;
-  let numState = 0;
   let last = 0;
-  let currency = 1300;
   let originalY = 0;
-  let stageLength = 0;
 
   let maskX = 0;
   let maskY = 0;
@@ -76,7 +70,6 @@ export function Plinko(element) {
   let maskHeight = 0;
   let heightScale = 1;
 
-  let scoreArray = [];
   let objects = [];
   let tweensArray = [];
 
@@ -120,9 +113,9 @@ export function Plinko(element) {
     };
     Composite.add(engine.world, metter);
     let texture = PIXI.Texture.from("/image/ball.svg?8");
-    if (levelState === "Low") {
+    if (levelState === "low") {
       texture = PIXI.Texture.from("/image/ball-low.svg?8");
-    } else if (levelState === "Medium") {
+    } else if (levelState === "medium") {
       texture = PIXI.Texture.from("/image/ball.svg?8");
     } else {
       texture = PIXI.Texture.from("/image/ball-high.svg?8");
@@ -236,32 +229,6 @@ export function Plinko(element) {
 
     sceneObjects.push(object);
     app.stage.addChild(container);
-    // container.on("mouseover", function (e) {
-    //   let sum = 0;
-    //   for (let i = 0; i < scoreArray.length; i++) {
-    //     if (scoreArray[i] === text) {
-    //       sum += (scoreArray[i] - 1) * amountState;
-    //     }
-    //   }
-    //   let percent = globalFunc.selectFromText(
-    //     rowNumState,
-    //     levelState,
-    //     text,
-    //     "percent"
-    //   );
-    //   document.getElementById("profit").textContent =
-    //     "$" + Math.round(sum * currency).toFixed(2);
-    //   document.getElementById("bitProfit").value = Math.round(
-    //     (text - 1) * amountState
-    //   ).toFixed(2);
-    //   document.getElementById("chance").value = percent * 100;
-    //   document.getElementById("overlay").style.display = "flex";
-    // });
-
-    // container.on("mouseout", function (e) {
-    //   document.getElementById("overlay").style.display = "none";
-    // });
-
     container.on("pointerdown", function (e) {
       let target = GetIndexFromText(text, x);
       add(parseInt(target));
@@ -390,27 +357,6 @@ export function Plinko(element) {
       rectangle.endFill();
       app.renderer.render(app.stage);
     });
-
-    // container.on("mousedown", function (e) {
-    //   let c = globalFunc.selectFromText(rowNumState, levelState, text, "color");
-    //   let s = globalFunc.selectFromText(
-    //     rowNumState,
-    //     levelState,
-    //     text,
-    //     "shadow"
-    //   );
-    //   const redc = (c >> 16) & 255;
-    //   const greenc = (c >> 8) & 255;
-    //   const bluec = c & 255;
-
-    //   const reds = (s >> 16) & 255;
-    //   const greens = (s >> 8) & 255;
-    //   const blues = s & 255;
-
-    //   const cColor = `rgb(${redc}, ${greenc}, ${bluec})`;
-    //   const sColor = `rgb(${reds}, ${greens}, ${blues})`;
-    //   mutations.currentScore(text, cColor, sColor);
-    // });
 
     container.on("pointerdown", function (e) {
       let c = globalFunc.selectFromText(rowNumState, levelState, text, "color");
@@ -603,21 +549,15 @@ export function Plinko(element) {
     return (row * (row - 1)) / 2 + (row - 1) * 2 + col;
   }
 
-  function GetSettings(betAmount, betLevel, betRowNum, betNum, score) {
+  function GetSettings(betLevel, betRowNum) {
     if (
-      betAmount === undefined ||
       betLevel === undefined ||
-      betRowNum === undefined ||
-      betNum === undefined ||
-      score === undefined
+      betRowNum === undefined
     ) {
       return;
     } else {
-      amountState = betAmount;
       levelState = betLevel;
       rowNumState = betRowNum;
-      numState = betNum;
-      scoreState = score;
     }
   }
 
@@ -635,16 +575,6 @@ export function Plinko(element) {
       }
     }
     return id;
-  }
-
-  function CheckBounds(row, pointId) {
-    if (pointId === 1 + ((row - 1) * (row + 4)) / 2) {
-      return "left";
-    } else if (pointId === (row * (row + 5)) / 2) {
-      return "right";
-    } else {
-      return "notBound";
-    }
   }
 
   function SearchRoute(target) {
@@ -689,13 +619,6 @@ export function Plinko(element) {
         }
         currentIndex -= i + 2;
       }
-      // pointIds.push(currentIndex);
-      // if (last === 0 || last === 1) {
-      //   pointDirs.push(last, last + 4);
-      // } else {
-      //   pointDirs.push(last);
-      // }
-      // currentIndex -= i + 2;
     }
     return [pointIds, pointDirs];
   }
@@ -712,8 +635,6 @@ export function Plinko(element) {
       }
     }
     const text = body.metter.text;
-    scoreState += (text - 1) * 100;
-    scoreArray.push(text);
     const object = ScoreBoard(
       maskX + maskWidth / 2,
       lastPos,
@@ -915,7 +836,6 @@ export function Plinko(element) {
     } else {
       app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 200;
     }
-    stageLength = app.stage.children.length;
 
     mask.clear();
     mask.beginFill(0xffffff);

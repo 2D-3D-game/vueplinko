@@ -100,9 +100,9 @@
         :disabled="betting > 0 || isAutoBetting"
         :style="{ fontFamily: 'PingFang SC', fontWeight: 600 }"
       >
-        <option value="Low">{{ $t("level1") }}</option>
-        <option value="Medium">{{ $t("level2") }}</option>
-        <option value="High">{{ $t("level3") }}</option>
+        <option value="low">{{ $t("level1") }}</option>
+        <option value="medium">{{ $t("level2") }}</option>
+        <option value="high">{{ $t("level3") }}</option>
       </select>
     </div>
     <div :class="['roworder']">
@@ -226,7 +226,6 @@ import { ref, onMounted, onUnmounted } from "vue";
 import axios from "axios";
 import { store, mutations } from "../core/Store";
 import { Plinko } from "../core/Plinko";
-import { GlobalFunc } from "../core/GlobalFunc";
 import Setting from "./Setting.vue";
 import Statistics from "./Statistics.vue";
 import Language from "./Language.vue";
@@ -249,13 +248,14 @@ export default {
       return store.autoEnd;
     },
   },
+
   setup() {
     const isManualButton = ref(true);
     const isAutoButton = ref(false);
     const isAutoBetting = ref(false);
     const isEmpty = ref(false);
     const amount = ref("0.000000000");
-    const level = ref("Medium");
+    const level = ref("medium");
     const rows = ref("16");
     const numberofbet = ref(0);
     const isMaximum = ref(false);
@@ -272,47 +272,51 @@ export default {
 
     const changeState = () => {
       mutations.updatePlinko(amount.value, rows.value, level.value);
-      plinko.GetSettings(
-        amount.value,
-        level.value,
-        rows.value,
-        numberofbet.value,
-        1000
-      );
+      plinko.GetSettings(level.value, rows.value);
       plinko.clear();
       plinko.map();
     };
+
     const selectInput = () => {
       const inputField = betAmountInput.value;
       if (inputField) {
         inputField.select();
       }
     };
-    const bet = () => {
+
+    const getBettingInfoFromServer = () => {
+      let token = "t:X8o95NySAQeCtgMBkONIrB1a";
       const requestData = {
         line: rows.value,
-        amount: amount.value,
-        risk: level.value,
+        amount: amount.value.toString(),
+        risk: level.value.toLowerCase(),
         currency_id: "701",
       };
-
       axios
-        .post(GlobalFunc().server, requestData, {
+        .post("/api/game/original/plinko", requestData, {
           headers: {
             "Access-Control-Allow-Origin": "http://localhost:5173",
             "Content-Type": "application/json",
-            d: 25,
+            d: "25",
             lang: "zh_CN",
-            t: "t:fzKJzwANDX3XkE3OjUlXAryp",
+            t: token,
           },
         })
         .then((response) => {
-          console.log("Success: " + response.data);
+          console.log("Success: " + response.data.data.state.index);
+          if (response.data.status) {
+            plinko.add(response.data.data.state.index);
+            betting.value = betting.value + 1;
+          } else {
+            console.log(response.data);
+          }
         })
         .catch((error) => {
           console.log("Error: " + error);
         });
+    };
 
+    const bet = () => {
       if (
         amount.value === 0 ||
         amount.value === undefined ||
@@ -323,7 +327,7 @@ export default {
       } else {
         isEmpty.value = false;
         if (isManualButton.value) {
-          dropParticle();
+          getBettingInfoFromServer();
         } else {
           if (
             parseInt(numberofbet.value) === 0 ||
@@ -343,7 +347,7 @@ export default {
             isAutoBetting.value = true;
             for (let i = 0; i < numberofbet.value; i++) {
               setTimeout(() => {
-                dropParticle();
+                getBettingInfoFromServer();
                 numberofbet.value = parseInt(numberofbet.value) - 1;
               }, 500 * i);
             }
@@ -360,29 +364,11 @@ export default {
     };
 
     const startInterval = () => {
-      intervalId = setInterval(dropParticle, 500);
+      intervalId = setInterval(getBettingInfoFromServer, 500);
     };
 
     const stopInterval = () => {
       clearInterval(intervalId);
-    };
-
-    const dropParticle = () => {
-      let target = 0;
-      let sum = 0;
-      const percentage = GlobalFunc().probabilities["_" + rows.value];
-      const randomNumber = Math.random();
-      for (let i = 0; i < percentage.length; i++) {
-        sum += percentage[i];
-        if (randomNumber >= sum - percentage[i] && randomNumber < sum) {
-          target = i + 1;
-          break;
-        } else {
-          continue;
-        }
-      }
-      plinko.add(target);
-      betting.value = betting.value + 1;
     };
 
     const activeButton = (buttonId) => {
@@ -461,6 +447,7 @@ export default {
         betting.value = betting.value - 1;
       }
     };
+
     onUnmounted(() => {
       window.removeEventListener("resize", handleResize);
       window.addEventListener("data-updated", handleDataUpdate);
@@ -469,13 +456,7 @@ export default {
     onMounted(() => {
       window.addEventListener("data-updated", handleDataUpdate);
       window.addEventListener("resize", handleResize);
-      plinko.GetSettings(
-        amount.value,
-        level.value,
-        rows.value,
-        numberofbet.value,
-        1000
-      );
+      plinko.GetSettings(level.value, rows.value);
     });
 
     return {
