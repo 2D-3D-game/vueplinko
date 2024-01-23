@@ -189,12 +189,15 @@ export function GlobalFunc() {
     MapGap: 3,
   };
 
+  const server = "https://www.tfdjqp.com/game/original/plinko";
+
   return {
     baskets,
     probabilities,
     colors,
     shadows,
     initialDrawValue,
+    server,
     selectFromText,
   };
 }

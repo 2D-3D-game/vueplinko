@@ -262,7 +262,7 @@ export function Plinko(element) {
     //   document.getElementById("overlay").style.display = "none";
     // });
 
-    container.on("mousedown", function (e) {
+    container.on("pointerdown", function (e) {
       let target = GetIndexFromText(text, x);
       add(parseInt(target));
     });
@@ -391,26 +391,26 @@ export function Plinko(element) {
       app.renderer.render(app.stage);
     });
 
-    container.on("mousedown", function (e) {
-      let c = globalFunc.selectFromText(rowNumState, levelState, text, "color");
-      let s = globalFunc.selectFromText(
-        rowNumState,
-        levelState,
-        text,
-        "shadow"
-      );
-      const redc = (c >> 16) & 255;
-      const greenc = (c >> 8) & 255;
-      const bluec = c & 255;
+    // container.on("mousedown", function (e) {
+    //   let c = globalFunc.selectFromText(rowNumState, levelState, text, "color");
+    //   let s = globalFunc.selectFromText(
+    //     rowNumState,
+    //     levelState,
+    //     text,
+    //     "shadow"
+    //   );
+    //   const redc = (c >> 16) & 255;
+    //   const greenc = (c >> 8) & 255;
+    //   const bluec = c & 255;
 
-      const reds = (s >> 16) & 255;
-      const greens = (s >> 8) & 255;
-      const blues = s & 255;
+    //   const reds = (s >> 16) & 255;
+    //   const greens = (s >> 8) & 255;
+    //   const blues = s & 255;
 
-      const cColor = `rgb(${redc}, ${greenc}, ${bluec})`;
-      const sColor = `rgb(${reds}, ${greens}, ${blues})`;
-      mutations.currentScore(text, cColor, sColor);
-    });
+    //   const cColor = `rgb(${redc}, ${greenc}, ${bluec})`;
+    //   const sColor = `rgb(${reds}, ${greens}, ${blues})`;
+    //   mutations.currentScore(text, cColor, sColor);
+    // });
 
     container.on("pointerdown", function (e) {
       let c = globalFunc.selectFromText(rowNumState, levelState, text, "color");

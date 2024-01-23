@@ -1,5 +1,9 @@
 <template>
-  <div :class="['modal', showStatistics ? 'active' : '']">
+  <div
+    :class="['modal', showStatistics ? 'active' : '']"
+    :ref="'stmodal'"
+    :style="{ right: startX + 'px', bottom: startY + 'px' }"
+  >
     <div :class="'modal__content'">
       <div
         :class="'modal-title'"
@@ -90,7 +94,7 @@
             @mouseover="handleMouseOver('gameType')"
             @mouseout="handleMouseOut()"
           >
-            <span>{{ gameType === 'type1' ? $t("type1") : "Plinko" }}</span>
+            <span>{{ gameType === "type1" ? $t("type1") : "Plinko" }}</span>
             <img
               :src="gameTypeSrc"
               width="14"
@@ -205,8 +209,6 @@
   visibility: hidden;
   opacity: 0;
   position: fixed;
-  right: 50px;
-  bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -500,8 +502,8 @@ export default {
       gameTypeSrc: "/image/arrow-down.svg",
       tooltipSrc: "/image/arrow-down.svg",
       dragging: false,
-      startX: 0,
-      startY: 0,
+      startX: 50,
+      startY: 20,
       offsetX: 0,
       offsetY: 0,
     };
@@ -533,18 +535,20 @@ export default {
     },
     startDrag(event) {
       this.dragging = true;
-      this.startX = event.clientX;
-      this.startY = event.clientY;
       this.offsetX = event.target.offsetLeft;
       this.offsetY = event.target.offsetTop;
-      console.log(event.clientX, event.clientY);
     },
     drag(event) {
       if (this.dragging) {
-        const dx = event.clientX - this.startX;
-        const dy = event.clientY - this.startY;
-        this.$refs.stmodal.style.left = `${this.offsetX + dx}px`;
-        this.$refs.stmodal.style.top = `${this.offsetY + dy}px`;
+        console.log(event.target.offsetLeft);
+        this.$refs.stmodal.style.right = `${
+          this.startX + event.clientX - this.offsetX
+        }px`;
+        this.$refs.stmodal.style.bottom = `${
+          this.startY + event.clientY - this.offsetY
+        }px`;
+        this.startX = event.clientX - this.offsetX;
+        this.startY = event.clientY - this.offsetY;
       }
     },
     stopDrag() {

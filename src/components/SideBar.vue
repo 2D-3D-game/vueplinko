@@ -223,6 +223,7 @@
 
 <script>
 import { ref, onMounted, onUnmounted } from "vue";
+import axios from "axios";
 import { store, mutations } from "../core/Store";
 import { Plinko } from "../core/Plinko";
 import { GlobalFunc } from "../core/GlobalFunc";
@@ -288,10 +289,34 @@ export default {
       }
     };
     const bet = () => {
+      const requestData = {
+        line: rows.value,
+        amount: amount.value,
+        risk: level.value,
+        currency_id: "701",
+      };
+
+      axios
+        .post(GlobalFunc().server, requestData, {
+          headers: {
+            "Access-Control-Allow-Origin": "http://localhost:5173",
+            "Content-Type": "application/json",
+            d: 25,
+            lang: "zh_CN",
+            t: "t:fzKJzwANDX3XkE3OjUlXAryp",
+          },
+        })
+        .then((response) => {
+          console.log("Success: " + response.data);
+        })
+        .catch((error) => {
+          console.log("Error: " + error);
+        });
+
       if (
-        amount.value == 0 ||
-        amount.value == undefined ||
-        amount.value == ""
+        amount.value === 0 ||
+        amount.value === undefined ||
+        amount.value === ""
       ) {
         isEmpty.value = true;
         return;
