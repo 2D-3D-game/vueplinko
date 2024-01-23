@@ -295,7 +295,6 @@ export default {
       axios
         .post("/api/game/original/plinko", requestData, {
           headers: {
-            "Access-Control-Allow-Origin": "https://plinko.onrender.com",
             "Content-Type": "application/json",
             d: "25",
             lang: "zh_CN",
@@ -303,7 +302,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log("Success: " + response.data);
+          console.log("Success: " + response.data.data);
           if (response.data.status) {
             plinko.add(response.data.data.state.index);
             betting.value = betting.value + 1;
