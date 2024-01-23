@@ -295,7 +295,7 @@ export default {
       axios
         .post("/api/game/original/plinko", requestData, {
           headers: {
-            "Access-Control-Allow-Origin": "http://localhost:5173",
+            "Access-Control-Allow-Origin": "https://plinko.onrender.com/",
             "Content-Type": "application/json",
             d: "25",
             lang: "zh_CN",
