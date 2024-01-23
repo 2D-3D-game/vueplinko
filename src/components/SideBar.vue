@@ -303,9 +303,8 @@ export default {
           },
         })
         .then((response) => {
-          console.log("Success: " + response.data.data.state.index);
+          console.log("Success: " + response.data);
           if (response.data.status) {
-            console.log("data", response.data.data);
             plinko.add(response.data.data.state.index);
             betting.value = betting.value + 1;
           } else {
