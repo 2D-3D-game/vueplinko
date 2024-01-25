@@ -5,12 +5,7 @@
     :style="{ right: startX + 'px', bottom: startY + 'px' }"
   >
     <div :class="'modal__content'">
-      <div
-        :class="'modal-title'"
-        @mousedown="startDrag"
-        @mousemove="drag"
-        @mouseup="stopDrag"
-      >
+      <div :class="'modal-title'">
         <img :src="'/image/total.svg'" alt="Image" width="16" height="16" />
         <span>{{ $t("statistics") }}</span>
       </div>
@@ -540,7 +535,6 @@ export default {
     },
     drag(event) {
       if (this.dragging) {
-        console.log(event.target.offsetLeft);
         this.$refs.stmodal.style.right = `${
           this.startX + event.clientX - this.offsetX
         }px`;

@@ -296,12 +296,11 @@ export default {
           },
         })
         .then((response) => {
-          console.log("Success: " + response.data.data.state);
           if (response.data.status) {
             plinko.add(response.data.data.state.index);
             betting.value = betting.value + 1;
           } else {
-            console.log(response.data);
+            console.log(response.data.status);
           }
         })
         .catch((error) => {

@@ -748,15 +748,6 @@ export function Plinko(element) {
 
   function Road(body, point) {
     Body.setStatic(body, true);
-    // let bound = CheckBounds(point.row, point.col);
-    // if (bound === "left" && body.road.list[0] === 0) {
-    //   body.road.list.splice(0, 2);
-    //   body.road.list.splice(0, 0, 2);
-    // } else if (bound === "right" && body.road.list[0] === 1) {
-    //   body.road.list.splice(0, 2);
-    //   body.road.list.splice(0, 0, 3);
-    // }
-
     if (!body.road.id.includes(point.id)) {
       const road = body.road.list.shift();
       let velocity = { x: 0, y: 0 };
