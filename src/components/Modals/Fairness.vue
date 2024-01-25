@@ -3,7 +3,7 @@
     <div
       :class="'modal__content'"
       :style="{
-        maxHeight: buttonType === 'seed' ? '610px' : '664px',
+        maxHeight: buttonType === 'seed' ? '612px' : '664px',
         overflowY: 'auto',
         overflowX: 'hidden',
         height: '100%',
@@ -547,7 +547,7 @@ select {
   position: relative;
   width: 500px;
   border-radius: 8px;
-  background: #1a2c37;
+  background: #0F212E;
   box-shadow: 0px 1px 0px 0px #253541 inset,
     0px 11px 0px 0px rgba(0, 0, 0, 0.14);
 }
@@ -558,7 +558,6 @@ select {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 16px;
 }
 
 .modal-title {
@@ -572,14 +571,14 @@ select {
   font-weight: 600;
   line-height: normal;
   padding: 0 16px;
-  margin-top: 16px;
+  padding-top: 16px;
+  background: #1A2C37;
 }
 .modal-body {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 17px;
-  margin-top: 20px;
   color: #b1bad3;
   font-family: PingFang SC;
   font-size: 16px;
@@ -587,6 +586,9 @@ select {
   font-weight: 500;
   line-height: normal;
   padding: 0 16px;
+  padding-top: 20px;
+  padding-bottom: 16px;
+  background-color: #1A2C37;
 }
 .buttonContainer {
   display: flex;
