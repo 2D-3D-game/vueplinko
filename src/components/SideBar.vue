@@ -212,8 +212,6 @@
       <div :class="'alert-timeline'"></div>
     </div>
   </div>
-  <Setting />
-  <Statistics />
   <Language />
 </template>
 
@@ -226,14 +224,10 @@ import { ref, onMounted, onUnmounted } from "vue";
 import axios from "axios";
 import { store, mutations } from "../core/Store";
 import { Plinko } from "../core/Plinko";
-import Setting from "./Setting.vue";
-import Statistics from "./Statistics.vue";
 import Language from "./Language.vue";
 
 export default {
   components: {
-    Setting,
-    Statistics,
     Language,
   },
 
@@ -285,7 +279,7 @@ export default {
     };
 
     const getBettingInfoFromServer = () => {
-      let token = "t:VTsUcg57sgVIhKqqgn2J9Qg3";
+      let token = "t:7BAMEL1mqHklFiWOtSJjWOKI";
       const requestData = {
         line: rows.value,
         amount: amount.value.toString(),
@@ -413,7 +407,7 @@ export default {
           mutations.rectShow(false);
           responsive(
             "400px",
-            "500px",
+            "100%",
             "400px",
             "310px",
             "400px",

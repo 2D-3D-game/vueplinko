@@ -127,11 +127,16 @@
     left: 50%;
     transform: translateX(-50%);
     align-self: center;
-    margin-top: 10px;
     background-color: #0f212e;
     border: none;
     border-radius: 8px;
-    margin-bottom: 20px;
     min-width: 340px;
+    order: 9;
+  }
+}
+@media screen and (max-width: 400px) {
+  .statistics-container {
+    left: 0;
+    transform: translateX(0);
   }
 }

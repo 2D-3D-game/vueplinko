@@ -1,49 +1,33 @@
 <template>
-  <div :class="['mycontainer', appOpacity ? 'modalShow' : '']">
-    <div
-      id="app"
-      class="app-container"
-      :style="{ width: appWidth, height: appHeight }"
-    ></div>
-    <div
-      id="canvas-container"
-      :style="{ width: containerWidth, height: containerHeight }"
-      class="canvas-container"
-    >
-      <div
-        id="canvas"
-        :style="{ width: canvasWidth, height: canvasHeight }"
-        class="canvas"
-      ></div>
-    </div>
-    <div id="overlay" class="overlay-container">
-      <div class="profit-container">
-        <div class="span-group">
-          <span class="span-color">Profit to win</span>
-          <span class="span-color" id="profit">$0.00</span>
+  <div :class="'responsive'">
+    <div :style="{ display: 'flex', flexDirection: 'column' }">
+      <div :class="'mycontainer'">
+        <div
+          id="app"
+          class="app-container"
+          :style="{ width: appWidth, height: appHeight }"
+        ></div>
+        <div
+          id="canvas-container"
+          :style="{ width: containerWidth, height: containerHeight }"
+          class="canvas-container"
+        >
+          <div
+            id="canvas"
+            :style="{ width: canvasWidth, height: canvasHeight }"
+            class="canvas"
+          ></div>
         </div>
-        <input
-          class="profit-input"
-          id="bitProfit"
-          type="text"
-          value="25.00000"
-          readonly
-        />
+        <div v-if="score !== 0">
+          <ScoreBoard />
+        </div>
       </div>
-      <div class="profit-container">
-        <span class="span-color">Chance</span>
-        <input
-          class="profit-input"
-          id="chance"
-          type="text"
-          value="0.396"
-          readonly
-        />
-      </div>
+      <Setting />
     </div>
-    <div v-if="score !== 0">
-      <ScoreBoard />
-    </div>
+    <Fairness v-if="showFairness" />
+    <MaxValue v-if="showMaxModal" />
+    <GameInfo v-if="showGameInfo" />
+    <Hotkeys v-if="showHotkeyModal" />
   </div>
 </template>
 
@@ -54,10 +38,20 @@
 <script>
 import { store } from "./core/Store";
 import ScoreBoard from "./components/ScoreBoard.vue";
+import Setting from "./components/Setting.vue";
+import Fairness from "./components/Modals/Fairness.vue";
+import MaxValue from "./components/Modals/MaxValue.vue";
+import GameInfo from "./components/Modals/GameInfo.vue";
+import Hotkeys from "./components/Modals/Hotkeys.vue";
 
 export default {
   components: {
     ScoreBoard,
+    Fairness,
+    Setting,
+    MaxValue,
+    GameInfo,
+    Hotkeys,
   },
 
   computed: {
@@ -79,11 +73,20 @@ export default {
     canvasHeight() {
       return store.c_h;
     },
-    appOpacity() {
-      return store.appOpacity;
-    },
     score() {
       return store.currentScore;
+    },
+    showFairness() {
+      return store.showFairness;
+    },
+    showMaxModal() {
+      return store.showMaxValueModal;
+    },
+    showGameInfo() {
+      return store.showGameInfoModal;
+    },
+    showHotkeyModal() {
+      return store.showHotkeyModal
     }
   },
   setup() {},

@@ -2,12 +2,12 @@
   width: 1200px;
   min-width: 1100px;
   height: 63px;
-  margin-top: 3px;
   background-color: #0f212e;
   display: flex;
   align-items: center;
   border-radius: 0px 0px 8px 8px;
   justify-content: space-between;
+  align-self: center;
 }
 
 .button-group-container {
@@ -176,5 +176,10 @@ input[type="range"]::after {
 
   .footer-image {
     display: none;
+  }
+}
+@media screen and (max-width: 400px) {
+  .footer-container {
+    align-self: auto;
   }
 }

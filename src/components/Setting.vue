@@ -189,11 +189,7 @@
     <button :style="{ background: 'transparent', border: 'none' }" @click="showFairness">
       <span :class="'footer-span'">{{ $t("fairness") }}</span>
     </button>
-    <MaxValue />
-    <GameInfo />
-    <Hotkeys />
     <RealTimeStatistics />
-    <Fairness />
   </div>
 </template>
 
@@ -204,19 +200,11 @@
 <script>
 import { ref } from "vue";
 import { mutations, store } from "../core/Store";
-import MaxValue from "./Modals/MaxValue.vue";
-import GameInfo from "./Modals/GameInfo.vue";
-import Hotkeys from "./Modals/Hotkeys.vue";
 import RealTimeStatistics from "./Modals/RealTimeStatistics.vue";
-import Fairness from "./Modals/Fairness.vue";
 
 export default {
   components: {
-    MaxValue,
-    GameInfo,
-    Hotkeys,
     RealTimeStatistics,
-    Fairness,
   },
   data() {
     return {

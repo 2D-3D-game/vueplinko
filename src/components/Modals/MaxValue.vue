@@ -30,7 +30,7 @@
 .modal {
   visibility: hidden;
   opacity: 0;
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
@@ -41,6 +41,8 @@
   background: rgba(0, 0, 0, 0.32);
   transition: all 0.4s;
   z-index: 9;
+  height: 100%;
+  box-sizing: border-box;
 }
 .modal.active {
   visibility: visible;

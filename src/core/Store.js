@@ -27,7 +27,7 @@ export const store = reactive({
       ? "630px"
       : window.innerWidth > 1100
       ? (630 * window.innerWidth) / 1200 + "px"
-      : "500px",
+      : "100%",
   co_w:
     window.innerWidth > 1200
       ? "900px"
