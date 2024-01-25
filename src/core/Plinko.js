@@ -401,7 +401,10 @@ export function Plinko(element) {
         const rectWidth = gap / scale;
         const rectHeight = gap / scale;
         const rectX = x - rectWidth / 2;
-        const rectY = y + 25 / scale;
+        let rectY = y + 25 / scale;
+        if (window.innerWidth < 1100) {
+          rectY = y + 25 / scale / 2;
+        }
         graphics.drawRoundedRect(rectX, rectY, rectWidth, rectHeight, 5);
         graphics.endFill();
 
