@@ -261,7 +261,7 @@
           <div :class="'inputBox'">
             <select :class="'inputStyle'">
               <option value="Low">{{ $t("level1") }}</option>
-              <option value="Medium">{{ $t("level2") }}</option>
+              <option value="Middle">{{ $t("level2") }}</option>
               <option value="High">{{ $t("level3") }}</option>
             </select>
             <img

@@ -645,7 +645,7 @@ export default {
     plinkoLevel() {
       if (store.plinkoLevel === "Low") {
         return "level1";
-      } else if (store.plinkoLevel === "Medium") {
+      } else if (store.plinkoLevel === "Middle") {
         return "level2";
       } else if (store.plinkoLevel === "High") {
         return "level3";

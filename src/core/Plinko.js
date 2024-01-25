@@ -59,7 +59,7 @@ export function Plinko(element) {
   /********** End Global Variables  **********/
 
   /********** Begin Local Variables  **********/
-  let levelState = "medium";
+  let levelState = "middle";
   let rowNumState = 16;
   let last = 0;
   let originalY = 0;
@@ -115,7 +115,7 @@ export function Plinko(element) {
     let texture = PIXI.Texture.from("/image/ball.svg?8");
     if (levelState === "low") {
       texture = PIXI.Texture.from("/image/ball-low.svg?8");
-    } else if (levelState === "medium") {
+    } else if (levelState === "middle") {
       texture = PIXI.Texture.from("/image/ball.svg?8");
     } else {
       texture = PIXI.Texture.from("/image/ball-high.svg?8");

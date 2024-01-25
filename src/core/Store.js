@@ -13,7 +13,7 @@ export const store = reactive({
   appOpacity: false,
   plinkoAmount: 0.000000000,
   plinkoRow: 16,
-  plinkoLevel: "Medium",
+  plinkoLevel: "middle",
   rectShow:
     window.innerWidth > 1100 ? true : false,
   a_w:

@@ -101,7 +101,7 @@
         :style="{ fontFamily: 'PingFang SC', fontWeight: 600 }"
       >
         <option value="low">{{ $t("level1") }}</option>
-        <option value="medium">{{ $t("level2") }}</option>
+        <option value="middle">{{ $t("level2") }}</option>
         <option value="high">{{ $t("level3") }}</option>
       </select>
     </div>
@@ -255,7 +255,7 @@ export default {
     const isAutoBetting = ref(false);
     const isEmpty = ref(false);
     const amount = ref("0.000000000");
-    const level = ref("medium");
+    const level = ref("middle");
     const rows = ref("16");
     const numberofbet = ref(0);
     const isMaximum = ref(false);
