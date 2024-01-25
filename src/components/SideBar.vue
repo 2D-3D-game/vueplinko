@@ -285,7 +285,7 @@ export default {
     };
 
     const getBettingInfoFromServer = () => {
-      let token = "t:X8o95NySAQeCtgMBkONIrB1a";
+      let token = "t:VTsUcg57sgVIhKqqgn2J9Qg3";
       const requestData = {
         line: rows.value,
         amount: amount.value.toString(),
@@ -293,7 +293,7 @@ export default {
         currency_id: "701",
       };
       axios
-        .post("/api/game/original/plinko", requestData, {
+        .post("https://www.tfdjqp.com/game/original/plinko", requestData, {
           headers: {
             "Content-Type": "application/json",
             d: "25",
@@ -302,7 +302,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log("Success: " + response.data.data);
+          console.log("Success: " + response.data.data.state);
           if (response.data.status) {
             plinko.add(response.data.data.state.index);
             betting.value = betting.value + 1;
