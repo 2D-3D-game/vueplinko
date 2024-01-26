@@ -341,11 +341,11 @@ export default {
               setTimeout(() => {
                 getBettingInfoFromServer();
                 numberofbet.value = parseInt(numberofbet.value) - 1;
-              }, 500 * i);
+              }, 1000 * i);
             }
             setTimeout(() => {
               isAutoBetting.value = false;
-            }, 500 * numberofbet.value);
+            }, 1000 * numberofbet.value);
           }
         }
       }
@@ -356,7 +356,7 @@ export default {
     };
 
     const startInterval = () => {
-      intervalId = setInterval(getBettingInfoFromServer, 500);
+      intervalId = setInterval(getBettingInfoFromServer, 1000);
     };
 
     const stopInterval = () => {
