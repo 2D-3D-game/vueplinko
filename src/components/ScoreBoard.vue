@@ -644,11 +644,11 @@ export default {
       return store.plinkoAmount;
     },
     plinkoLevel() {
-      if (store.plinkoLevel === "Low") {
+      if (store.plinkoLevel === "low") {
         return "level1";
-      } else if (store.plinkoLevel === "Middle") {
+      } else if (store.plinkoLevel === "middle") {
         return "level2";
-      } else if (store.plinkoLevel === "High") {
+      } else if (store.plinkoLevel === "high") {
         return "level3";
       }
     },
