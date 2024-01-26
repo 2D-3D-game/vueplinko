@@ -317,7 +317,7 @@
   position: relative;
   width: 500px;
   border-radius: 8px;
-  background: #1a2c37;
+  background: #0f212e;
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
   overflow-y: auto;
   overflow-x: hidden;
@@ -413,10 +413,9 @@ select {
   border: none;
   border-radius: 4px;
   background: #0f212e;
-  margin-top: 16px;
+  margin: 16px 0;
 }
 .fairness {
-  margin-top: 16px;
   width: 100%;
   padding: 13px 16px;
   border: none;
@@ -489,7 +488,8 @@ select {
   font-weight: 600;
   line-height: normal;
   padding: 0 16px;
-  margin-top: 16px;
+  padding-top: 16px;
+  background: #1a2c38;
 }
 .modal-body {
   width: 100%;
@@ -498,13 +498,14 @@ select {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 18px;
+  padding-top: 18px;
   color: #b1bad3;
   font-family: PingFang SC;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  background: #1a2c38;
 }
 .id-container {
   display: flex;

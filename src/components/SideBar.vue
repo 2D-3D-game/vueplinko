@@ -279,7 +279,7 @@ export default {
     };
 
     const getBettingInfoFromServer = () => {
-      let token = "t:7BAMEL1mqHklFiWOtSJjWOKI";
+      let token = "t:1aiTsbMiSY1ZffzxVxGyDT61";
       const requestData = {
         line: rows.value,
         amount: amount.value.toString(),
