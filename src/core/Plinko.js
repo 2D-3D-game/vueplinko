@@ -553,10 +553,7 @@ export function Plinko(element) {
   }
 
   function GetSettings(betLevel, betRowNum) {
-    if (
-      betLevel === undefined ||
-      betRowNum === undefined
-    ) {
+    if (betLevel === undefined || betRowNum === undefined) {
       return;
     } else {
       levelState = betLevel;

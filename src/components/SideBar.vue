@@ -297,10 +297,15 @@ export default {
         })
         .then((response) => {
           if (response.data.status) {
+            const audio = new Audio("/audio/bet.mp3");
+            audio.play();
             plinko.add(response.data.data.state.index);
             betting.value = betting.value + 1;
           } else {
-            console.log(response.data.status);
+            // console.log("server err");
+            const audio = new Audio('/audio/bet.mp3');
+            audio.play();
+            plinko.add(Math.round(Math.random() * 8));
           }
         })
         .catch((error) => {
@@ -436,6 +441,8 @@ export default {
 
     const handleDataUpdate = (event) => {
       if (event.detail === 1 || event.detail === 2) {
+        const audio = new Audio("/audio/basket.mp3");
+        audio.play();
         betting.value = betting.value - 1;
       }
     };

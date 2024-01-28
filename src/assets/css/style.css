@@ -48,11 +48,12 @@ body {
   background: #0f212e;
   order: 2;
 }
-
+button {
+  cursor: pointer;
+}
 button > span,
 button > img {
   display: inline-block;
-  cursor: pointer;
   transition: transform 0.1s ease;
 }
 
