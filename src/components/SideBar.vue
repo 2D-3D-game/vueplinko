@@ -220,7 +220,7 @@
 </style>
 
 <script>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import axios from "axios";
 import { store, mutations } from "../core/Store";
 import { Plinko } from "../core/Plinko";
@@ -260,6 +260,11 @@ export default {
     const statisticsComponent = ref(null);
     const amountorder = ref(null);
     const betbuttonorder = ref(null);
+    const volumn = ref(
+      computed(() => {
+        return store.volumn;
+      })
+    );
 
     const plinko = Plinko(document.body.querySelector("#canvas"));
     plinko.map();
@@ -298,12 +303,14 @@ export default {
         .then((response) => {
           if (response.data.status) {
             const audio = new Audio("/audio/bet.mp3");
+            audio.volume = volumn.value / 100;
             audio.play();
             plinko.add(response.data.data.state.index);
             betting.value = betting.value + 1;
           } else {
             // console.log("server err");
-            const audio = new Audio('/audio/bet.mp3');
+            const audio = new Audio("/audio/bet.mp3");
+            audio.volume = volumn.value / 100;
             audio.play();
             plinko.add(Math.round(Math.random() * 8));
           }
@@ -442,6 +449,7 @@ export default {
     const handleDataUpdate = (event) => {
       if (event.detail === 1 || event.detail === 2) {
         const audio = new Audio("/audio/basket.mp3");
+        audio.volume = volumn.value / 100;
         audio.play();
         betting.value = betting.value - 1;
       }

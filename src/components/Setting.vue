@@ -21,7 +21,7 @@
           </button>
         </div>
         <div v-if="isShowSetting" class="dropdown-content">
-          <div :class="['contents']" :style="{ alignItems: 'end' }">
+          <div :class="'contents'">
             <button>
               <span>
                 <img
@@ -31,19 +31,27 @@
                   width="16"
                   height="16"
                   alt="Image"
-                  @click="volumn === 0 ? changeRange(50) : changeRange(0)"
+                  @click="
+                    volumn === 0
+                      ? ((volumn = 50), changeVolumn(50))
+                      : ((volumn = 0), changeVolumn(0))
+                  "
                 />
               </span>
             </button>
-            <div :style="{ position: 'relative' }">
+            <div class="windowsSlider">
               <input
-                type="range"
                 v-model="volumn"
-                max="100"
+                type="range"
+                class="windowsSliderInput"
                 min="0"
-                :ref="'inputRange'"
-                @input="changeRange(volumn)"
+                max="100"
+                @input="changeVolumn(volumn)"
               />
+              <div
+                class="windowsSliderProgress"
+                :style="{ width: volumn + '%' }"
+              ></div>
             </div>
           </div>
           <button
@@ -186,7 +194,10 @@
     <div :class="'footer-image'">
       <img :src="'/image/Vector.svg'" alt="Image" width="68" height="25" />
     </div>
-    <button :style="{ background: 'transparent', border: 'none' }" @click="showFairness">
+    <button
+      :style="{ background: 'transparent', border: 'none' }"
+      @click="showFairness"
+    >
       <span :class="'footer-span'">{{ $t("fairness") }}</span>
     </button>
     <RealTimeStatistics />
@@ -260,7 +271,6 @@ export default {
     const isAnimation = ref(false);
     const volumn = ref(50);
     const rectComponent = ref(null);
-    const inputRange = ref(null);
 
     const changeImage = () => {
       isFavorite.value = !isFavorite.value;
@@ -268,11 +278,6 @@ export default {
 
     const showSetting = () => {
       isShowSetting.value = !isShowSetting.value;
-      if (isShowSetting.value) {
-        setTimeout(() => {
-          changeRange(volumn.value);
-        }, 10);
-      }
     };
 
     const liveSetting = () => {
@@ -309,14 +314,10 @@ export default {
 
     const showFairness = () => {
       mutations.showFairness();
-    }
+    };
 
-    const changeRange = (req) => {
-      const volumeElement = inputRange.value;
-      if (volumeElement) {
-        volumn.value = req;
-        volumeElement.style.setProperty("--width", req * 0.86 + "%");
-      }
+    const changeVolumn = (value) => {
+      mutations.changeVolumn(value);
     };
 
     return {
@@ -325,7 +326,6 @@ export default {
       isLive,
       isAnimation,
       volumn,
-      inputRange,
       rectComponent,
       changeImage,
       showSetting,
@@ -336,7 +336,7 @@ export default {
       showHotkeySetting,
       showStatistics,
       showFairness,
-      changeRange,
+      changeVolumn,
     };
   },
 };

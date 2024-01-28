@@ -11,11 +11,11 @@ export const store = reactive({
   showStatistics: false,
   showFairness: false,
   appOpacity: false,
-  plinkoAmount: 0.000000000,
+  plinkoAmount: 0.0,
   plinkoRow: 16,
   plinkoLevel: "middle",
-  rectShow:
-    window.innerWidth > 1100 ? true : false,
+  volumn: 50,
+  rectShow: window.innerWidth > 1100 ? true : false,
   a_w:
     window.innerWidth > 1200
       ? "300px"
@@ -65,8 +65,8 @@ export const store = reactive({
       ? window.innerWidth + "px"
       : "400px",
   currentScore: 0,
-  currentColor: '',
-  currentShadow: '',
+  currentColor: "",
+  currentShadow: "",
 });
 
 export const mutations = {
@@ -123,7 +123,11 @@ export const mutations = {
     this.appOpacity();
   },
   appOpacity() {
-    if(store.showGameInfoModal || store.showHotkeyModal || store.showMaxValueModal) {
+    if (
+      store.showGameInfoModal ||
+      store.showHotkeyModal ||
+      store.showMaxValueModal
+    ) {
       store.appOpacity = true;
     } else {
       store.appOpacity = false;
@@ -133,5 +137,9 @@ export const mutations = {
     store.plinkoAmount = amount;
     store.plinkoLevel = level;
     store.plinkoRow = rows;
+  },
+  changeVolumn(value) {
+    console.log(value);
+    store.volumn = value
   }
 };
