@@ -547,7 +547,7 @@ select {
   position: relative;
   width: 500px;
   border-radius: 8px;
-  background: #0F212E;
+  background: #0f212e;
   box-shadow: 0px 1px 0px 0px #253541 inset,
     0px 11px 0px 0px rgba(0, 0, 0, 0.14);
 }
@@ -572,7 +572,7 @@ select {
   line-height: normal;
   padding: 0 16px;
   padding-top: 16px;
-  background: #1A2C37;
+  background: #1a2c37;
 }
 .modal-body {
   display: flex;
@@ -588,7 +588,7 @@ select {
   padding: 0 16px;
   padding-top: 20px;
   padding-bottom: 16px;
-  background-color: #1A2C37;
+  background-color: #1a2c37;
 }
 .buttonContainer {
   display: flex;
@@ -622,7 +622,7 @@ select {
 </style>
 
 <script>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { store, mutations } from "../../core/Store";
 
 export default {
@@ -637,11 +637,21 @@ export default {
     const copied1 = ref(false);
     const copied2 = ref(false);
     const copied3 = ref(false);
-    const copy1 = ref("edr74dsfsg3df5644");
-    const copy2 = ref(
-      "edr74dsfsg3df5644gguyg34534536uigiugigig346346346uig346"
+    const copy1 = ref(
+      computed(() => {
+        return store.active_client_seed;
+      })
     );
-    const copy3 = ref("sgfsg345345h34jh634534jh534j5h3j45h3j45jh345j345hjj35");
+    const copy2 = ref(
+      computed(() => {
+        return store.active_server_seed_hash;
+      })
+    );
+    const copy3 = ref(
+      computed(() => {
+        return store.next_server_seed_hash;
+      })
+    );
     const hideModal = () => {
       mutations.showFairness();
     };

@@ -1,6 +1,8 @@
 import { reactive } from "vue";
+import axios from "axios";
 
 export const store = reactive({
+  token: "t:eHuQFiWr3GXIRz6aKuWjnmXN",
   isMaximum: false,
   autoStart: false,
   autoEnd: false,
@@ -67,6 +69,12 @@ export const store = reactive({
   currentScore: 0,
   currentColor: "",
   currentShadow: "",
+  active_client_seed: "rjDVxoYHl0",
+  active_server_seed_hash:
+    "dafef89c0fe074a01ab849a89c25f39a8c829af985e42d4b01c8c88f088c18240",
+  next_server_seed_hash:
+    "6bd1cfe4415925cc1fea8c28ce0281f79598c1d7150d279d3892ecb99e19d0fb",
+  nonce: 6,
 });
 
 export const mutations = {
@@ -139,7 +147,32 @@ export const mutations = {
     store.plinkoRow = rows;
   },
   changeVolumn(value) {
-    console.log(value);
-    store.volumn = value
-  }
+    store.volumn = value;
+  },
+  seedDetail() {
+    axios
+      .get("https://www.tfdjqp.com/game/original/seed/detail", {
+        headers: {
+          "Content-Type": "application/json",
+          d: "25",
+          lang: "zh_CN",
+          t: store.token,
+        },
+      })
+      .then((response) => {
+        if (response.data.status) {
+          store.active_client_seed = response.data.data.active_client_seed;
+          store.active_server_seed_hash =
+            response.data.data.active_server_seed_hash;
+          store.next_server_seed_hash =
+            response.data.data.next_server_seed_hash;
+          store.nonce = response.data.data.nonce;
+        } else {
+          console.log(response.data.status);
+        }
+      })
+      .catch((error) => {
+        console.log("Error: " + error);
+      });
+  },
 };

@@ -626,7 +626,7 @@ select {
 </style>
 
 <script>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { store, mutations } from "../core/Store";
 
 export default {
@@ -663,10 +663,20 @@ export default {
     const isHover3 = ref(false);
     const copy1 = ref("201,213,564,969");
     const copy2 = ref(
-      "edr74dsfsg3df5644dfgd2525245hjjh2hjjhhj23423jh234j23jhj234"
+      computed(() => {
+        return store.active_server_seed_hash;
+      })
     );
-    const copy3 = ref("edr74dsfsg3df5644");
-    const copy4 = ref("4345");
+    const copy3 = ref(
+      computed(() => {
+        return store.active_client_seed;
+      })
+    );
+    const copy4 = ref(
+      computed(() => {
+        return store.nonce;
+      })
+    );
     const copied1 = ref(false);
     const copied2 = ref(false);
     const copied3 = ref(false);
@@ -677,6 +687,9 @@ export default {
     };
     const showFairness = () => {
       showFairFlag.value = !showFairFlag.value;
+      if (showFairFlag.value) {
+        mutations.seedDetail();
+      }
     };
     const changeHover = (hover, req) => {
       if (hover === "isHover1") {

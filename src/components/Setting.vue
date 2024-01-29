@@ -313,6 +313,7 @@ export default {
     };
 
     const showFairness = () => {
+      mutations.seedDetail();
       mutations.showFairness();
     };
 
