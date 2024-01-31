@@ -7,7 +7,7 @@
   align-items: center;
   border-radius: 0px 0px 8px 8px;
   justify-content: space-between;
-  align-self: center;
+  /* align-self: center; */
 }
 
 .button-group-container {
@@ -194,6 +194,6 @@
 }
 @media screen and (max-width: 400px) {
   .footer-container {
-    align-self: auto;
+    min-width: 300px;
   }
 }

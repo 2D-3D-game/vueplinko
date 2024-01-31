@@ -1,6 +1,6 @@
 <template>
   <div :class="'responsive'">
-    <div :style="{ display: 'flex', flexDirection: 'column' }">
+    <div :style="{ display: 'flex', flexDirection: 'column', alignItems: 'center' }">
       <div :class="'mycontainer'">
         <div
           id="app"

@@ -65,7 +65,7 @@
 .modal__content {
   position: relative;
   width: 500px;
-  max-width: 90%;
+  max-width: 94vw;
   padding: 16px;
   border-radius: 8px;
   background: #1a2c37;

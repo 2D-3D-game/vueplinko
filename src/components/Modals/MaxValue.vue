@@ -74,7 +74,7 @@
   border-radius: 4px;
   position: relative;
   width: 500px;
-  max-width: 90%;
+  max-width: 94vw;
   background: #1a2c37;
   padding: 16px;
 }

@@ -212,7 +212,6 @@
       <div :class="'alert-timeline'"></div>
     </div>
   </div>
-  <Language />
 </template>
 
 <style scoped>
@@ -224,13 +223,8 @@ import { ref, onMounted, onUnmounted, computed } from "vue";
 import axios from "axios";
 import { store, mutations } from "../core/Store";
 import { Plinko } from "../core/Plinko";
-import Language from "./Language.vue";
 
 export default {
-  components: {
-    Language,
-  },
-
   computed: {
     showMax() {
       return store.isMaximum;
@@ -302,12 +296,14 @@ export default {
         })
         .then((response) => {
           if (response.data.status) {
+            console.log(response.data);
             const audio = new Audio("/audio/bet.mp3");
             audio.volume = volumn.value / 100;
             audio.play();
             plinko.add(response.data.data.state.index);
             betting.value = betting.value + 1;
           } else {
+            console.log(response.data);
             // console.log("server err");
             const audio = new Audio("/audio/bet.mp3");
             audio.volume = volumn.value / 100;
@@ -416,16 +412,29 @@ export default {
           );
         } else {
           mutations.rectShow(false);
-          responsive(
-            "400px",
-            "100%",
-            "400px",
-            "310px",
-            "400px",
-            "310px",
-            newWidth * 0.8 - 60 + "px",
-            "400px"
-          );
+          if (newWidth > 400) {
+            responsive(
+              "400px",
+              "100%",
+              "400px",
+              "310px",
+              "400px",
+              "310px",
+              newWidth * 0.8 - 60 + "px",
+              "400px"
+            );
+          } else {
+            responsive(
+              "300px",
+              "100%",
+              "300px",
+              "225px",
+              "300px",
+              "225px",
+              newWidth * 0.8 - 60 + "px",
+              "300px"
+            );
+          }
         }
       } else {
         responsive(

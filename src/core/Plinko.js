@@ -229,10 +229,51 @@ export function Plinko(element) {
 
     sceneObjects.push(object);
     app.stage.addChild(container);
+
     container.on("pointerdown", function (e) {
       let target = GetIndexFromText(text, x);
       add(parseInt(target));
     });
+
+    // container.on("mouseover", function (e) {
+    //   let newColor = globalFunc.selectFromText(
+    //     rowNumState,
+    //     levelState,
+    //     text,
+    //     "shadow"
+    //   );
+
+    //   rectangle.clear();
+    //   rectangle.beginFill(newColor);
+    //   rectangle.drawRect(
+    //     -gap / 2 / scale,
+    //     -gap / 2 / scale,
+    //     gap / scale,
+    //     gap / scale - 1
+    //   );
+    //   rectangle.endFill();
+    //   app.renderer.render(app.stage);
+    // });
+
+    // container.on("mouseout", function (e) {
+    //   let newColor = globalFunc.selectFromText(
+    //     rowNumState,
+    //     levelState,
+    //     text,
+    //     "color"
+    //   );
+
+    //   rectangle.clear();
+    //   rectangle.beginFill(newColor);
+    //   rectangle.drawRect(
+    //     -gap / 2 / scale,
+    //     -gap / 2 / scale,
+    //     gap / scale,
+    //     gap / scale - 1
+    //   );
+    //   rectangle.endFill();
+    //   app.renderer.render(app.stage);
+    // });
 
     metter.metter = {
       text: text,
@@ -629,7 +670,12 @@ export function Plinko(element) {
       lastPos = objects[objects.length - 1].body.position.y - 50 / scale;
     }
     if (window.innerWidth < 1100) {
-      lastPos = canvasHeight / 6 / scale - 25 / scale / 2;
+      if (window.innerWidth > 400) {
+        lastPos = canvasHeight / 6 / scale - 25 / scale / 2;
+      } else {
+        lastPos = canvasHeight / 10 / scale - 25 / scale / 2;
+      }
+
       if (objects.length > 1) {
         lastPos = objects[objects.length - 1].body.position.y - 25 / scale;
       }
@@ -664,10 +710,17 @@ export function Plinko(element) {
     if (window.innerWidth < 1100) {
       distance = -25 / scale;
       if (objects.length > 1) {
-        distance =
-          objects[objects.length - 1].body.position.y -
-          canvasHeight / 6 / scale -
-          maskHeight / 8;
+        if (window.innerWidth > 400) {
+          distance =
+            objects[objects.length - 1].body.position.y -
+            canvasHeight / 6 / scale -
+            maskHeight / 8;
+        } else {
+          distance =
+            objects[objects.length - 1].body.position.y -
+            canvasHeight / 10 / scale -
+            maskHeight / 8;
+        }
       }
     }
     for (let i = 0; i < objects.length; i++) {
@@ -822,10 +875,15 @@ export function Plinko(element) {
       col += increment;
     }
     app.stage.scale.set(scale);
+    console.log(scale);
     if (newWindowWidth > 1100) {
       app.stage.position.x = ((1 - scale) * canvasWidth) / 2;
     } else {
-      app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 200;
+      if (newWindowWidth > 400) {
+        app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 200;
+      } else {
+        app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 250;
+      }
     }
 
     mask.clear();
@@ -851,13 +909,23 @@ export function Plinko(element) {
         maskHeight = 198 / scale;
         maskWidth = 50 / scale;
       } else {
-        maskX =
-          (canvasWidth - 100) / scale / 2 +
-          5 / scale -
-          app.stage.position.x / scale;
-        maskY = canvasHeight / 6 / scale;
-        maskHeight = 98 / scale;
-        maskWidth = 25 / scale;
+        if (newWindowWidth > 400) {
+          maskX =
+            (canvasWidth - 100) / scale / 2 +
+            5 / scale -
+            app.stage.position.x / scale;
+          maskY = canvasHeight / 6 / scale;
+          maskHeight = 98 / scale;
+          maskWidth = 25 / scale;
+        } else {
+          maskX =
+            (canvasWidth - 300) / scale / 2 +
+            5 / scale -
+            app.stage.position.x / scale;
+          maskY = canvasHeight / 10 / scale;
+          maskHeight = 98 / scale;
+          maskWidth = 25 / scale;
+        }
       }
     }
     mask.drawRoundedRect(
@@ -870,16 +938,16 @@ export function Plinko(element) {
     mask.endFill();
     app.stage.addChild(mask);
 
-    const rectangle = new PIXI.Graphics();
-    rectangle.beginFill(0xffffff);
-    rectangle.drawRect(
-      -gap / 2 / scale,
-      -gap / 4 / scale,
-      (gap - 4) / scale,
-      gap / 2 / scale
-    );
-    rectangle.endFill();
-    rectangle.mask = mask;
+    // const rectangle = new PIXI.Graphics();
+    // rectangle.beginFill(0xffffff);
+    // rectangle.drawRect(
+    //   -gap / 2 / scale,
+    //   -gap / 4 / scale,
+    //   (gap - 4) / scale,
+    //   gap / 2 / scale
+    // );
+    // rectangle.endFill();
+    // rectangle.mask = mask;
   }
 
   function add(target) {

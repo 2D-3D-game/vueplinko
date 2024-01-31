@@ -12,7 +12,7 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  /* min-width: 320px; */
   background-color: #1a2c38;
   color: "#FFF";
   font-family: PingFang SC;
@@ -28,7 +28,7 @@ body {
 .mycontainer {
   display: flex;
   flex-direction: row;
-  margin: auto;
+  /* margin: auto; */
   border-bottom: 3px solid #213743;
   position: relative;
 }
@@ -37,16 +37,18 @@ body {
   width: 300px;
   height: 630px;
   order: 1;
+  min-width: 300px;
 }
 
 .canvas-container {
   width: 900px;
   height: 630px;
-  margin: auto;
+  /* margin: auto; */
   color: #fff;
   border-radius: 0px 8px 0px 0px;
   background: #0f212e;
   order: 2;
+  min-width: 300px;
 }
 button {
   cursor: pointer;
@@ -68,6 +70,7 @@ button:active > img {
   margin: auto;
   border-radius: 0px 8px 0px 0px;
   background: #0f212e;
+  min-width: 300px;
 }
 
 .overlay-container {
@@ -261,14 +264,14 @@ button:active > img {
   .mycontainer {
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     border-bottom: 0;
   }
 
   .mycontainer .app-container {
     width: 400px;
     order: 2;
-    margin-left: 0;
+    /* margin-left: 0; */
     position: relative;
   }
 

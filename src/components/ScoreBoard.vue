@@ -316,6 +316,7 @@
 .modal__content {
   position: relative;
   width: 500px;
+  max-width: 94vw;
   border-radius: 8px;
   background: #0f212e;
   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);

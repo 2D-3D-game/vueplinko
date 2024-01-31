@@ -23,6 +23,8 @@ export const store = reactive({
       ? "300px"
       : window.innerWidth > 1100
       ? "300px"
+      : window.innerWidth < 400
+      ? "300px"
       : "400px",
   a_h:
     window.innerWidth > 1200
@@ -35,24 +37,32 @@ export const store = reactive({
       ? "900px"
       : window.innerWidth > 1100
       ? 900 - 1200 + window.innerWidth + "px"
+      : window.innerWidth < 400
+      ? "300px"
       : "400px",
   co_h:
     window.innerWidth > 1200
       ? "630px"
       : window.innerWidth > 1100
       ? (630 * window.innerWidth) / 1200 + "px"
+      : window.innerWidth < 400
+      ? "225px"
       : "310px",
   c_w:
     window.innerWidth > 1200
       ? "800px"
       : window.innerWidth > 1100
       ? "800px"
+      : window.innerWidth < 400
+      ? "300px"
       : "400px",
   c_h:
     window.innerWidth > 1200
       ? "630px"
       : window.innerWidth > 1100
       ? (630 * window.innerWidth) / 1200 + "px"
+      : window.innerWidth < 400
+      ? "225px"
       : "310px",
   st_w:
     window.innerWidth > 1200
@@ -65,6 +75,8 @@ export const store = reactive({
       ? "1200px"
       : window.innerWidth > 1100
       ? window.innerWidth + "px"
+      : window.innerWidth < 400
+      ? "300px"
       : "400px",
   currentScore: 0,
   currentColor: "",

@@ -546,6 +546,7 @@ select {
 .modal__content {
   position: relative;
   width: 500px;
+  max-width: 94vw;
   border-radius: 8px;
   background: #0f212e;
   box-shadow: 0px 1px 0px 0px #253541 inset,

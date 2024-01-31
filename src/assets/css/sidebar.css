@@ -178,6 +178,9 @@ img.betting-image {
   font-weight: 600;
   line-height: normal;
 }
+.typeButton span {
+  font-size: 14px;
+}
 .typeButton:hover {
   background-color: #2f4552;
   border-radius: 1000px;
