@@ -938,16 +938,16 @@ export function Plinko(element) {
     mask.endFill();
     app.stage.addChild(mask);
 
-    // const rectangle = new PIXI.Graphics();
-    // rectangle.beginFill(0xffffff);
-    // rectangle.drawRect(
-    //   -gap / 2 / scale,
-    //   -gap / 4 / scale,
-    //   (gap - 4) / scale,
-    //   gap / 2 / scale
-    // );
-    // rectangle.endFill();
-    // rectangle.mask = mask;
+    const rectangle = new PIXI.Graphics();
+    rectangle.beginFill(0xffffff);
+    rectangle.drawRect(
+      -gap / 2 / scale,
+      -gap / 4 / scale,
+      (gap - 4) / scale,
+      gap / 2 / scale
+    );
+    rectangle.endFill();
+    rectangle.mask = mask;
   }
 
   function add(target) {
