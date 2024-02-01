@@ -230,10 +230,10 @@ export function Plinko(element) {
     sceneObjects.push(object);
     app.stage.addChild(container);
 
-    container.on("pointerdown", function (e) {
-      let target = GetIndexFromText(text, x);
-      add(parseInt(target));
-    });
+    // container.on("pointerdown", function (e) {
+    //   let target = GetIndexFromText(text, x);
+    //   add(parseInt(target));
+    // });
 
     // container.on("mouseover", function (e) {
     //   let newColor = globalFunc.selectFromText(
@@ -602,21 +602,21 @@ export function Plinko(element) {
     }
   }
 
-  function GetIndexFromText(text, x) {
-    let basket = globalFunc.baskets[levelState]["_" + rowNumState];
-    let id = 0;
+  // function GetIndexFromText(text, x) {
+  //   let basket = globalFunc.baskets[levelState]["_" + rowNumState];
+  //   let id = 0;
 
-    for (let i = 0; i < basket.length; i++) {
-      if (basket[i] === text) {
-        if (x <= canvasWidth / 2) {
-          id = basket.length - i;
-        } else {
-          id = i + 1;
-        }
-      }
-    }
-    return id;
-  }
+  //   for (let i = 0; i < basket.length; i++) {
+  //     if (basket[i] === text) {
+  //       if (x <= canvasWidth / 2) {
+  //         id = basket.length - i;
+  //       } else {
+  //         id = i + 1;
+  //       }
+  //     }
+  //   }
+  //   return id;
+  // }
 
   function SearchRoute(target) {
     const pointIds = [];
