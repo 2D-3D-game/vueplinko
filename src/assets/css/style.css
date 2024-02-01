@@ -43,12 +43,14 @@ body {
 .canvas-container {
   width: 900px;
   height: 630px;
-  /* margin: auto; */
   color: #fff;
   border-radius: 0px 8px 0px 0px;
   background: #0f212e;
   order: 2;
-  min-width: 300px;
+  min-width: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 button {
   cursor: pointer;
@@ -278,6 +280,7 @@ button:active > img {
   .canvas-container {
     width: 400px;
     height: 310px;
+    min-width: 400px;
     border-radius: 8px 8px 0px 0px;
     order: 1;
   }
@@ -286,5 +289,18 @@ button:active > img {
     width: 400px;
     height: 310px;
     border-radius: 8px 8px 0px 0px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .canvas-container {
+    min-width: 0;
+    min-height: 270px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .canvas-container {
+    min-width: 300px;
   }
 }

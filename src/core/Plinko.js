@@ -602,22 +602,6 @@ export function Plinko(element) {
     }
   }
 
-  // function GetIndexFromText(text, x) {
-  //   let basket = globalFunc.baskets[levelState]["_" + rowNumState];
-  //   let id = 0;
-
-  //   for (let i = 0; i < basket.length; i++) {
-  //     if (basket[i] === text) {
-  //       if (x <= canvasWidth / 2) {
-  //         id = basket.length - i;
-  //       } else {
-  //         id = i + 1;
-  //       }
-  //     }
-  //   }
-  //   return id;
-  // }
-
   function SearchRoute(target) {
     const pointIds = [];
     const pointDirs = [];
@@ -673,7 +657,11 @@ export function Plinko(element) {
       if (window.innerWidth > 400) {
         lastPos = canvasHeight / 6 / scale - 25 / scale / 2;
       } else {
-        lastPos = canvasHeight / 10 / scale - 25 / scale / 2;
+        if (window.innerWidth > 350) {
+          lastPos = canvasHeight / 8 / scale - 25 / scale / 2;
+        } else {
+          lastPos = canvasHeight / 10 / scale - 25 / scale / 2;
+        }
       }
 
       if (objects.length > 1) {
@@ -716,10 +704,17 @@ export function Plinko(element) {
             canvasHeight / 6 / scale -
             maskHeight / 8;
         } else {
-          distance =
-            objects[objects.length - 1].body.position.y -
-            canvasHeight / 10 / scale -
-            maskHeight / 8;
+          if (window.innerWidth > 350) {
+            distance =
+              objects[objects.length - 1].body.position.y -
+              canvasHeight / 8 / scale -
+              maskHeight / 8;
+          } else {
+            distance =
+              objects[objects.length - 1].body.position.y -
+              canvasHeight / 10 / scale -
+              maskHeight / 8;
+          }
         }
       }
     }
@@ -875,14 +870,17 @@ export function Plinko(element) {
       col += increment;
     }
     app.stage.scale.set(scale);
-    console.log(scale);
     if (newWindowWidth > 1100) {
       app.stage.position.x = ((1 - scale) * canvasWidth) / 2;
     } else {
       if (newWindowWidth > 400) {
         app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 200;
       } else {
-        app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 250;
+        if (newWindowWidth > 350) {
+          app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 225;
+        } else {
+          app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 250;
+        }
       }
     }
 
@@ -918,13 +916,23 @@ export function Plinko(element) {
           maskHeight = 98 / scale;
           maskWidth = 25 / scale;
         } else {
-          maskX =
-            (canvasWidth - 300) / scale / 2 +
-            5 / scale -
-            app.stage.position.x / scale;
-          maskY = canvasHeight / 10 / scale;
-          maskHeight = 98 / scale;
-          maskWidth = 25 / scale;
+          if (newWindowWidth > 350) {
+            maskX =
+              (canvasWidth - 200) / scale / 2 +
+              5 / scale -
+              app.stage.position.x / scale;
+            maskY = canvasHeight / 8 / scale;
+            maskHeight = 98 / scale;
+            maskWidth = 25 / scale;
+          } else {
+            maskX =
+              (canvasWidth - 300) / scale / 2 +
+              5 / scale -
+              app.stage.position.x / scale;
+            maskY = canvasHeight / 10 / scale;
+            maskHeight = 98 / scale;
+            maskWidth = 25 / scale;
+          }
         }
       }
     }

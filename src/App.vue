@@ -1,6 +1,12 @@
 <template>
   <div :class="'responsive'">
-    <div :style="{ display: 'flex', flexDirection: 'column', alignItems: 'center' }">
+    <div
+      :style="{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }"
+    >
       <div :class="'mycontainer'">
         <div
           id="app"
@@ -86,9 +92,8 @@ export default {
       return store.showGameInfoModal;
     },
     showHotkeyModal() {
-      return store.showHotkeyModal
-    }
+      return store.showHotkeyModal;
+    },
   },
-  setup() {},
 };
 </script>

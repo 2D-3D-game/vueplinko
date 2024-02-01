@@ -296,14 +296,12 @@ export default {
         })
         .then((response) => {
           if (response.data.status) {
-            console.log(response.data);
             const audio = new Audio("/audio/bet.mp3");
             audio.volume = volumn.value / 100;
             audio.play();
             plinko.add(response.data.data.state.index);
             betting.value = betting.value + 1;
           } else {
-            console.log(response.data);
             // console.log("server err");
             const audio = new Audio("/audio/bet.mp3");
             audio.volume = volumn.value / 100;
@@ -396,63 +394,16 @@ export default {
 
     const handleResize = () => {
       let newWidth = window.innerWidth;
+      mutations.responsive();
       if (newWidth < 1200) {
         changeOrder();
         if (newWidth > 1100) {
           mutations.rectShow(true);
-          responsive(
-            "300px",
-            (630 * newWidth) / 1200 + "px",
-            900 - 1200 + newWidth + "px",
-            (630 * newWidth) / 1200 + "px",
-            "800px",
-            (630 * newWidth) / 1200 + "px",
-            newWidth - 60 + "px",
-            newWidth + "px"
-          );
         } else {
           mutations.rectShow(false);
-          if (newWidth > 400) {
-            responsive(
-              "400px",
-              "100%",
-              "400px",
-              "310px",
-              "400px",
-              "310px",
-              newWidth * 0.8 - 60 + "px",
-              "400px"
-            );
-          } else {
-            responsive(
-              "300px",
-              "100%",
-              "300px",
-              "225px",
-              "300px",
-              "225px",
-              newWidth * 0.8 - 60 + "px",
-              "300px"
-            );
-          }
         }
-      } else {
-        responsive(
-          "300px",
-          "630px",
-          "900px",
-          "630px",
-          "800px",
-          "630px",
-          "1140px",
-          "1200px"
-        );
       }
       plinko.map();
-    };
-
-    const responsive = (a_w, a_h, co_w, co_h, c_w, c_h, st_w, s_w) => {
-      mutations.responsive(a_w, a_h, co_w, co_h, c_w, c_h, st_w, s_w);
     };
 
     const handleDataUpdate = (event) => {
@@ -473,6 +424,7 @@ export default {
       window.addEventListener("data-updated", handleDataUpdate);
       window.addEventListener("resize", handleResize);
       plinko.GetSettings(level.value, rows.value);
+      mutations.responsive();
     });
 
     return {

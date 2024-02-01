@@ -23,61 +23,67 @@ export const store = reactive({
       ? "300px"
       : window.innerWidth > 1100
       ? "300px"
-      : window.innerWidth < 400
-      ? "300px"
-      : "400px",
+      : window.innerWidth > 400
+      ? "400px"
+      : window.innerWidth > 350
+      ? "350px"
+      : "300px",
   a_h:
     window.innerWidth > 1200
       ? "630px"
       : window.innerWidth > 1100
-      ? (630 * window.innerWidth) / 1200 + "px"
+      ? (630 * width) / 1200 + "px"
       : "100%",
   co_w:
     window.innerWidth > 1200
       ? "900px"
       : window.innerWidth > 1100
-      ? 900 - 1200 + window.innerWidth + "px"
-      : window.innerWidth < 400
-      ? "300px"
-      : "400px",
+      ? 900 - 1200 + width + "px"
+      : window.innerWidth > 400
+      ? "400px"
+      : window.innerWidth > 350
+      ? "350px"
+      : "300px",
   co_h:
     window.innerWidth > 1200
       ? "630px"
       : window.innerWidth > 1100
-      ? (630 * window.innerWidth) / 1200 + "px"
-      : window.innerWidth < 400
-      ? "225px"
-      : "310px",
+      ? (630 * width) / 1200 + "px"
+      : window.innerWidth > 400
+      ? "310px"
+      : window.innerWidth > 350
+      ? "270px"
+      : "225px",
   c_w:
     window.innerWidth > 1200
       ? "800px"
       : window.innerWidth > 1100
       ? "800px"
-      : window.innerWidth < 400
-      ? "300px"
-      : "400px",
+      : window.innerWidth > 400
+      ? "400px"
+      : window.innerWidth > 350
+      ? "350px"
+      : "300px",
   c_h:
     window.innerWidth > 1200
       ? "630px"
       : window.innerWidth > 1100
-      ? (630 * window.innerWidth) / 1200 + "px"
-      : window.innerWidth < 400
-      ? "225px"
-      : "310px",
-  st_w:
-    window.innerWidth > 1200
-      ? "1140px"
-      : window.innerWidth > 1100
-      ? window.innerWidth - 60 + "px"
-      : window.innerWidth * 0.8 - 60 + "px",
+      ? (630 * width) / 1200 + "px"
+      : window.innerWidth > 400
+      ? "310px"
+      : window.innerWidth > 350
+      ? "270px"
+      : "225px",
   s_w:
     window.innerWidth > 1200
       ? "1200px"
       : window.innerWidth > 1100
       ? window.innerWidth + "px"
-      : window.innerWidth < 400
-      ? "300px"
-      : "400px",
+      : window.innerWidth > 400
+      ? "400px"
+      : window.innerWidth > 350
+      ? "350px"
+      : "300px",
   currentScore: 0,
   currentColor: "",
   currentShadow: "",
@@ -109,15 +115,60 @@ export const mutations = {
   rectShow(req) {
     store.rectShow = req;
   },
-  responsive(a_w, a_h, co_w, co_h, c_w, c_h, st_w, s_w) {
-    store.a_w = a_w;
-    store.a_h = a_h;
-    store.co_w = co_w;
-    store.co_h = co_h;
-    store.c_w = c_w;
-    store.c_h = c_h;
-    store.st_w = st_w;
-    store.s_w = s_w;
+  responsive() {
+    const width = window.innerWidth;
+    console.log(width);
+    if (width > 1200) {
+      store.a_w = "300px";
+      store.a_h = "630px";
+      store.co_w = "900px";
+      store.co_h = "630px";
+      store.c_w = "800px";
+      store.c_h = "630px";
+      store.s_w = "1200px";
+    } else if (width > 1100 && width < 1200) {
+      store.a_w = "300px";
+      store.a_h = (630 * width) / 1200 + "px";
+      store.co_w = 900 - 1200 + width + "px";
+      store.co_h = (630 * width) / 1200 + "px";
+      store.c_w = "800px";
+      store.c_h = (630 * width) / 1200 + "px";
+      store.s_w = width + "px";
+    } else if (width > 400 && width < 1100) {
+      store.a_w = "400px";
+      store.a_h = "100%";
+      store.co_w = "400px";
+      store.co_h = "310px";
+      store.c_w = "400px";
+      store.c_h = "310px";
+      store.s_w = "400px";
+    } else if (width > 350 && width < 400) {
+      store.a_w = "350px";
+      store.a_h = "100%";
+      store.co_w = "350px";
+      store.co_h = "270px";
+      store.c_w = "350px";
+      store.c_h = "270px";
+      store.s_w = "350px";
+    } else {
+      store.a_w = "300px";
+      store.a_h = "100%";
+      store.co_w = "300px";
+      store.co_h = "225px";
+      store.c_w = "300px";
+      store.c_h = "225px";
+      store.s_w = "300px";
+    }
+
+    console.log(
+      store.a_w,
+      store.a_h,
+      store.co_w,
+      store.co_h,
+      store.c_w,
+      store.c_h,
+      store.s_w
+    );
   },
   currentScore(score, color, shadow) {
     store.currentScore = score;
