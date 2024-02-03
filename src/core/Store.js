@@ -52,7 +52,7 @@ export const store = reactive({
       : window.innerWidth > 400
       ? "310px"
       : window.innerWidth > 350
-      ? "270px"
+      ? 94 * 0.77 + "vw"
       : "225px",
   c_w:
     window.innerWidth > 1200
@@ -117,7 +117,6 @@ export const mutations = {
   },
   responsive() {
     const width = window.innerWidth;
-    console.log(width);
     if (width > 1200) {
       store.a_w = "300px";
       store.a_h = "630px";
@@ -143,13 +142,13 @@ export const mutations = {
       store.c_h = "310px";
       store.s_w = "400px";
     } else if (width > 350 && width < 400) {
-      store.a_w = "350px";
+      store.a_w = "100vw";
       store.a_h = "100%";
-      store.co_w = "350px";
-      store.co_h = "270px";
-      store.c_w = "350px";
+      store.co_w = "100vw";
+      store.co_h = 94 * 0.77 + "vw";
+      store.c_w = "100vw";
       store.c_h = "270px";
-      store.s_w = "350px";
+      store.s_w = "100vw";
     } else {
       store.a_w = "300px";
       store.a_h = "100%";
@@ -159,16 +158,6 @@ export const mutations = {
       store.c_h = "225px";
       store.s_w = "300px";
     }
-
-    console.log(
-      store.a_w,
-      store.a_h,
-      store.co_w,
-      store.co_h,
-      store.c_w,
-      store.c_h,
-      store.s_w
-    );
   },
   currentScore(score, color, shadow) {
     store.currentScore = score;

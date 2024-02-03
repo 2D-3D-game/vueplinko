@@ -99,15 +99,31 @@
           <span
             :class="'gray-span'"
             :style="{ fontWeight: 400, fontFamily: 'PingFang SC' }"
-            >{{ $t("fairnesses.verifyText1") }}</span
+            v-if="!stateChange"
           >
+            {{ $t("fairnesses.verifyText1") }}
+          </span>
           <img
             :src="'/image/betting1.svg'"
             width="16"
             height="16"
             alt="Image"
             :class="'betting-image'"
+            v-if="!stateChange"
           />
+          <div :class="'score'" v-if="stateChange">
+            <div
+              :class="'rect'"
+              :style="{
+                background: color,
+                boxShadow: `0px 3px 0px 0px ${shadow}`,
+              }"
+            >
+              <span :class="'gray-span'" :style="{ color: '#000' }">
+                {{ score }}x
+              </span>
+            </div>
+          </div>
         </div>
       </div>
       <div :class="'modal-footer'" v-if="buttonType === 'seed'">
@@ -182,14 +198,18 @@
         <div :class="'input-container'">
           <div :class="'gray-span'">{{ $t("verifyTexts.game") }}</div>
           <div :class="'inputBox'">
-            <select :class="'inputStyle'">
+            <select
+              :class="'inputStyle'"
+              v-model="game"
+              @change="generateScore"
+            >
               <option value="Blackjack">Blackjack</option>
               <option value="Crash">Crash</option>
               <option value="Dice">Dice</option>
               <option value="Hilo">Hilo</option>
               <option value="Limbo">Limbo</option>
               <option value="Mines">Mines</option>
-              <option value="Plinko">Plinko</option>
+              <option value="Plinko" selected>Plinko</option>
             </select>
             <img
               :src="'/image/arrow-down.svg'"
@@ -203,13 +223,23 @@
         <div :class="'input-container'">
           <div :class="'gray-span'">{{ $t("verifyTexts.clientSeed") }}</div>
           <div :class="'inputBox'">
-            <input :class="'inputStyle'" type="text" />
+            <input
+              :class="'inputStyle'"
+              type="text"
+              v-model="clientSeed"
+              @input="generateScore"
+            />
           </div>
         </div>
         <div :class="'input-container'">
           <div :class="'gray-span'">{{ $t("verifyTexts.serverSeed") }}</div>
           <div :class="'inputBox'">
-            <input :class="'inputStyle'" type="text" />
+            <input
+              :class="'inputStyle'"
+              type="text"
+              v-model="serverSeed"
+              @input="generateScore"
+            />
           </div>
         </div>
         <div :class="'input-container'">
@@ -220,6 +250,7 @@
               v-model="nonce"
               type="number"
               :style="{ width: 'calc(100% - 108px)' }"
+              @input="generateScore"
             />
             <button
               :class="'noncebutton'"
@@ -260,7 +291,11 @@
         <div :class="'input-container'">
           <div :class="'gray-span'">{{ $t("risk") }}</div>
           <div :class="'inputBox'">
-            <select :class="'inputStyle'">
+            <select
+              :class="'inputStyle'"
+              v-model="level"
+              @change="generateScore"
+            >
               <option value="Low">{{ $t("level1") }}</option>
               <option value="Middle">{{ $t("level2") }}</option>
               <option value="High">{{ $t("level3") }}</option>
@@ -277,7 +312,7 @@
         <div :class="'input-container'">
           <div :class="'gray-span'">{{ $t("rows") }}</div>
           <div :class="'inputBox'">
-            <select :class="'inputStyle'">
+            <select :class="'inputStyle'" v-model="row" @change="generateScore">
               <option
                 v-for="value in [8, 9, 10, 11, 12, 13, 14, 15, 16]"
                 :key="value"
@@ -620,11 +655,31 @@ select {
   border: none;
   font-size: 14px;
 }
+.score {
+  position: relative;
+  width: 100%;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+.rect {
+  border-radius: 4px;
+  width: 48px;
+  height: 40px;
+  background: #fa223e;
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>
 
 <script>
 import { ref, computed } from "vue";
 import { store, mutations } from "../../core/Store";
+import { GlobalFunc } from "../../core/GlobalFunc";
 
 export default {
   computed: {
@@ -638,6 +693,15 @@ export default {
     const copied1 = ref(false);
     const copied2 = ref(false);
     const copied3 = ref(false);
+    const stateChange = ref(false);
+    const game = ref("Plinko");
+    const clientSeed = ref("");
+    const serverSeed = ref("");
+    const level = ref("Middle");
+    const row = ref(16);
+    const score = ref(null);
+    const color = ref(null);
+    const shadow = ref(null);
     const copy1 = ref(
       computed(() => {
         return store.active_client_seed;
@@ -660,6 +724,7 @@ export default {
       buttonType.value = req;
     };
     const changeNonce = (req) => {
+      generateScore();
       if (req === "plus") {
         nonce.value = nonce.value + 1;
       } else {
@@ -696,6 +761,31 @@ export default {
       }
       navigator.clipboard.writeText(text);
     };
+    const generateScore = () => {
+      if (game.value === "Plinko" && serverSeed.value !== '') {
+        stateChange.value = false;
+        let info = GlobalFunc().generateRandomNumber(
+          row.value,
+          level.value.toLowerCase()
+        );
+
+        const redc = (info.color >> 16) & 255;
+        const greenc = (info.color >> 8) & 255;
+        const bluec = info.color & 255;
+
+        const reds = (info.shadow >> 16) & 255;
+        const greens = (info.shadow >> 8) & 255;
+        const blues = info.shadow & 255;
+
+        color.value = `rgb(${redc}, ${greenc}, ${bluec})`;
+        shadow.value = `rgb(${reds}, ${greens}, ${blues})`;
+        score.value = info.value;
+
+        setTimeout(() => {
+          stateChange.value = true;
+        }, 300);
+      }
+    };
     return {
       buttonType,
       nonce,
@@ -709,6 +799,16 @@ export default {
       copied2,
       copied3,
       copyText,
+      stateChange,
+      generateScore,
+      game,
+      clientSeed,
+      serverSeed,
+      level,
+      row,
+      score,
+      color,
+      shadow,
     };
   },
 };

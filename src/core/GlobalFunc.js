@@ -32,6 +32,24 @@ export function GlobalFunc() {
     return index;
   };
 
+  const generateRandomNumber = (row, level) => {
+    let value = 0;
+    let color = null;
+    let shadow = null;
+    const randomNumber = Math.random();
+    const percentage = probabilities["_" + row];
+    let sum = 0;
+    for (let i = 0; i < percentage.length; i++) {
+      sum += percentage[i];
+      if (randomNumber >= sum - percentage[i] && randomNumber < sum) {
+        value = baskets[level]["_" + row][i];
+        color = selectFromText(row, level, value, "color");
+        shadow = selectFromText(row, level, value, "shadow");
+        return { value: value, color: color, shadow: shadow };
+      }
+    }
+  };
+
   const baskets = {
     low: {
       _8: [5.6, 2.1, 1.1, 1, 0.5, 1, 1.1, 2.1, 5.6],
@@ -196,5 +214,6 @@ export function GlobalFunc() {
     shadows,
     initialDrawValue,
     selectFromText,
+    generateRandomNumber,
   };
 }

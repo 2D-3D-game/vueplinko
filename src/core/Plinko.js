@@ -877,7 +877,9 @@ export function Plinko(element) {
         app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 200;
       } else {
         if (newWindowWidth > 350) {
-          app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 225;
+          app.stage.position.x =
+            (canvasWidth - scale * canvasWidth) / 2 -
+            ((350 - newWindowWidth) / 3 + 230);
         } else {
           app.stage.position.x = (canvasWidth - scale * canvasWidth) / 2 - 250;
         }
