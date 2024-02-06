@@ -23,12 +23,10 @@ body {
 }
 #myapp {
   margin: auto;
-  margin-top: 10px;
 }
 .mycontainer {
   display: flex;
   flex-direction: row;
-  /* margin: auto; */
   border-bottom: 3px solid #213743;
   position: relative;
 }
@@ -41,7 +39,8 @@ body {
 }
 
 .canvas-container {
-  width: 900px;
+  width: calc(100vw - 300px);
+  max-width: 900px;
   height: 630px;
   color: #fff;
   border-radius: 0px 8px 0px 0px;
@@ -266,14 +265,13 @@ button:active > img {
   .mycontainer {
     display: flex;
     flex-direction: column;
-    /* margin: 0 auto; */
     border-bottom: 0;
   }
 
   .mycontainer .app-container {
     width: 400px;
+    height: 100%;
     order: 2;
-    /* margin-left: 0; */
     position: relative;
   }
 
@@ -293,14 +291,34 @@ button:active > img {
 }
 
 @media screen and (max-width: 400px) {
+  .mycontainer {
+    width: 100vw;
+    min-width: 300px;
+  }
+
+  .mycontainer .app-container {
+    width: 100vw;
+    min-width: 300px;
+  }
+
   .canvas-container {
-    min-width: 0;
-    min-height: 270px;
+    width: 100vw;
+    height: 77vw;
+    min-height: 225px;
+    min-width: 300px;
+  }
+
+  .canvas {
+    width: 360px;
+    height: 270px;
+    min-height: 225px;
+    min-width: 300px;
   }
 }
 
 @media screen and (max-width: 350px) {
-  .canvas-container {
-    min-width: 300px;
+  .canvas {
+    width: 300px;
+    height: 225px;
   }
 }

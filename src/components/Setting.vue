@@ -1,7 +1,11 @@
 <template>
-  <div
+  <!-- <div
     id="setting"
     :style="{ width: settingWidth }"
+    :class="'footer-container'"
+  > -->
+  <div
+    id="setting"
     :class="'footer-container'"
   >
     <div :class="'button-group-container'">
@@ -260,9 +264,9 @@ export default {
     showRect() {
       return store.rectShow;
     },
-    settingWidth() {
-      return store.s_w;
-    },
+    // settingWidth() {
+    //   return store.s_w;
+    // },
   },
   setup() {
     const isFavorite = ref(false);

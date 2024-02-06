@@ -394,12 +394,13 @@ export default {
 
     const handleResize = () => {
       let newWidth = window.innerWidth;
-      mutations.responsive();
+      // mutations.responsive();
       if (newWidth < 1200) {
         changeOrder();
         if (newWidth > 1100) {
           mutations.rectShow(true);
         } else {
+          if(newWidth > 760) {}
           mutations.rectShow(false);
         }
       }
@@ -424,7 +425,6 @@ export default {
       window.addEventListener("data-updated", handleDataUpdate);
       window.addEventListener("resize", handleResize);
       plinko.GetSettings(level.value, rows.value);
-      mutations.responsive();
     });
 
     return {

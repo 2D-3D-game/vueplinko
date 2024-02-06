@@ -18,72 +18,72 @@ export const store = reactive({
   plinkoLevel: "middle",
   volumn: 50,
   rectShow: window.innerWidth > 1100 ? true : false,
-  a_w:
-    window.innerWidth > 1200
-      ? "300px"
-      : window.innerWidth > 1100
-      ? "300px"
-      : window.innerWidth > 400
-      ? "400px"
-      : window.innerWidth > 350
-      ? "350px"
-      : "300px",
-  a_h:
-    window.innerWidth > 1200
-      ? "630px"
-      : window.innerWidth > 1100
-      ? (630 * width) / 1200 + "px"
-      : "100%",
-  co_w:
-    window.innerWidth > 1200
-      ? "900px"
-      : window.innerWidth > 1100
-      ? 900 - 1200 + width + "px"
-      : window.innerWidth > 400
-      ? "400px"
-      : window.innerWidth > 350
-      ? "350px"
-      : "300px",
-  co_h:
-    window.innerWidth > 1200
-      ? "630px"
-      : window.innerWidth > 1100
-      ? (630 * width) / 1200 + "px"
-      : window.innerWidth > 400
-      ? "310px"
-      : window.innerWidth > 350
-      ? 94 * 0.77 + "vw"
-      : "225px",
-  c_w:
-    window.innerWidth > 1200
-      ? "800px"
-      : window.innerWidth > 1100
-      ? "800px"
-      : window.innerWidth > 400
-      ? "400px"
-      : window.innerWidth > 350
-      ? "350px"
-      : "300px",
-  c_h:
-    window.innerWidth > 1200
-      ? "630px"
-      : window.innerWidth > 1100
-      ? (630 * width) / 1200 + "px"
-      : window.innerWidth > 400
-      ? "310px"
-      : window.innerWidth > 350
-      ? "270px"
-      : "225px",
-  s_w:
-    window.innerWidth > 1200
-      ? "1200px"
-      : window.innerWidth > 1100
-      ? window.innerWidth + "px"
-      : window.innerWidth > 400
-      ? "400px"
-      : window.innerWidth > 350
-      ? "350px"
-      : "300px",
+  // a_w:
+  //   window.innerWidth > 1200
+  //     ? "300px"
+  //     : window.innerWidth > 1100
+  //     ? "300px"
+  //     : window.innerWidth > 400
+  //     ? "400px"
+  //     : window.innerWidth > 350
+  //     ? "350px"
+  //     : "300px",
+  // a_h:
+  //   window.innerWidth > 1200
+  //     ? "630px"
+  //     : window.innerWidth > 1100
+  //     ? (630 * window.innerWidth) / 1200 + "px"
+  //     : "100%",
+  // co_w:
+  //   window.innerWidth > 1200
+  //     ? "900px"
+  //     : window.innerWidth > 1100
+  //     ? 900 - 1200 + window.innerWidth + "px"
+  //     : window.innerWidth > 400
+  //     ? "400px"
+  //     : window.innerWidth > 350
+  //     ? "350px"
+  //     : "300px",
+  // co_h:
+  //   window.innerWidth > 1200
+  //     ? "630px"
+  //     : window.innerWidth > 1100
+  //     ? (630 * window.innerWidth) / 1200 + "px"
+  //     : window.innerWidth > 400
+  //     ? "310px"
+  //     : window.innerWidth > 350
+  //     ? 94 * 0.77 + "vw"
+  //     : "225px",
+  // c_w:
+  //   window.innerWidth > 1200
+  //     ? "800px"
+  //     : window.innerWidth > 1100
+  //     ? "800px"
+  //     : window.innerWidth > 400
+  //     ? "400px"
+  //     : window.innerWidth > 350
+  //     ? "350px"
+  //     : "300px",
+  // c_h:
+  //   window.innerWidth > 1200
+  //     ? "630px"
+  //     : window.innerWidth > 1100
+  //     ? (630 * window.innerWidth) / 1200 + "px"
+  //     : window.innerWidth > 400
+  //     ? "310px"
+  //     : window.innerWidth > 350
+  //     ? "270px"
+  //     : "225px",
+  // s_w:
+  //   window.innerWidth > 1200
+  //     ? "1200px"
+  //     : window.innerWidth > 1100
+  //     ? window.innerWidth + "px"
+  //     : window.innerWidth > 400
+  //     ? "400px"
+  //     : window.innerWidth > 350
+  //     ? "350px"
+  //     : "300px",
   currentScore: 0,
   currentColor: "",
   currentShadow: "",
@@ -115,50 +115,50 @@ export const mutations = {
   rectShow(req) {
     store.rectShow = req;
   },
-  responsive() {
-    const width = window.innerWidth;
-    if (width > 1200) {
-      store.a_w = "300px";
-      store.a_h = "630px";
-      store.co_w = "900px";
-      store.co_h = "630px";
-      store.c_w = "800px";
-      store.c_h = "630px";
-      store.s_w = "1200px";
-    } else if (width > 1100 && width < 1200) {
-      store.a_w = "300px";
-      store.a_h = (630 * width) / 1200 + "px";
-      store.co_w = 900 - 1200 + width + "px";
-      store.co_h = (630 * width) / 1200 + "px";
-      store.c_w = "800px";
-      store.c_h = (630 * width) / 1200 + "px";
-      store.s_w = width + "px";
-    } else if (width > 400 && width < 1100) {
-      store.a_w = "400px";
-      store.a_h = "100%";
-      store.co_w = "400px";
-      store.co_h = "310px";
-      store.c_w = "400px";
-      store.c_h = "310px";
-      store.s_w = "400px";
-    } else if (width > 350 && width < 400) {
-      store.a_w = "100vw";
-      store.a_h = "100%";
-      store.co_w = "100vw";
-      store.co_h = 94 * 0.77 + "vw";
-      store.c_w = "100vw";
-      store.c_h = "270px";
-      store.s_w = "100vw";
-    } else {
-      store.a_w = "300px";
-      store.a_h = "100%";
-      store.co_w = "300px";
-      store.co_h = "225px";
-      store.c_w = "300px";
-      store.c_h = "225px";
-      store.s_w = "300px";
-    }
-  },
+  // responsive() {
+  //   const width = window.innerWidth;
+  //   if (width > 1200) {
+  //     store.a_w = "300px";
+  //     store.a_h = "630px";
+  //     store.co_w = "900px";
+  //     store.co_h = "630px";
+  //     store.c_w = "800px";
+  //     store.c_h = "630px";
+  //     store.s_w = "1200px";
+  //   } else if (width > 1100 && width < 1200) {
+  //     store.a_w = "300px";
+  //     store.a_h = (630 * width) / 1200 + "px";
+  //     store.co_w = 900 - 1200 + width + "px";
+  //     store.co_h = (630 * width) / 1200 + "px";
+  //     store.c_w = "800px";
+  //     store.c_h = (630 * width) / 1200 + "px";
+  //     store.s_w = width + "px";
+  //   } else if (width > 400 && width < 1100) {
+  //     store.a_w = "400px";
+  //     store.a_h = "100%";
+  //     store.co_w = "400px";
+  //     store.co_h = "310px";
+  //     store.c_w = "400px";
+  //     store.c_h = "310px";
+  //     store.s_w = "400px";
+  //   } else if (width > 350 && width < 400) {
+  //     store.a_w = "100vw";
+  //     store.a_h = "100%";
+  //     store.co_w = "100vw";
+  //     store.co_h = 94 * 0.77 + "vw";
+  //     store.c_w = "100vw";
+  //     store.c_h = "270px";
+  //     store.s_w = "100vw";
+  //   } else {
+  //     store.a_w = "300px";
+  //     store.a_h = "100%";
+  //     store.co_w = "300px";
+  //     store.co_h = "225px";
+  //     store.c_w = "300px";
+  //     store.c_h = "225px";
+  //     store.s_w = "300px";
+  //   }
+  // },
   currentScore(score, color, shadow) {
     store.currentScore = score;
     store.currentColor = color;

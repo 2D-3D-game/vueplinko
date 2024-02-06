@@ -8,19 +8,31 @@
       }"
     >
       <div :class="'mycontainer'">
-        <div
+        <!-- <div
           id="app"
           class="app-container"
           :style="{ width: appWidth, height: appHeight }"
-        ></div>
+        ></div> -->
         <div
+          id="app"
+          class="app-container"
+        ></div>
+        <!-- <div
           id="canvas-container"
           :style="{ width: containerWidth, height: containerHeight }"
           class="canvas-container"
+        > -->
+        <div
+          id="canvas-container"
+          class="canvas-container"
         >
-          <div
+          <!-- <div
             id="canvas"
             :style="{ width: canvasWidth, height: canvasHeight }"
+            class="canvas"
+          ></div> -->
+          <div
+            id="canvas"
             class="canvas"
           ></div>
         </div>
@@ -61,24 +73,24 @@ export default {
   },
 
   computed: {
-    appWidth() {
-      return store.a_w;
-    },
-    appHeight() {
-      return store.a_h;
-    },
-    containerWidth() {
-      return store.co_w;
-    },
-    containerHeight() {
-      return store.co_h;
-    },
-    canvasWidth() {
-      return store.c_w;
-    },
-    canvasHeight() {
-      return store.c_h;
-    },
+    // appWidth() {
+    //   return store.a_w;
+    // },
+    // appHeight() {
+    //   return store.a_h;
+    // },
+    // containerWidth() {
+    //   return store.co_w;
+    // },
+    // containerHeight() {
+    //   return store.co_h;
+    // },
+    // canvasWidth() {
+    //   return store.c_w;
+    // },
+    // canvasHeight() {
+    //   return store.c_h;
+    // },
     score() {
       return store.currentScore;
     },
