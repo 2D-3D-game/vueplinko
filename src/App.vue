@@ -8,33 +8,78 @@
       }"
     >
       <div :class="'mycontainer'">
-        <!-- <div
-          id="app"
-          class="app-container"
-          :style="{ width: appWidth, height: appHeight }"
-        ></div> -->
-        <div
-          id="app"
-          class="app-container"
-        ></div>
-        <!-- <div
-          id="canvas-container"
-          :style="{ width: containerWidth, height: containerHeight }"
-          class="canvas-container"
-        > -->
-        <div
-          id="canvas-container"
-          class="canvas-container"
-        >
-          <!-- <div
-            id="canvas"
-            :style="{ width: canvasWidth, height: canvasHeight }"
-            class="canvas"
-          ></div> -->
-          <div
-            id="canvas"
-            class="canvas"
-          ></div>
+        <div id="app" class="app-container"></div>
+        <div id="canvas-container" class="canvas-container">
+          <div id="canvas" class="canvas"></div>
+          <div id="overlay" class="overlay-container" v-if="showPro">
+            <div class="profit-container">
+              <div
+                :style="{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }"
+              >
+                <span
+                  :style="{
+                    fontSize: '14px',
+                    fontFamily: 'PingFang SC',
+                    color: '#B1BAD3',
+                  }"
+                  >{{ $t("showPro.profit") }}</span
+                >
+                <span
+                  :style="{
+                    fontSize: '12px',
+                    fontFamily: 'PingFang SC',
+                    color: '#B1BAD3',
+                  }"
+                  >$0.00</span
+                >
+              </div>
+              <div :style="{ position: 'relative' }">
+                <input class="profit-input" type="text" :value="proText" readonly />
+                <img
+                  src="/image/bit.svg"
+                  alt=""
+                  :style="{
+                    position: 'absolute',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    right: '12px',
+                  }"
+                />
+              </div>
+            </div>
+            <div class="profit-container">
+              <span
+                :style="{
+                  fontSize: '14px',
+                  fontFamily: 'PingFang SC',
+                  color: '#B1BAD3',
+                }"
+                >{{ $t("showPro.chance") }}</span
+              >
+              <div :style="{ position: 'relative' }">
+                <input
+                  class="profit-input"
+                  type="text"
+                  :value="proValue"
+                  readonly
+                />
+                <img
+                  src="/image/percent.svg"
+                  alt=""
+                  :style="{
+                    position: 'absolute',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    right: '12px',
+                  }"
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <div v-if="score !== 0">
           <ScoreBoard />
@@ -73,24 +118,6 @@ export default {
   },
 
   computed: {
-    // appWidth() {
-    //   return store.a_w;
-    // },
-    // appHeight() {
-    //   return store.a_h;
-    // },
-    // containerWidth() {
-    //   return store.co_w;
-    // },
-    // containerHeight() {
-    //   return store.co_h;
-    // },
-    // canvasWidth() {
-    //   return store.c_w;
-    // },
-    // canvasHeight() {
-    //   return store.c_h;
-    // },
     score() {
       return store.currentScore;
     },
@@ -105,6 +132,15 @@ export default {
     },
     showHotkeyModal() {
       return store.showHotkeyModal;
+    },
+    showPro() {
+      return store.showPro;
+    },
+    proText() {
+      return ((store.proText * 1 - 1) * store.plinkoAmount).toFixed(8);
+    },
+    proValue() {
+      return (store.proValue * 100).toFixed(4);
     },
   },
 };

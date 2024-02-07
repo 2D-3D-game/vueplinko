@@ -98,5 +98,9 @@
         "nonce": "现实标志"
     },
     "copyText": "成功复制！",
-    "copyId": "成功复制！"
+    "copyId": "成功复制！",
+    "showPro": {
+        "profit": "获胜利润",
+        "chance": "胜算"
+    }
 }

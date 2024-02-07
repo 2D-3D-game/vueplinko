@@ -98,5 +98,9 @@
         "nonce": "Nonce"
     },
     "copyText": "Copied！",
-    "copyId": "Copied, share in chat!"
+    "copyId": "Copied, share in chat!",
+    "showPro": {
+        "profit": "Profit on Win",
+        "chance": "Chance"
+    }
 }

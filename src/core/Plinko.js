@@ -210,7 +210,11 @@ export function Plinko(element) {
       align: "center",
     });
 
-    const label = new PIXI.Text(text + "x", style);
+    let scoreText = text.toString();
+    if(scoreText.length < 3) {
+      scoreText += "x"
+    }
+    const label = new PIXI.Text(scoreText, style);
     label.anchor.set(0.5, 0.5);
 
     const container = new PIXI.Container();
@@ -230,50 +234,19 @@ export function Plinko(element) {
     sceneObjects.push(object);
     app.stage.addChild(container);
 
-    // container.on("pointerdown", function (e) {
-    //   let target = GetIndexFromText(text, x);
-    //   add(parseInt(target));
-    // });
+    container.on("mouseover", function (e) {
+      let pro = globalFunc.selectFromText(
+        rowNumState,
+        levelState,
+        text,
+        "pro"
+      );
+      mutations.changeShowPro(true, text, pro)
+    });
 
-    // container.on("mouseover", function (e) {
-    //   let newColor = globalFunc.selectFromText(
-    //     rowNumState,
-    //     levelState,
-    //     text,
-    //     "shadow"
-    //   );
-
-    //   rectangle.clear();
-    //   rectangle.beginFill(newColor);
-    //   rectangle.drawRect(
-    //     -gap / 2 / scale,
-    //     -gap / 2 / scale,
-    //     gap / scale,
-    //     gap / scale - 1
-    //   );
-    //   rectangle.endFill();
-    //   app.renderer.render(app.stage);
-    // });
-
-    // container.on("mouseout", function (e) {
-    //   let newColor = globalFunc.selectFromText(
-    //     rowNumState,
-    //     levelState,
-    //     text,
-    //     "color"
-    //   );
-
-    //   rectangle.clear();
-    //   rectangle.beginFill(newColor);
-    //   rectangle.drawRect(
-    //     -gap / 2 / scale,
-    //     -gap / 2 / scale,
-    //     gap / scale,
-    //     gap / scale - 1
-    //   );
-    //   rectangle.endFill();
-    //   app.renderer.render(app.stage);
-    // });
+    container.on("mouseout", function (e) {
+      mutations.changeShowPro(false)
+    });
 
     metter.metter = {
       text: text,
