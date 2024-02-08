@@ -1,5 +1,5 @@
 <template>
-  <div :class="['modal', showFairness ? 'active' : '']">
+  <div :class="['modal', showFairness ? 'active' : '']" @click="closeModal">
     <div
       :class="'modal__content'"
       :style="{
@@ -8,6 +8,7 @@
         overflowX: 'hidden',
         height: '100%',
       }"
+      @click.stop
     >
       <div :class="'modal-title'">
         <img :src="'/image/fairness.svg'" alt="Image" width="16" height="16" />
@@ -686,6 +687,13 @@ export default {
     showFairness() {
       return store.showFairness;
     },
+  },
+  methods: {
+    closeModal(event) {
+      if (event.target.classList.contains('modal')) {
+        mutations.showFairness();
+      }
+    }
   },
   setup() {
     const buttonType = ref("seed");

@@ -1,6 +1,6 @@
 <template>
-  <div :class="['modal', showHotkeyModal ? 'active' : '']">
-    <div :class="'modal__content'">
+  <div :class="['modal', showHotkeyModal ? 'active' : '']" @click="closeModal">
+    <div :class="'modal__content'" @click.stop>
       <div :class="'modal-title'">
         <img
           :src="'/image/hotkey-setting.svg'"
@@ -289,7 +289,13 @@ export default {
       return store.showHotkeyModal;
     },
   },
-
+  methods: {
+    closeModal(event) {
+      if (event.target.classList.contains('modal')) {
+        mutations.showHotkeyModal();
+      }
+    }
+  },
   setup() {
     const hideModal = () => {
       mutations.showHotkeyModal();

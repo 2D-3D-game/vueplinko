@@ -1,6 +1,6 @@
 <template>
-  <div :class="['modal', showGameInfo ? 'active' : '']">
-    <div :class="'modal__content'">
+  <div :class="['modal', showGameInfo ? 'active' : '']" @click="closeModal">
+    <div :class="'modal__content'" @click.stop>
       <div :class="'modal-title'">
         <img :src="'/image/info.svg'" alt="Image" width="16" height="16" />
         <span>{{ $t("info") }}</span>
@@ -123,6 +123,13 @@ export default {
     showGameInfo() {
       return store.showGameInfoModal;
     },
+  },
+  methods: {
+    closeModal(event) {
+      if (event.target.classList.contains('modal')) {
+        mutations.showGameInfoModal();
+      }
+    }
   },
   setup() {
     const hideModal = () => {

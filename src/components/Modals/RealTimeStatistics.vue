@@ -3,8 +3,9 @@
     :class="['modal', showStatistics ? 'active' : '']"
     :ref="'stmodal'"
     :style="{ right: startX + 'px', bottom: startY + 'px' }"
+    @click="closeModal"
   >
-    <div :class="'modal__content'">
+    <div :class="'modal__content'" @click.stop>
       <div :class="'modal-title'">
         <img :src="'/image/total.svg'" alt="Image" width="16" height="16" />
         <span>{{ $t("statistics") }}</span>
@@ -508,7 +509,6 @@ export default {
       return store.showStatistics;
     },
   },
-
   methods: {
     handleMouseOut() {
       this.typeSrc = "/image/arrow-down.svg";
@@ -548,6 +548,11 @@ export default {
     stopDrag() {
       this.dragging = false;
     },
+    closeModal(event) {
+      if (event.target.classList.contains('modal')) {
+        mutations.showStatistics();
+      }
+    }
   },
 
   setup() {

@@ -1,6 +1,6 @@
 <template>
-  <div :class="['modal', showMaxValueModal ? 'active' : '']">
-    <div :class="'modal__content'">
+  <div :class="['modal', showMaxValueModal ? 'active' : '']" @click="closeModal">
+    <div :class="'modal__content'" @click.stop>
       <div :class="'modal-title'">
         <img
           :src="'/image/max-setting.svg'"
@@ -132,7 +132,13 @@ export default {
       return store.showMaxValueModal;
     },
   },
-
+  methods: {
+    closeModal(event) {
+      if (event.target.classList.contains('modal')) {
+        mutations.showMaxValueModal();
+      }
+    }
+  },
   setup() {
     const hideModal = () => {
       mutations.showMaxValueModal();

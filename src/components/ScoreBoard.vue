@@ -1,8 +1,9 @@
 <template>
-  <div :class="['modal', 'active']" :ref="'scoreModal'">
+  <div :class="['modal', 'active']" :ref="'scoreModal'" @click="closeModal">
     <div
       :class="'modal__content'"
       :style="{ height: showFairFlag ? '843px' : '653px' }"
+      @click.stop
     >
       <div :class="'modal-title'">
         <img :src="'/image/score.svg'" alt="Image" width="16" height="16" />
@@ -624,6 +625,21 @@ select {
 .fobutton:hover span {
   color: #fff;
 }
+@media screen and (max-width: 560px) {
+  .state-container {
+    grid-template-columns: 1fr;
+  }
+  .state {
+    padding: 0.5em;
+    gap: 0;
+  }
+  .state:first-child {
+    padding-top: 0;
+  }
+  .state:last-child {
+    padding-bottom: 0;
+  }
+}
 </style>
 
 <script>
@@ -656,6 +672,13 @@ export default {
     plinkoRow() {
       return store.plinkoRow;
     },
+  },
+  methods: {
+    closeModal(event) {
+      if (event.target.classList.contains('modal')) {
+        mutations.currentScore(0, "", "");
+      }
+    }
   },
   setup() {
     const showFairFlag = ref(false);

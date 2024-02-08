@@ -397,12 +397,6 @@ export default {
       // mutations.responsive();
       if (newWidth < 1200) {
         changeOrder();
-        if (newWidth > 1100) {
-          mutations.rectShow(true);
-        } else {
-          if(newWidth > 760) {}
-          mutations.rectShow(false);
-        }
       }
       plinko.map();
     };

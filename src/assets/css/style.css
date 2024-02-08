@@ -272,7 +272,6 @@ button:active > img {
   .mycontainer {
     display: flex;
     flex-direction: column;
-    border-bottom: 0;
   }
 
   .mycontainer .app-container {

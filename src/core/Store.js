@@ -17,7 +17,6 @@ export const store = reactive({
   plinkoRow: 16,
   plinkoLevel: "middle",
   volumn: 50,
-  rectShow: window.innerWidth > 1100 ? true : false,
   currentScore: 0,
   currentColor: "",
   currentShadow: "",
@@ -48,9 +47,6 @@ export const mutations = {
   },
   updateHotkey() {
     store.hotkey = !store.hotkey;
-  },
-  rectShow(req) {
-    store.rectShow = req;
   },
   currentScore(score, color, shadow) {
     store.currentScore = score;

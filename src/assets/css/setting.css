@@ -191,10 +191,19 @@
   .footer-image {
     display: none;
   }
+  .button-group-container .stooltip:nth-child(2) {
+    display: none;
+  }
+  .footer-span {
+    margin-right: 12px;
+  }
 }
 @media screen and (max-width: 400px) {
   .footer-container {
     width: 100vw;
     min-width: 300px;
+  }
+  .button-group-container .stooltip:nth-child(3) {
+    display: none;
   }
 }

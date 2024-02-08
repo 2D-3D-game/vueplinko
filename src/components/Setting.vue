@@ -1,9 +1,4 @@
 <template>
-  <!-- <div
-    id="setting"
-    :style="{ width: settingWidth }"
-    :class="'footer-container'"
-  > -->
   <div
     id="setting"
     :class="'footer-container'"
@@ -148,7 +143,7 @@
           <div :class="'triangle'"></div>
         </div>
       </div>
-      <div :class="'stooltip'" v-if="showRect">
+      <div :class="'stooltip'">
         <button :class="'button-group'">
           <span>
             <img
@@ -260,9 +255,6 @@ export default {
     },
     hotkeyState() {
       return store.hotkey;
-    },
-    showRect() {
-      return store.rectShow;
     },
     // settingWidth() {
     //   return store.s_w;
