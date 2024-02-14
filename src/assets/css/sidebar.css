@@ -368,3 +368,8 @@ img.betting-image {
     right: 10.5%;
   }
 }
+@media screen and (max-width: 560px) {
+  .betAmountTimesBtn:hover {
+    background-color: #2f4553;
+  }
+}

@@ -639,6 +639,9 @@ select {
   .state:last-child {
     padding-bottom: 0;
   }
+  .copy:hover {
+    background: #304554 !important;
+  }
 }
 </style>
 
@@ -716,6 +719,9 @@ export default {
       }
     };
     const changeHover = (hover, req) => {
+      if(window.innerWidth < 560) {
+        return;
+      }
       if (hover === "isHover1") {
         if (req === "on") {
           isHover1.value = true;

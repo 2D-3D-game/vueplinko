@@ -1,15 +1,6 @@
 <template>
   <div :class="['modal', showFairness ? 'active' : '']" @click="closeModal">
-    <div
-      :class="'modal__content'"
-      :style="{
-        maxHeight: buttonType === 'seed' ? '612px' : '664px',
-        overflowY: 'auto',
-        overflowX: 'hidden',
-        height: '100%',
-      }"
-      @click.stop
-    >
+    <div :class="'modal__content'" @click.stop>
       <div :class="'modal-title'">
         <img :src="'/image/fairness.svg'" alt="Image" width="16" height="16" />
         <span>{{ $t("fairness") }}</span>
@@ -358,9 +349,9 @@
   background: rgba(0, 0, 0, 0.32);
   transition: all 0.4s;
   z-index: 9;
-  padding: 16px;
   height: 100%;
   box-sizing: border-box;
+  padding: 16px;
 }
 .noncebutton-container {
   position: "absolute";
@@ -587,6 +578,9 @@ select {
   background: #0f212e;
   box-shadow: 0px 1px 0px 0px #253541 inset,
     0px 11px 0px 0px rgba(0, 0, 0, 0.14);
+  max-height: 664px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .modal-footer {
   border-radius: 0px 0px 8px 8px;
@@ -675,6 +669,17 @@ select {
   align-items: center;
   justify-content: center;
 }
+@media screen and (max-width: 560px) {
+  .noncebutton:hover {
+    background-color: #304554 !important;
+  }
+  .copy:hover {
+    background: #304554 !important;
+  }
+  .modal {
+    align-items: flex-start;
+  }
+}
 </style>
 
 <script>
@@ -690,10 +695,10 @@ export default {
   },
   methods: {
     closeModal(event) {
-      if (event.target.classList.contains('modal')) {
+      if (event.target.classList.contains("modal")) {
         mutations.showFairness();
       }
-    }
+    },
   },
   setup() {
     const buttonType = ref("seed");
@@ -770,7 +775,7 @@ export default {
       navigator.clipboard.writeText(text);
     };
     const generateScore = () => {
-      if (game.value === "Plinko" && serverSeed.value !== '') {
+      if (game.value === "Plinko" && serverSeed.value !== "") {
         stateChange.value = false;
         let info = GlobalFunc().generateRandomNumber(
           row.value,
